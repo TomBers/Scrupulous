@@ -18,6 +18,7 @@ defmodule ScrupulousWeb.Router do
 
     get "/", PageController, :index
     get "/book/:page", PageController, :book
+    get "/graph/", PageController, :graph
   end
 
   # Other scopes may use custom stacks.

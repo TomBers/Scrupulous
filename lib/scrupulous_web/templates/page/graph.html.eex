@@ -1,0 +1,48 @@
+<h1 class="title">Graph</h1>
+<div id="cy"></div>
+<script>
+    var elements = [];
+    <%= for node <- @nodes do %>
+        elements.push({data: {id: '<%= node.id %>'}})
+    <% end %>
+    <%= for edge <- @edges do %>
+        elements.push({data: {id: '<%= edge.id %>', source: '<%= edge.source %>', target: '<%= edge.target %>'}})
+    <% end %>
+
+    var cy = cytoscape({
+
+  container: document.getElementById('cy'), // container to render in
+
+  elements: elements,
+
+  style: [ // the stylesheet for the graph
+    {
+      selector: 'node',
+      style: {
+        'background-color': '#666',
+        'label': 'data(id)'
+      }
+    },
+
+    {
+      selector: 'edge',
+      style: {
+        'width': 3,
+        'line-color': '#ccc',
+        'target-arrow-color': '#ccc',
+        'target-arrow-shape': 'triangle',
+        'curve-style': 'bezier'
+      }
+    }
+  ],
+
+  layout: {
+    name: 'grid',
+    rows: 3
+  }
+
+});
+
+
+
+</script>
