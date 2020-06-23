@@ -1,4 +1,5 @@
 <h1 class="title">Book</h1>
+
 <div class="field">
     <div class="control float-input">
         <textarea id="note" class="textarea is-primary" placeholder="Add note"></textarea>
@@ -6,7 +7,7 @@
     </div>
 </div>
 <%= for line <- @lines do %>
-<div class="line" id="<%= line.line %>"><span id="<%= line.line %>"><%= line.txt %></span></div>
+<div class="line" id="<%= line.line %>"><span id="<%= line.line %>"><%= line.txt %></span> <span><%= if has_note(line.line, @notes) do %><a href="#">Note</a> <% end %> </span></div>
 <% end %>
 
 
@@ -41,6 +42,31 @@
 });
 document.getElementById("noteBtn").addEventListener("click", function(){
   var note = document.getElementById("note").value;
-  alert('Page <%= @book %>' + ' Note ' + note + ' from ' +  startLine + ' to ' + endLine)
+  var data = {
+    note: {
+        book: '<%= @book %>',
+        note : note,
+        start_line: startLine,
+        end_line: endLine
+    }
+  }
+
+  var body = JSON.stringify(data)
+  console.log(body)
+  fetch('/api/notes', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: body,
+})
+.then(response => response.json())
+.then(data => {
+  console.log('Success:', data);
+})
+.catch((error) => {
+  console.error('Error:', error);
+});
+
 });
 </script>
