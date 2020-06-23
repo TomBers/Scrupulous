@@ -1,0 +1,46 @@
+<h1 class="title">Book</h1>
+<div class="field">
+    <div class="control float-input">
+        <textarea id="note" class="textarea is-primary" placeholder="Add note"></textarea>
+        <button id="noteBtn" class="button is-primary">Add note</button>
+    </div>
+</div>
+<%= for line <- @lines do %>
+<div class="line" id="<%= line.line %>"><span id="<%= line.line %>"><%= line.txt %></span></div>
+<% end %>
+
+
+<a href="/book/<%= @previous_page %>">Back</a> <a href="/book/<%= @next_page %>">Next</a>
+
+<script>
+    var startLine;
+    var endLine;
+
+    document.addEventListener('selectionchange', () => {
+    var select = document.getSelection();
+
+    if (select.anchorNode.nodeName == "#text") {
+        baseLine = parseInt(select.baseNode.parentElement.id, 10);
+        extentLine = parseInt(select.extentNode.parentElement.id, 10);
+
+        startLine = baseLine <= extentLine ? baseLine : extentLine;
+        endLine = baseLine >= extentLine ? baseLine : extentLine;
+
+        var elems = document.querySelectorAll("div.line");
+
+        elems.forEach.call(elems, function(el) {
+           if(el.id >= startLine && el.id <= endLine) {
+               el.classList.add("selected");
+            } else {
+                el.classList.remove("selected");
+            }
+         });
+
+    }
+
+});
+document.getElementById("noteBtn").addEventListener("click", function(){
+  var note = document.getElementById("note").value;
+  alert('Page <%= @book %>' + ' Note ' + note + ' from ' +  startLine + ' to ' + endLine)
+});
+</script>

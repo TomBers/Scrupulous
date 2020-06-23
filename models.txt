@@ -1,0 +1,3 @@
+mix phx.gen.json Accounts User users name:string age:integer
+
+mix phx.gen.json UserContent Note notes book:string start_line:integer end_line:integer note:text
