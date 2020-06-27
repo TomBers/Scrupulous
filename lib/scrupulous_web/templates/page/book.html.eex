@@ -7,7 +7,19 @@
     </div>
 </div>
 <%= for line <- @lines do %>
-<div class="line" id="<%= line.line %>"><span id="<%= line.line %>"><%= line.txt %></span> <span><%= if has_note(line.line, @notes) do %><a href="#">Note</a> <% end %> </span></div>
+    <div class="line" id="<%= line.line %>">
+        <span id="<%= line.line %>"><%= line.txt %></span>
+        <%= if has_note(line.line, @notes) do %>
+            <span class="note">Notes</span>
+            <div class="noteTxt">
+                <ol>
+                    <%= for note <- get_notes(line.line, @notes) do %>
+                        <li><%= note.note %></li>
+                    <% end %>
+                </ol>
+            </div>
+        <% end %>
+    </div>
 <% end %>
 
 
@@ -19,10 +31,14 @@
 
     document.addEventListener('selectionchange', () => {
     var select = document.getSelection();
+    function getNodeID(node) {
+        return parseInt(node.parentElement.id, 10);
+    }
 
     if (select.anchorNode.nodeName == "#text") {
-        baseLine = parseInt(select.baseNode.parentElement.id, 10);
-        extentLine = parseInt(select.extentNode.parentElement.id, 10);
+
+        baseLine = getNodeID(select.anchorNode);
+        extentLine = getNodeID(select.focusNode);
 
         startLine = baseLine <= extentLine ? baseLine : extentLine;
         endLine = baseLine >= extentLine ? baseLine : extentLine;
@@ -41,7 +57,8 @@
 
 });
 document.getElementById("noteBtn").addEventListener("click", function(){
-  var note = document.getElementById("note").value;
+  var noteElement = document.getElementById("note")
+  var note = noteElement.value;
   var data = {
     note: {
         book: '<%= @book %>',
@@ -52,7 +69,6 @@ document.getElementById("noteBtn").addEventListener("click", function(){
   }
 
   var body = JSON.stringify(data)
-  console.log(body)
   fetch('/api/notes', {
   method: 'POST',
   headers: {
@@ -63,6 +79,7 @@ document.getElementById("noteBtn").addEventListener("click", function(){
 .then(response => response.json())
 .then(data => {
   console.log('Success:', data);
+  noteElement.value = "";
 })
 .catch((error) => {
   console.error('Error:', error);

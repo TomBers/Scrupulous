@@ -1,6 +1,20 @@
 /* This file is for your main application css. */
 @import "./bulma.css";
 
+
+.noteTxt {
+    display: none;
+}
+
+.note:hover + .noteTxt {
+    display: block;
+    color: red;
+}
+
+.note {
+    color: blue;
+}
+
 .line:hover {
     background-color: #E8E8E8;
 }
