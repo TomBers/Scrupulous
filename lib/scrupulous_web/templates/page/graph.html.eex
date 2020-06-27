@@ -3,7 +3,7 @@
 <script>
     var elements = [];
     <%= for node <- @nodes do %>
-        elements.push({data: {id: '<%= node.id %>'}})
+        elements.push({data: {id: '<%= node.id %>', node_col: '<%= node.node_col %>' }})
     <% end %>
     <%= for edge <- @edges do %>
         elements.push({data: {id: '<%= edge.id %>', source: '<%= edge.source %>', target: '<%= edge.target %>'}})
@@ -19,7 +19,7 @@
     {
       selector: 'node',
       style: {
-        'background-color': '#666',
+        'background-color': 'data(node_col)',
         'label': 'data(id)'
       }
     },
@@ -37,8 +37,7 @@
   ],
 
   layout: {
-    name: 'grid',
-    rows: 3
+    name: 'random'
   }
 
 });
