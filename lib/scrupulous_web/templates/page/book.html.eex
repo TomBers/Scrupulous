@@ -23,7 +23,7 @@
 <% end %>
 
 
-<a href="/book/<%= @previous_page %>">Back</a> <a href="/book/<%= @next_page %>">Next</a>
+<a href="/book/<%= @book_id %>/<%= @previous_page %>">Back</a> <a href="/book/<%= @book_id %>/<%= @next_page %>">Next</a>
 
 <script>
     var startLine;
@@ -61,7 +61,7 @@ document.getElementById("noteBtn").addEventListener("click", function(){
   var note = noteElement.value;
   var data = {
     note: {
-        book: '<%= @book %>',
+        book: '<%= @book_id %>',
         note : note,
         start_line: startLine,
         end_line: endLine

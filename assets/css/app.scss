@@ -4,15 +4,15 @@
 
 .noteTxt {
     display: none;
-    position: relative;
-    left: 60%;
-    top: -20px;
-    max-width: 300px;
+    position: absolute;
+    top: 10%;
+    right: 0;
+    width: 300px;
 }
 
 .note:hover + .noteTxt {
     display: block;
-    color: red;
+    font-style: italic;
 }
 
 .note {
