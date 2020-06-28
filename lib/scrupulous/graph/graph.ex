@@ -38,8 +38,8 @@ defmodule Scrupulous.Graph do
 
 
   def get_cols(year) do
-    max = 1997
-    min = 1832
+    max = 1880
+    min = 1831
     gap = year - min
     cols = [
       '#0A2F51',
@@ -54,7 +54,7 @@ defmodule Scrupulous.Graph do
       '#DEEDCF'
     ]
     #   # 17 comes from width of range (max - min) divided by the number of buckets (10) - 16.5
-    Enum.at(cols, div(gap, 17))
+    Enum.at(cols, div(gap, 5))
   end
 
   def range_func(a, b, range \\ 10) do
