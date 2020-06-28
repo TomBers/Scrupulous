@@ -1,12 +1,30 @@
 /* This file is for your main application css. */
 @import "./bulma.css";
 
+
+.noteTxt {
+    display: none;
+    position: relative;
+    left: 60%;
+    top: -20px;
+    max-width: 300px;
+}
+
+.note:hover + .noteTxt {
+    display: block;
+    color: red;
+}
+
+.note {
+    color: blue;
+}
+
 .line:hover {
-    background-color: #E8E8E8;
+    // background-color: #a8d1ff;
 }
 
 .line.selected span {
-    background-color: #E8E8E8;
+    background-color: #a8d1ff;
 }
 
 #cy {
