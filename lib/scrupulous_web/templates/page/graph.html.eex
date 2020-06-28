@@ -3,10 +3,10 @@
 <script>
     var elements = [];
     <%= for node <- @nodes do %>
-        elements.push({data: {id: '<%= node.id %>', node_col: '<%= node.node_col %>', href: "/book/10" }})
+        elements.push({data: {id: '<%= node.id %>', node_col: '<%= node.col %>', href: "/book/10" }})
     <% end %>
     <%= for edge <- @edges do %>
-        elements.push({data: {id: '<%= edge.id %>', source: '<%= edge.source %>', target: '<%= edge.target %>'}})
+        elements.push({data: {id: '<%= edge.id %>', source: '<%= edge.source %>', target: '<%= edge.target %>', edge_col: '<%= edge.col %>' }})
     <% end %>
 
     var cy = cytoscape({
@@ -28,16 +28,14 @@
       selector: 'edge',
       style: {
         'width': 3,
-        'line-color': '#ccc',
-        'target-arrow-color': '#ccc',
-        'target-arrow-shape': 'triangle',
+        'line-color': 'data(edge_col)',
         'curve-style': 'bezier'
       }
     }
   ],
 
   layout: {
-    name: 'random'
+    name: 'circle'
   }
 });
 
