@@ -1,0 +1,33 @@
+<h1>Show Book</h1>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @book.title %>
+  </li>
+
+  <li>
+    <strong>Author:</strong>
+    <%= @book.author %>
+  </li>
+
+  <li>
+    <strong>Country:</strong>
+    <%= @book.country %>
+  </li>
+
+  <li>
+    <strong>Publication year:</strong>
+    <%= @book.publication_year %>
+  </li>
+
+  <li>
+    <strong>File name:</strong>
+    <%= @book.file_name %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.book_path(@conn, :edit, @book) %></span>
+<span><%= link "Back", to: Routes.book_path(@conn, :index) %></span>

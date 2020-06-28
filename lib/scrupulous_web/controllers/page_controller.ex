@@ -2,6 +2,7 @@ defmodule ScrupulousWeb.PageController do
   use ScrupulousWeb, :controller
   alias Scrupulous.UserContent
   alias Scrupulous.Graph
+  alias Scrupulous.StaticContent
 
   def index(conn, _params) do
     render(conn, "index.html")
@@ -19,7 +20,8 @@ defmodule ScrupulousWeb.PageController do
   end
 
   def graph(conn, _params) do
-    nodes = Graph.books() |> Enum.map(fn(x) -> Map.put(x, :id, x.title) end) |> Enum.map(fn(x) -> Map.put(x, :col, Graph.get_cols(x.publication_year)) end)
+    books = StaticContent.list_books()
+    nodes = books |> Enum.map(fn(x) -> Map.put(x, :id, x.title) end) |> Enum.map(fn(x) -> Map.put(x, :col, Graph.get_cols(x.publication_year)) end)
     edges = Graph.gen_edges(nodes)
 
     render(conn, "graph.html", nodes: nodes, edges: edges)
