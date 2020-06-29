@@ -16,7 +16,8 @@ defmodule ScrupulousWeb.PageController do
     book = StaticContent.get_book!(book)
     notes = UserContent.get_notes_between_lines(book.id, start_line, end_line)
     lines = FileStream.read_book(book.file_name, start_line, end_line)
-    render(conn, "book.html", book_id: book.id, notes: notes, lines: lines, next_page: page + 1, previous_page: page - 1)
+
+    render(conn, "book.html", title: book.title, book_id: book.id, notes: notes, lines: lines, next_page: page + 1, previous_page: page - 1)
   end
 
   def graph(conn, _params) do
@@ -26,6 +27,7 @@ defmodule ScrupulousWeb.PageController do
             |> Enum.map(fn(x) -> Map.put(x, :id, x.title) end)
             |> Enum.map(fn(x) -> Map.put(x, :col, Graph.get_cols(x.publication_year)) end)
 
+    IO.inspect(nodes)
     edges = Graph.gen_edges(nodes)
 
     render(conn, "graph.html", nodes: nodes, edges: edges)

@@ -2,6 +2,10 @@
 @import "./bulma.css";
 
 
+.spacer {
+    height: 15px;
+}
+
 .noteTxt {
     display: none;
     position: absolute;
@@ -16,7 +20,7 @@
 }
 
 .note {
-    color: blue;
+    color: #3273dc;
 }
 
 .line:hover {
@@ -29,7 +33,7 @@
 
 #cy {
     min-width: 300px;
-    min-height: 400px;
+    min-height: 700px;
 }
 
 .float-input {

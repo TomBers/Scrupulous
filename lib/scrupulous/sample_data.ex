@@ -14,6 +14,12 @@ defmodule SampleData do
       %{title: "Notes from the Underground", author: "Fyodor Dostoevsky", country: "Russia", publication_year: 1864, file_name: "pg600"},
       %{title: "The Daughter of the Commandant", author: "Alexander Pushkin", country: "Russia", publication_year: 1831, file_name: "pg13511"},
       %{title: "Fathers and Children", author: "Ivan Turgenev", country: "Russia", publication_year: 1862, file_name: "pg30723"},
+      %{title: "The Turn of the Screw", author: "Henry James", country: "USA", publication_year: 1898, file_name: "209-0"},
+      %{title: "Pragmatism: A New Name for Some Old Ways of Thinking", author: "William James", country: "USA", publication_year: 1907, file_name: "pg5116"},
+      %{title: "Fifty Famous Stories Retold", author: "James Baldwin", country: "USA", publication_year: 1896, file_name: "pg18442"},
+      %{title: "The Adventures of Tom Sawyer", author: "Mark Twain", country: "USA", publication_year: 1876, file_name: "74-0"},
+      %{title: "Adventures of Huckleberry Finn", author: "Mark Twain", country: "USA", publication_year: 1884, file_name: "76-0"},
+      %{title: "The Big Trip Up Yonder", author: "Kurt Vonnegut", country: "USA", publication_year: 1954, file_name: "pg30240"},
     ]
   end
 

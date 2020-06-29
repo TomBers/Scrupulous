@@ -1,4 +1,6 @@
-<h1 class="title">Book</h1>
+<h1 class="title"><%= @title %></h1>
+
+<a href="/book/<%= @book_id %>/page/<%= @previous_page %>">Back</a> <a href="/book/<%= @book_id %>/page/<%= @next_page %>">Next</a>
 
 <div class="field">
     <div class="control float-input">
@@ -7,6 +9,9 @@
     </div>
 </div>
 <%= for line <- @lines do %>
+    <%= if line.txt == "\n" do %>
+        <div class="spacer"></div>
+    <% else %>
     <div class="line" id="<%= line.line %>">
         <span id="<%= line.line %>"><%= line.txt %></span>
         <%= if has_note(line.line, @notes) do %>
@@ -20,10 +25,11 @@
             </div>
         <% end %>
     </div>
+    <% end %>
 <% end %>
 
 
-<a href="/book/<%= @book_id %>/<%= @previous_page %>">Back</a> <a href="/book/<%= @book_id %>/<%= @next_page %>">Next</a>
+<a href="/book/<%= @book_id %>/page/<%= @previous_page %>">Back</a> <a href="/book/<%= @book_id %>/page/<%= @next_page %>">Next</a>
 
 <script>
     var startLine;

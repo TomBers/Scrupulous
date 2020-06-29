@@ -18,7 +18,7 @@ defmodule ScrupulousWeb.Router do
     resources "/books", BookController
 
     get "/", PageController, :index
-    get "/book/:book/:page", PageController, :book
+    get "/book/:book/page/:page", PageController, :book
     get "/graph/", PageController, :graph
   end
 
