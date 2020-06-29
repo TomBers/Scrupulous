@@ -10,9 +10,9 @@ defmodule Scrupulous.Graph do
             |> Enum.flat_map(fn(node) -> make_edges(node, nodes, :publication_year, &range_func/3, @year_col) end)
             |> Enum.reduce([], fn(x, acc) -> remove_dupes(x, acc) end)
 
-    country = nodes
-              |> Enum.flat_map(fn(node) -> make_edges(node, nodes, :country, &eql_func/3, @country_col) end)
-              |> Enum.reduce([], fn(x, acc) -> remove_dupes(x, acc) end)
+    country = [] #nodes
+#              |> Enum.flat_map(fn(node) -> make_edges(node, nodes, :country, &eql_func/3, @country_col) end)
+#              |> Enum.reduce([], fn(x, acc) -> remove_dupes(x, acc) end)
 
     author = nodes
              |> Enum.flat_map(fn(node) -> make_edges(node, nodes, :author, &eql_func/3, @author_col) end)

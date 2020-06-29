@@ -27,7 +27,6 @@ defmodule ScrupulousWeb.PageController do
             |> Enum.map(fn(x) -> Map.put(x, :id, x.title) end)
             |> Enum.map(fn(x) -> Map.put(x, :col, Graph.get_cols(x.publication_year)) end)
 
-    IO.inspect(nodes)
     edges = Graph.gen_edges(nodes)
 
     render(conn, "graph.html", nodes: nodes, edges: edges)

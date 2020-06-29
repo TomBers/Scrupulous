@@ -9,6 +9,8 @@
         elements.push({data: {id: '<%= edge.id %>', source: '<%= edge.source %>', target: '<%= edge.target %>', edge_col: '<%= edge.col %>' }})
     <% end %>
 
+document.addEventListener("DOMContentLoaded", function(){
+    cytoscape.use(window.layoutFunc);
     var cy = cytoscape({
 
   container: document.getElementById('cy'), // container to render in
@@ -32,7 +34,14 @@
         'curve-style': 'bezier'
       }
     }
-  ]
+  ],
+   layout: {
+    name: 'fcose',
+    nodeSeparation: 100,
+    nodeRepulsion: 6500,
+    idealEdgeLength: 275,
+  }
+
 });
 
 cy.on('tap', 'node', function(){
@@ -42,6 +51,8 @@ cy.on('tap', 'node', function(){
     window.location.href = this.data('href');
   }
 });
+    });
+
 
 
 
