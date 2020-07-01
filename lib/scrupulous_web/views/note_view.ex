@@ -12,7 +12,6 @@ defmodule ScrupulousWeb.NoteView do
 
   def render("note.json", %{note: note}) do
     %{id: note.id,
-      book: note.book,
       start_line: note.start_line,
       end_line: note.end_line,
       note: note.note}

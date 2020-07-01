@@ -1,6 +1,7 @@
 defmodule Scrupulous.StaticContent.Book do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Scrupulous.UserContent.Note
 
   schema "books" do
     field :author, :string
@@ -8,6 +9,8 @@ defmodule Scrupulous.StaticContent.Book do
     field :file_name, :string
     field :publication_year, :integer
     field :title, :string
+
+    has_many :notes, Note, on_delete: :delete_all
 
     timestamps()
   end

@@ -67,7 +67,7 @@ document.getElementById("noteBtn").addEventListener("click", function(){
   var note = noteElement.value;
   var data = {
     note: {
-        book: '<%= @book_id %>',
+        book_id: '<%= @book_id %>',
         note : note,
         start_line: startLine,
         end_line: endLine
