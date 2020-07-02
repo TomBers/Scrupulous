@@ -2,9 +2,10 @@ import "../css/app.scss"
 
 import "phoenix_html"
 
+import cytoscape from 'cytoscape'
 import fcose from 'cytoscape-fcose';
 
-
+window.cytoscape = cytoscape
 window.layoutFunc = fcose;
 
 //import {Socket} from "phoenix"

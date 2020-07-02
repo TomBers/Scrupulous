@@ -10,8 +10,8 @@
     <% end %>
 
 document.addEventListener("DOMContentLoaded", function(){
-    cytoscape.use(window.layoutFunc);
-    var cy = cytoscape({
+    window.cytoscape.use(window.layoutFunc);
+    var cy = window.cytoscape({
 
   container: document.getElementById('cy'), // container to render in
 

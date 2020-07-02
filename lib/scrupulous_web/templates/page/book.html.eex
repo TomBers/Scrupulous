@@ -34,11 +34,16 @@
 <script>
     var startLine;
     var endLine;
+    var noteElement = document.getElementById("note")
 
     document.addEventListener('selectionchange', () => {
     var select = document.getSelection();
     function getNodeID(node) {
-        return parseInt(node.parentElement.id, 10);
+        if(node.nodeValue == "Notes") {
+            return parseInt(node.parentNode.parentNode.id, 10);
+        } else {
+            return parseInt(node.parentElement.id, 10);
+        }
     }
 
     if (select.anchorNode.nodeName == "#text") {
@@ -48,6 +53,8 @@
 
         startLine = baseLine <= extentLine ? baseLine : extentLine;
         endLine = baseLine >= extentLine ? baseLine : extentLine;
+
+        noteElement.placeholder = "Add note from " + startLine + " to " + endLine;
 
         var elems = document.querySelectorAll("div.line");
 
