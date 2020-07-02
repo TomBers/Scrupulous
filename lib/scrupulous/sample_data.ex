@@ -32,7 +32,7 @@ defmodule SampleData do
   def make_slug(title, author) do
     slug_title = title |> String.downcase |> String.replace(" ", "-")
     slug_author = author |> String.downcase |> String.replace(" ", "-")
-    "#{title}_#{author}"
+    "#{slug_title}_#{slug_author}"
   end
 
 end
