@@ -25,7 +25,14 @@ defmodule SampleData do
 
   def make_books do
     books()
+    |> Enum.map(fn(book) -> Map.put(book, :slug, make_slug(book.title, book.author)) end)
     |> Enum.map(fn(book) -> StaticContent.create_book(book) end)
+  end
+
+  def make_slug(title, author) do
+    slug_title = title |> String.downcase |> String.replace(" ", "-")
+    slug_author = author |> String.downcase |> String.replace(" ", "-")
+    "#{title}_#{author}"
   end
 
 end

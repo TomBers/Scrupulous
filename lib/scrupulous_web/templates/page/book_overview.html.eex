@@ -7,7 +7,7 @@
 <div class="content">
 <ul>
 <%= for note <- @book.notes do %>
-<li><%= note.note %></li>
+<li><%= note.note %> <a href="/book/<%= @book.id %>/page/<%= div(note.end_line, 50) %>">Link</a></li>
 <% end %>
 </ul>
 </div>

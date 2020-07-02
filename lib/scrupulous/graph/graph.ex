@@ -1,31 +1,31 @@
 defmodule Scrupulous.Graph do
   @moduledoc false
 
-  @year_col '#39A96B'
-  @country_col '#DEEDCF'
-  @author_col '#0A2F51'
+  @year_col '#D3D3D3'
+  @country_col '#D3D3D3'
+  @author_col '#778899'
 
   def gen_edges(nodes) do
     year = nodes
-            |> Enum.flat_map(fn(node) -> make_edges(node, nodes, :publication_year, &range_func/3, @year_col) end)
+            |> Enum.flat_map(fn(node) -> make_edges(node, nodes, :publication_year, &range_func/3, @year_col, 2) end)
             |> Enum.reduce([], fn(x, acc) -> remove_dupes(x, acc) end)
 
-    country = [] #nodes
-#              |> Enum.flat_map(fn(node) -> make_edges(node, nodes, :country, &eql_func/3, @country_col) end)
-#              |> Enum.reduce([], fn(x, acc) -> remove_dupes(x, acc) end)
+    country = nodes
+              |> Enum.flat_map(fn(node) -> make_edges(node, nodes, :country, &eql_func/3, @country_col, 1) end)
+              |> Enum.reduce([], fn(x, acc) -> remove_dupes(x, acc) end)
 
     author = nodes
-             |> Enum.flat_map(fn(node) -> make_edges(node, nodes, :author, &eql_func/3, @author_col) end)
+             |> Enum.flat_map(fn(node) -> make_edges(node, nodes, :author, &eql_func/3, @author_col, 5) end)
              |> Enum.reduce([], fn(x, acc) -> remove_dupes(x, acc) end)
 
     year ++ country ++ author
   end
 
-  def make_edges(node, nodes, key, equality, col) do
+  def make_edges(node, nodes, key, equality, col, edge_width) do
     match_val = Map.get(node, key)
     nodes
     |> Enum.filter(fn(nde) -> nde != node and equality.(Map.get(nde, key), match_val, 10) end)
-    |> Enum.map(fn(x) -> %{id: "#{to_string(key)}_#{x.title}_#{node.title}", source: node.id, target: x.id, col: col} end)
+    |> Enum.map(fn(x) -> %{id: "#{to_string(key)}_#{x.title}_#{node.title}", source: node.id, target: x.id, col: col, edge_width: edge_width} end)
   end
 
   def remove_dupes(edge, acc) do

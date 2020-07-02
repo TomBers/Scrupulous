@@ -1,4 +1,4 @@
-<h1 class="title"><%= @title %></h1>
+<h1 class="title"><a href="/book/<%= @book_id %>"><%= @title %></a></h1>
 
 <a href="/book/<%= @book_id %>/page/<%= @previous_page %>">Back</a> <a href="/book/<%= @book_id %>/page/<%= @next_page %>">Next</a>
 
@@ -86,6 +86,7 @@ document.getElementById("noteBtn").addEventListener("click", function(){
 .then(data => {
   console.log('Success:', data);
   noteElement.value = "";
+  alert('Note added, refresh page to see it');
 })
 .catch((error) => {
   console.error('Error:', error);

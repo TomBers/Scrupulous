@@ -1,4 +1,4 @@
-<h1 class="title">Graph</h1>
+<h1 class="title">Book graph</h1>
 <div id="cy"></div>
 <script>
     var elements = [];
@@ -6,7 +6,7 @@
         elements.push({data: {id: '<%= node.id %>', node_col: '<%= node.col %>', href: "/book/<%= node.book_id %>" }})
     <% end %>
     <%= for edge <- @edges do %>
-        elements.push({data: {id: '<%= edge.id %>', source: '<%= edge.source %>', target: '<%= edge.target %>', edge_col: '<%= edge.col %>' }})
+        elements.push({data: {id: '<%= edge.id %>', source: '<%= edge.source %>', target: '<%= edge.target %>', edge_col: '<%= edge.col %>', edge_width: '<%= edge.edge_width %>' }})
     <% end %>
 
 document.addEventListener("DOMContentLoaded", function(){
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function(){
     {
       selector: 'edge',
       style: {
-        'width': 3,
+        'width': 'data(edge_width)',
         'line-color': 'data(edge_col)',
         'curve-style': 'bezier'
       }

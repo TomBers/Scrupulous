@@ -37,6 +37,11 @@ defmodule ScrupulousWeb.PageController do
     render(conn, "graph.html", nodes: nodes, edges: edges)
   end
 
+  def makedata(conn, _params) do
+    SampleData.make_books()
+    render(conn, "index.html")
+  end
+
 
 
 end
