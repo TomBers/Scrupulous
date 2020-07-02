@@ -37,6 +37,8 @@ defmodule Scrupulous.StaticContent do
   """
   def get_book!(id), do: Repo.get!(Book, id)
 
+  def get_book_with_notes!(id), do: Repo.get!(Book, id) |> Repo.preload([:notes])
+
   @doc """
   Creates a book.
 

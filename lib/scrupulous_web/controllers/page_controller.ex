@@ -8,13 +8,18 @@ defmodule ScrupulousWeb.PageController do
     render(conn, "index.html")
   end
 
+  def book_overview(conn, %{"book" => book}) do
+    book = StaticContent.get_book_with_notes!(book)
+    render(conn, "book_overview.html", book: book)
+  end
+
   def book(conn, %{"book" => book, "page" => pageStr}) do
     {page, _rem} = Integer.parse(pageStr)
     start_line = page * 50
     end_line = start_line + 50
 
     book = StaticContent.get_book!(book)
-    notes = [] #UserContent.get_notes_between_lines(book.id, start_line, end_line)
+    notes = UserContent.get_notes_between_lines(book.id, start_line, end_line)
     lines = FileStream.read_book(book.file_name, start_line, end_line)
 
     render(conn, "book.html", title: book.title, book_id: book.id, notes: notes, lines: lines, next_page: page + 1, previous_page: page - 1)
