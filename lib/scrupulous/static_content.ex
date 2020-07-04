@@ -21,6 +21,13 @@ defmodule Scrupulous.StaticContent do
     Repo.all(Book)
   end
 
+  def list_books_from_ids(books) do
+    query =
+      from books in Book,
+           where: books.id in ^books
+    Repo.all(query)
+  end
+
   @doc """
   Gets a single book.
 

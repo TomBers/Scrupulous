@@ -2,6 +2,7 @@ defmodule Scrupulous.StaticContent.Book do
   use Ecto.Schema
   import Ecto.Changeset
   alias Scrupulous.UserContent.Note
+  alias Scrupulous.UserContent.Edge
 
   schema "books" do
     field :author, :string

@@ -21,6 +21,7 @@ defmodule ScrupulousWeb.Router do
     get "/book/:book", PageController, :book_overview
     get "/book/:book/page/:page", PageController, :book
     get "/graph/", PageController, :graph
+    get "/graph/:book", PageController, :usergraph
     get "/make/data", PageController, :makedata
   end
 
@@ -29,6 +30,7 @@ defmodule ScrupulousWeb.Router do
      pipe_through :api
 
      resources "/notes", NoteController, except: [:new, :edit]
+     resources "/edges", EdgeController, except: [:new, :edit]
    end
 
   # Enables LiveDashboard only for development
