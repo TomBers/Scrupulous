@@ -2,7 +2,16 @@ defmodule FileStream do
   @moduledoc false
 
   def read_book(file_name, start_line, end_line) do
-    read_lines("lib/scrupulous/books/#{file_name}.txt", start_line, end_line)
+#    Server path
+    deploy_path = "/app/lib/scrupulous-0.1.0/priv/static/static_book_txt"
+    local_path = "priv/static/static_book_txt"
+    static_path = if File.exists?(deploy_path) do
+      deploy_path
+    else
+      local_path
+    end
+    file_path = "#{file_name}.txt"
+    read_lines("#{static_path}/#{file_path}", start_line, end_line)
   end
 
   def read_lines(path, start_line, end_line) do
