@@ -2,7 +2,7 @@ mix phx.gen.json Accounts User users name:string age:integer
 
 mix phx.routes
 
-mix phx.gen.json UserContent Note notes book:string start_line:integer end_line:integer note:text
+mix phx.gen.json UserContent Note notes book:references:books start_line:integer end_line:integer note:text
 
 mix phx.gen.html StaticContent Book books title:string author:string country:string publication_year:integer file_name:string
 

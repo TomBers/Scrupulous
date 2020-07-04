@@ -1,4 +1,6 @@
-<h1 class="title">Book</h1>
+<h1 class="title"><a href="/book/<%= @book_id %>"><%= @title %></a></h1>
+
+<a href="/book/<%= @book_id %>/page/<%= @previous_page %>">Back</a> <a href="/book/<%= @book_id %>/page/<%= @next_page %>">Next</a>
 
 <div class="field">
     <div class="control float-input">
@@ -7,6 +9,9 @@
     </div>
 </div>
 <%= for line <- @lines do %>
+    <%= if line.txt == "\n" do %>
+        <div class="spacer"></div>
+    <% else %>
     <div class="line" id="<%= line.line %>">
         <span id="<%= line.line %>"><%= line.txt %></span>
         <%= if has_note(line.line, @notes) do %>
@@ -20,19 +25,25 @@
             </div>
         <% end %>
     </div>
+    <% end %>
 <% end %>
 
 
-<a href="/book/<%= @book_id %>/<%= @previous_page %>">Back</a> <a href="/book/<%= @book_id %>/<%= @next_page %>">Next</a>
+<a href="/book/<%= @book_id %>/page/<%= @previous_page %>">Back</a> <a href="/book/<%= @book_id %>/page/<%= @next_page %>">Next</a>
 
 <script>
     var startLine;
     var endLine;
+    var noteElement = document.getElementById("note")
 
     document.addEventListener('selectionchange', () => {
     var select = document.getSelection();
     function getNodeID(node) {
-        return parseInt(node.parentElement.id, 10);
+        if(node.nodeValue == "Notes") {
+            return parseInt(node.parentNode.parentNode.id, 10);
+        } else {
+            return parseInt(node.parentElement.id, 10);
+        }
     }
 
     if (select.anchorNode.nodeName == "#text") {
@@ -42,6 +53,8 @@
 
         startLine = baseLine <= extentLine ? baseLine : extentLine;
         endLine = baseLine >= extentLine ? baseLine : extentLine;
+
+        noteElement.placeholder = "Add note from " + startLine + " to " + endLine;
 
         var elems = document.querySelectorAll("div.line");
 
@@ -61,7 +74,7 @@ document.getElementById("noteBtn").addEventListener("click", function(){
   var note = noteElement.value;
   var data = {
     note: {
-        book: '<%= @book_id %>',
+        book_id: '<%= @book_id %>',
         note : note,
         start_line: startLine,
         end_line: endLine
@@ -80,6 +93,7 @@ document.getElementById("noteBtn").addEventListener("click", function(){
 .then(data => {
   console.log('Success:', data);
   noteElement.value = "";
+  alert('Note added, refresh page to see it');
 })
 .catch((error) => {
   console.error('Error:', error);

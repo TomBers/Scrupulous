@@ -5,18 +5,16 @@ defmodule ScrupulousWeb.NoteControllerTest do
   alias Scrupulous.UserContent.Note
 
   @create_attrs %{
-    book: "some book",
     end_line: 42,
     note: "some note",
     start_line: 42
   }
   @update_attrs %{
-    book: "some updated book",
     end_line: 43,
     note: "some updated note",
     start_line: 43
   }
-  @invalid_attrs %{book: nil, end_line: nil, note: nil, start_line: nil}
+  @invalid_attrs %{end_line: nil, note: nil, start_line: nil}
 
   def fixture(:note) do
     {:ok, note} = UserContent.create_note(@create_attrs)
@@ -43,7 +41,6 @@ defmodule ScrupulousWeb.NoteControllerTest do
 
       assert %{
                "id" => id,
-               "book" => "some book",
                "end_line" => 42,
                "note" => "some note",
                "start_line" => 42
@@ -67,7 +64,6 @@ defmodule ScrupulousWeb.NoteControllerTest do
 
       assert %{
                "id" => id,
-               "book" => "some updated book",
                "end_line" => 43,
                "note" => "some updated note",
                "start_line" => 43

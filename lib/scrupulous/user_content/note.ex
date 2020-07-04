@@ -1,12 +1,13 @@
 defmodule Scrupulous.UserContent.Note do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Scrupulous.StaticContent.Book
 
   schema "notes" do
-    field :book, :string
     field :end_line, :integer
     field :note, :string
     field :start_line, :integer
+    belongs_to :book, Book
 
     timestamps()
   end
@@ -14,7 +15,7 @@ defmodule Scrupulous.UserContent.Note do
   @doc false
   def changeset(note, attrs) do
     note
-    |> cast(attrs, [:book, :start_line, :end_line, :note])
-    |> validate_required([:book, :start_line, :end_line, :note])
+    |> cast(attrs, [:start_line, :end_line, :note, :book_id])
+    |> validate_required([:start_line, :end_line, :note])
   end
 end

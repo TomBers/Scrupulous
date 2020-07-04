@@ -1,0 +1,13 @@
+<h1 class="title"><%= @book.title %></h1>
+<h2 class="subtitle"><%= @book.author %></h2>
+<h2 class="subtitle"><%= @book.publication_year %></h2>
+<a href="/book/<%= @book.id %>/page/0">Read now</a>
+
+<h1>Notes: </h1>
+<div class="content">
+<ul>
+<%= for note <- @book.notes do %>
+<li><%= note.note %> <a href="/book/<%= @book.id %>/page/<%= div(note.end_line, 50) %>">Link</a></li>
+<% end %>
+</ul>
+</div>

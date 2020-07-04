@@ -1,15 +1,17 @@
-<h1 class="title">Graph</h1>
+<h1 class="title">Book graph</h1>
 <div id="cy"></div>
 <script>
     var elements = [];
     <%= for node <- @nodes do %>
-        elements.push({data: {id: '<%= node.id %>', node_col: '<%= node.col %>', href: "/book/<%= node.book_id %>/0" }})
+        elements.push({data: {id: '<%= node.id %>', node_col: '<%= node.col %>', href: "/book/<%= node.book_id %>" }})
     <% end %>
     <%= for edge <- @edges do %>
-        elements.push({data: {id: '<%= edge.id %>', source: '<%= edge.source %>', target: '<%= edge.target %>', edge_col: '<%= edge.col %>' }})
+        elements.push({data: {id: '<%= edge.id %>', source: '<%= edge.source %>', target: '<%= edge.target %>', edge_col: '<%= edge.col %>', edge_width: '<%= edge.edge_width %>' }})
     <% end %>
 
-    var cy = cytoscape({
+document.addEventListener("DOMContentLoaded", function(){
+    window.cytoscape.use(window.layoutFunc);
+    var cy = window.cytoscape({
 
   container: document.getElementById('cy'), // container to render in
 
@@ -27,16 +29,19 @@
     {
       selector: 'edge',
       style: {
-        'width': 3,
+        'width': 'data(edge_width)',
         'line-color': 'data(edge_col)',
         'curve-style': 'bezier'
       }
     }
   ],
-
-  layout: {
-    name: 'circle'
+   layout: {
+    name: 'fcose',
+    nodeSeparation: 100,
+    nodeRepulsion: 6500,
+    idealEdgeLength: 275,
   }
+
 });
 
 cy.on('tap', 'node', function(){
@@ -46,6 +51,8 @@ cy.on('tap', 'node', function(){
     window.location.href = this.data('href');
   }
 });
+    });
+
 
 
 

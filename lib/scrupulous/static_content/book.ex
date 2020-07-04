@@ -1,6 +1,7 @@
 defmodule Scrupulous.StaticContent.Book do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Scrupulous.UserContent.Note
 
   schema "books" do
     field :author, :string
@@ -8,6 +9,9 @@ defmodule Scrupulous.StaticContent.Book do
     field :file_name, :string
     field :publication_year, :integer
     field :title, :string
+    field :slug, :string
+
+    has_many :notes, Note, on_delete: :delete_all
 
     timestamps()
   end
@@ -15,7 +19,7 @@ defmodule Scrupulous.StaticContent.Book do
   @doc false
   def changeset(book, attrs) do
     book
-    |> cast(attrs, [:title, :author, :country, :publication_year, :file_name])
-    |> validate_required([:title, :author, :country, :publication_year, :file_name])
+    |> cast(attrs, [:title, :author, :country, :publication_year, :file_name, :slug])
+    |> validate_required([:title, :author, :country, :publication_year, :file_name, :slug])
   end
 end
