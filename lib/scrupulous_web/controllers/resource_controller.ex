@@ -14,12 +14,17 @@ defmodule ScrupulousWeb.ResourceController do
     render(conn, "new.html", changeset: changeset)
   end
 
+  def new_for_book(conn, %{"book" => book_id, "category" => category}) do
+    changeset = StaticContent.change_resource(%Resource{book_id: book_id, category: category})
+    render(conn, "new.html", changeset: changeset, book_id: book_id)
+  end
+
   def create(conn, %{"resource" => resource_params}) do
     case StaticContent.create_resource(resource_params) do
       {:ok, resource} ->
         conn
         |> put_flash(:info, "Resource created successfully.")
-        |> redirect(to: Routes.resource_path(conn, :show, resource))
+        |> redirect(to: Routes.page_path(conn, :book_overview, Map.get(resource_params, "book_id")))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)

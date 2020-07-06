@@ -5,19 +5,21 @@
     </div>
   <% end %>
 
-  <%= label f, :label %>
-  <%= text_input f, :label %>
+<div class="field">
+  <%= label f, :label, class: :label %>
+  <%= text_input f, :label, class: :input %>
   <%= error_tag f, :label %>
+</div>
 
-  <%= label f, :link %>
-  <%= text_input f, :link %>
+<div class="field">
+  <%= label f, :link, class: :label %>
+  <%= text_input f, :link, class: :input %>
   <%= error_tag f, :link %>
-
-  <%= label f, :category %>
-  <%= text_input f, :category %>
-  <%= error_tag f, :category %>
+</div>
+  <%= hidden_input f, :category %>
+  <%= hidden_input f, :book_id %>
 
   <div>
-    <%= submit "Save" %>
+    <%= submit "Save", class: "button is-link" %>
   </div>
 <% end %>

@@ -1,10 +1,15 @@
-<article class="tile is-child notification is-primary">
-    <p class="title"><%= @label %></p>
-    <div class="content">
-        <ul>
-            <%= for resource <- get_category_links(@book.resources, @category) do %>
-                <li><a href="<%= resource.link %>"><%= resource.label %></a></li>
-            <% end %>
-        </ul>
-    </div>
-</article>
+<nav class="panel">
+    <p class="panel-heading">
+        <%= @label %>
+        <a href="<%= Routes.resource_path(@conn, :new_for_book, @book.id, @category) %>" class="is-pulled-right">Add</a>
+    </p>
+
+    <%= for resource <- get_category_links(@book.resources, @category) do %>
+    <a href="<%= resource.link %>" class="panel-block is-active">
+        <span class="panel-icon">
+          <i class="fas fa-book" aria-hidden="true"></i>
+        </span>
+            <%= resource.label %>
+        </a>
+    <% end %>
+</nav>

@@ -16,7 +16,7 @@ defmodule Scrupulous.StaticContent.Resource do
   @doc false
   def changeset(resource, attrs) do
     resource
-    |> cast(attrs, [:label, :link, :category])
+    |> cast(attrs, [:label, :link, :category, :book_id])
     |> validate_required([:label, :link, :category])
   end
 end

@@ -1,6 +1,18 @@
 /* This file is for your main application css. */
 @import "./bulma.css";
 
+.nav-black {
+    background-color: #363636;
+    width: 100%;
+}
+
+.white-text {
+ color: white;
+}
+
+a.white-text:hover {
+    color: #3273dc;
+}
 
 .spacer {
     height: 15px;

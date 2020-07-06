@@ -10,8 +10,7 @@
   </head>
   <body>
     <header>
-      <section class="container">
-      </section>
+      <%= render("navbar.html") %>
     </header>
     <main role="main" class="container">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
