@@ -16,6 +16,7 @@ defmodule ScrupulousWeb.Router do
   scope "/", ScrupulousWeb do
     pipe_through :browser
     resources "/books", BookController
+    resources "/resources", ResourceController
 
     get "/", PageController, :index
     get "/book/:book", PageController, :book_overview

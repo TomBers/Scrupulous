@@ -1,13 +1,27 @@
-<h1 class="title"><%= @book.title %></h1>
-<h2 class="subtitle"><%= @book.author %></h2>
-<h2 class="subtitle"><%= @book.publication_year %></h2>
-<a href="/book/<%= @book.id %>/page/0">Read now</a>
+<div class="container">
+    <div class="columns">
+        <div class="column is-three-quarters">
+            <h1 class="title"><%= @book.title %>, <%= @book.publication_year %></h1>
+            <h2 class="subtitle"><%= @book.author %></h2>
+        </div>
+        <div class="column">
+            <a href="/book/<%= @book.id %>/page/0"><button class="button is-large is-fullwidth">Read Now</button></a>
+        </div>
+    </div>
 
-<h1>Notes: </h1>
-<div class="content">
-<ul>
-<%= for note <- @book.notes do %>
-<li><%= note.note %> <a href="/book/<%= @book.id %>/page/<%= div(note.end_line, 50) %>">Link</a></li>
-<% end %>
-</ul>
+
+    <div class="tile is-parent is-vertical">
+        <%= render("resource_snippet.html", book: @book, label: "Buy links", category: "BUY") %>
+        <%= render("resource_snippet.html", book: @book, label: "Critique", category: "CRITIQUE") %>
+        <%= render("resource_snippet.html", book: @book, label: "Discuss", category: "DISCUSS") %>
+    </div>
 </div>
+
+<div class="content">
+    <ol>
+        <%= for note <- @book.notes do %>
+            <li><%= note.note %> <a href="/book/<%= @book.id %>/page/<%= div(note.end_line, 50) %>">Link</a></li>
+        <% end %>
+    </ol>
+</div>
+

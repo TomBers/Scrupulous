@@ -1,0 +1,23 @@
+<h1>Show Resource</h1>
+
+<ul>
+
+  <li>
+    <strong>Label:</strong>
+    <%= @resource.label %>
+  </li>
+
+  <li>
+    <strong>Link:</strong>
+    <%= @resource.link %>
+  </li>
+
+  <li>
+    <strong>Category:</strong>
+    <%= @resource.category %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.resource_path(@conn, :edit, @resource) %></span>
+<span><%= link "Back", to: Routes.resource_path(@conn, :index) %></span>

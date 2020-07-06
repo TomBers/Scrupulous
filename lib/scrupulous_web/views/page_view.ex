@@ -10,4 +10,9 @@ defmodule ScrupulousWeb.PageView do
     notes
     |> Enum.filter(fn(note) -> line >= note.start_line and line <= note.end_line end)
   end
+
+  def get_category_links(resources, category) do
+    resources
+    |> Enum.filter(fn(resource) -> resource.category == category end)
+  end
 end

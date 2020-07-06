@@ -1,0 +1,10 @@
+<article class="tile is-child notification is-primary">
+    <p class="title"><%= @label %></p>
+    <div class="content">
+        <ul>
+            <%= for resource <- get_category_links(@book.resources, @category) do %>
+                <li><a href="<%= resource.link %>"><%= resource.label %></a></li>
+            <% end %>
+        </ul>
+    </div>
+</article>

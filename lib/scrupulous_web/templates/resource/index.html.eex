@@ -1,0 +1,30 @@
+<h1>Listing Resources</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Label</th>
+      <th>Link</th>
+      <th>Category</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for resource <- @resources do %>
+    <tr>
+      <td><%= resource.label %></td>
+      <td><%= resource.link %></td>
+      <td><%= resource.category %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.resource_path(@conn, :show, resource) %></span>
+        <span><%= link "Edit", to: Routes.resource_path(@conn, :edit, resource) %></span>
+        <span><%= link "Delete", to: Routes.resource_path(@conn, :delete, resource), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Resource", to: Routes.resource_path(@conn, :new) %></span>
