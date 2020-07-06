@@ -6,16 +6,17 @@
   <% end %>
 
 <div class="field">
-  <%= label f, :label, class: :label %>
+  <%= label f, "URL", class: :label %>
+  <%= text_input f, :link, class: :input %>
+  <%= error_tag f, :link %>
+</div>
+
+<div class="field">
+  <%= label f, "Label (simple description)", class: :label %>
   <%= text_input f, :label, class: :input %>
   <%= error_tag f, :label %>
 </div>
 
-<div class="field">
-  <%= label f, :link, class: :label %>
-  <%= text_input f, :link, class: :input %>
-  <%= error_tag f, :link %>
-</div>
   <%= hidden_input f, :category %>
   <%= hidden_input f, :book_id %>
 

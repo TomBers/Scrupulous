@@ -1,13 +1,13 @@
 <nav class="panel">
     <p class="panel-heading">
         <%= @label %>
-        <a href="<%= Routes.resource_path(@conn, :new_for_book, @book.id, @category) %>" class="is-pulled-right">Add</a>
+        <a href="<%= Routes.resource_path(@conn, :new_for_book, @book.id, @category) %>" class="is-pulled-right"><i class="far fa-plus-square"></i></a>
     </p>
 
     <%= for resource <- get_category_links(@book.resources, @category) do %>
     <a href="<%= resource.link %>" class="panel-block is-active">
         <span class="panel-icon">
-          <i class="fas fa-book" aria-hidden="true"></i>
+          <i class="fas <%= @icon %>" aria-hidden="true"></i>
         </span>
             <%= resource.label %>
         </a>

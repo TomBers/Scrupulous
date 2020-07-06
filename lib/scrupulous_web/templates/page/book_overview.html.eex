@@ -9,11 +9,10 @@
         </div>
     </div>
 
-
     <div class="tile is-parent is-vertical">
-        <%= render("resource_snippet.html", conn: @conn, book: @book, label: "Where to buy", category: "BUY") %>
-        <%= render("resource_snippet.html", conn: @conn, book: @book, label: "Critiques", category: "CRITIQUE") %>
-        <%= render("resource_snippet.html", conn: @conn, book: @book, label: "Discussions", category: "DISCUSS") %>
+        <%= render("resource_snippet.html", conn: @conn, book: @book, label: "Where to buy", category: "BUY", icon: "fa-shopping-cart") %>
+        <%= render("resource_snippet.html", conn: @conn, book: @book, label: "Critiques", category: "CRITIQUE", icon: "fa-chalkboard-teacher") %>
+        <%= render("resource_snippet.html", conn: @conn, book: @book, label: "Discussions", category: "DISCUSS", icon: "fa-comments") %>
     </div>
 </div>
 
