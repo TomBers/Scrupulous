@@ -6,6 +6,7 @@
         </div>
         <div class="column">
             <a href="/book/<%= @book.id %>/page/0"><button class="button is-large is-fullwidth">Read Now</button></a>
+            <a href="/graph/<%= @book.id %>"><button class="button is-large is-fullwidth">Related Books</button></a>
         </div>
     </div>
 
