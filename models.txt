@@ -6,6 +6,13 @@ mix phx.gen.json UserContent Note notes book:references:books start_line:integer
 
 mix phx.gen.html StaticContent Book books title:string author:string country:string publication_year:integer file_name:string
 
+
 mix phx.gen.html StaticContent Resource resources book_id:references:books label:string link:text category:string
 
 %{title: "Eugene Onegin", author: "Alexander Pushkin", country: "Russia", publication_year: 1832},
+
+mix phx.gen.json UserContent Edge edges source_id:references:books target_id:references:books label:string
+
+
+%{source_id: 1, target_id: 2, label: "test"}
+

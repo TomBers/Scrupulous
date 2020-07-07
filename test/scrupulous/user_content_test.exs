@@ -130,4 +130,63 @@ defmodule Scrupulous.UserContentTest do
       assert %Ecto.Changeset{} = UserContent.change_note(note)
     end
   end
+
+  describe "edges" do
+    alias Scrupulous.UserContent.Edge
+
+    @valid_attrs %{label: "some label"}
+    @update_attrs %{label: "some updated label"}
+    @invalid_attrs %{label: nil}
+
+    def edge_fixture(attrs \\ %{}) do
+      {:ok, edge} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> UserContent.create_edge()
+
+      edge
+    end
+
+    test "list_edges/0 returns all edges" do
+      edge = edge_fixture()
+      assert UserContent.list_edges() == [edge]
+    end
+
+    test "get_edge!/1 returns the edge with given id" do
+      edge = edge_fixture()
+      assert UserContent.get_edge!(edge.id) == edge
+    end
+
+    test "create_edge/1 with valid data creates a edge" do
+      assert {:ok, %Edge{} = edge} = UserContent.create_edge(@valid_attrs)
+      assert edge.label == "some label"
+    end
+
+    test "create_edge/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = UserContent.create_edge(@invalid_attrs)
+    end
+
+    test "update_edge/2 with valid data updates the edge" do
+      edge = edge_fixture()
+      assert {:ok, %Edge{} = edge} = UserContent.update_edge(edge, @update_attrs)
+      assert edge.label == "some updated label"
+    end
+
+    test "update_edge/2 with invalid data returns error changeset" do
+      edge = edge_fixture()
+      assert {:error, %Ecto.Changeset{}} = UserContent.update_edge(edge, @invalid_attrs)
+      assert edge == UserContent.get_edge!(edge.id)
+    end
+
+    test "delete_edge/1 deletes the edge" do
+      edge = edge_fixture()
+      assert {:ok, %Edge{}} = UserContent.delete_edge(edge)
+      assert_raise Ecto.NoResultsError, fn -> UserContent.get_edge!(edge.id) end
+    end
+
+    test "change_edge/1 returns a edge changeset" do
+      edge = edge_fixture()
+      assert %Ecto.Changeset{} = UserContent.change_edge(edge)
+    end
+  end
 end

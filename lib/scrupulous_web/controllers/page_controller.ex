@@ -37,6 +37,11 @@ defmodule ScrupulousWeb.PageController do
     render(conn, "graph.html", nodes: nodes, edges: edges)
   end
 
+  def usergraph(conn, %{"book" => book}) do
+    { nodes, edges } = Scrupulous.UserGraph.graph_topic(book)
+    render(conn, "graph.html", nodes: nodes, edges: edges)
+  end
+
   def makedata(conn, _params) do
     SampleData.make_books()
     render(conn, "index.html")
