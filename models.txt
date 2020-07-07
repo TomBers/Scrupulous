@@ -14,6 +14,5 @@ mix phx.gen.html StaticContent Resource resources book_id:references:books label
 mix phx.gen.json UserContent Edge edges source_id:references:books target_id:references:books label:string
 
 
-
 %{source_id: 1, target_id: 2, label: "test"}
 

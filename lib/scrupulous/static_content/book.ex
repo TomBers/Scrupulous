@@ -4,6 +4,7 @@ defmodule Scrupulous.StaticContent.Book do
   alias Scrupulous.UserContent.Note
   alias Scrupulous.StaticContent.Resource
 
+
   schema "books" do
     field :author, :string
     field :country, :string
