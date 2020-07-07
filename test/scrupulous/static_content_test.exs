@@ -69,4 +69,67 @@ defmodule Scrupulous.StaticContentTest do
       assert %Ecto.Changeset{} = StaticContent.change_book(book)
     end
   end
+
+  describe "resources" do
+    alias Scrupulous.StaticContent.Resource
+
+    @valid_attrs %{category: "some category", label: "some label", link: "some link"}
+    @update_attrs %{category: "some updated category", label: "some updated label", link: "some updated link"}
+    @invalid_attrs %{category: nil, label: nil, link: nil}
+
+    def resource_fixture(attrs \\ %{}) do
+      {:ok, resource} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> StaticContent.create_resource()
+
+      resource
+    end
+
+    test "list_resources/0 returns all resources" do
+      resource = resource_fixture()
+      assert StaticContent.list_resources() == [resource]
+    end
+
+    test "get_resource!/1 returns the resource with given id" do
+      resource = resource_fixture()
+      assert StaticContent.get_resource!(resource.id) == resource
+    end
+
+    test "create_resource/1 with valid data creates a resource" do
+      assert {:ok, %Resource{} = resource} = StaticContent.create_resource(@valid_attrs)
+      assert resource.category == "some category"
+      assert resource.label == "some label"
+      assert resource.link == "some link"
+    end
+
+    test "create_resource/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = StaticContent.create_resource(@invalid_attrs)
+    end
+
+    test "update_resource/2 with valid data updates the resource" do
+      resource = resource_fixture()
+      assert {:ok, %Resource{} = resource} = StaticContent.update_resource(resource, @update_attrs)
+      assert resource.category == "some updated category"
+      assert resource.label == "some updated label"
+      assert resource.link == "some updated link"
+    end
+
+    test "update_resource/2 with invalid data returns error changeset" do
+      resource = resource_fixture()
+      assert {:error, %Ecto.Changeset{}} = StaticContent.update_resource(resource, @invalid_attrs)
+      assert resource == StaticContent.get_resource!(resource.id)
+    end
+
+    test "delete_resource/1 deletes the resource" do
+      resource = resource_fixture()
+      assert {:ok, %Resource{}} = StaticContent.delete_resource(resource)
+      assert_raise Ecto.NoResultsError, fn -> StaticContent.get_resource!(resource.id) end
+    end
+
+    test "change_resource/1 returns a resource changeset" do
+      resource = resource_fixture()
+      assert %Ecto.Changeset{} = StaticContent.change_resource(resource)
+    end
+  end
 end

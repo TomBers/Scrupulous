@@ -16,12 +16,15 @@ defmodule ScrupulousWeb.Router do
   scope "/", ScrupulousWeb do
     pipe_through :browser
     resources "/books", BookController
+    resources "/resources", ResourceController
 
     get "/", PageController, :index
     get "/book/:book", PageController, :book_overview
     get "/book/:book/page/:page", PageController, :book
+    get "/book/:book/resources/new/:category", ResourceController, :new_for_book
     get "/graph/", PageController, :graph
     get "/make/data", PageController, :makedata
+
   end
 
   # Other scopes may use custom stacks.

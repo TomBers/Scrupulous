@@ -1,0 +1,5 @@
+<div class="nav-black">
+        <span class="title white-text">Scrupulous</span>
+        <span><a class="white-text" href="/">Home</a></span>
+        <span><a class="white-text" href="/graph">Graph</a></span>
+</div>
