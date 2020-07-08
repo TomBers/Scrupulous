@@ -1,11 +1,13 @@
 <nav class="panel">
     <p class="panel-heading">
         <%= @label %>
-        <a href="<%= Routes.resource_path(@conn, :new_for_book, @book.id, @category) %>" class="is-pulled-right"><i class="far fa-plus-square"></i></a>
+        <%= if @user do %>
+            <a href="<%= Routes.resource_path(@conn, :new_for_book, @book.id, @category) %>" class="is-pulled-right"><i class="far fa-plus-square"></i></a>
+        <% end %>
     </p>
 
     <%= for resource <- get_category_links(@book.resources, @category) do %>
-    <a href="<%= resource.link %>" class="panel-block is-active">
+    <a href="<%= resource.link %>" class="panel-block is-active" target="_blank">
         <span class="panel-icon">
           <i class="fas <%= @icon %>" aria-hidden="true"></i>
         </span>

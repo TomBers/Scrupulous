@@ -9,6 +9,7 @@ defmodule Scrupulous.StaticContent.Resource do
     field :link, :string
 
     belongs_to :book, Book
+    belongs_to :user, User
 
     timestamps()
   end
@@ -16,7 +17,7 @@ defmodule Scrupulous.StaticContent.Resource do
   @doc false
   def changeset(resource, attrs) do
     resource
-    |> cast(attrs, [:label, :link, :category, :book_id])
+    |> cast(attrs, [:label, :link, :category, :book_id, :user_id])
     |> validate_required([:label, :link, :category])
   end
 end
