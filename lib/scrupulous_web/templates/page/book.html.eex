@@ -4,8 +4,9 @@
 
 <div class="field">
     <div class="control float-input">
-        <textarea id="note" class="textarea is-primary" placeholder="Add note"></textarea>
-        <button id="noteBtn" class="button is-primary">Add note</button>
+        <textarea id="note" class="textarea is-info" placeholder="Add note"></textarea>
+        <br>
+        <button id="noteBtn" class="button is-info">Add note</button>
     </div>
 </div>
 <%= for line <- @lines do %>
@@ -19,7 +20,7 @@
             <div class="noteTxt">
                 <ol>
                     <%= for note <- get_notes(line.line, @notes) do %>
-                        <li><%= note.note %></li>
+                        <li><%= note.user.email %> - <%= note.note %></li>
                     <% end %>
                 </ol>
             </div>

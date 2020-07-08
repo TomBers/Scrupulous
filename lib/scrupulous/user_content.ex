@@ -41,7 +41,8 @@ defmodule Scrupulous.UserContent do
   def get_notes_between_lines(book_id, start_line, end_line) do
     query =
       from note in Note,
-           where: note.book_id == ^"#{book_id}" and note.start_line >= ^start_line and note.end_line <= ^end_line
+           where: note.book_id == ^"#{book_id}" and note.start_line >= ^start_line and note.end_line <= ^end_line,
+           preload: [:user]
     Repo.all(query)
   end
 
