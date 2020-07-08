@@ -23,7 +23,7 @@
             <div class="noteTxt">
                 <ol>
                     <%= for note <- get_notes(line.line, @notes) do %>
-                        <li><%= note.inserted_at %> <%= note.user.email %> - <%= note.note %></li>
+                        <li><%= format_email(note.user.email) %> - <%= note.note %> <br> <%= note.inserted_at %> </li>
                     <% end %>
                 </ol>
             </div>

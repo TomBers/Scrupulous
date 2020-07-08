@@ -1,10 +1,4 @@
-Add Username to user model
-
-Make sure people can only add notes if logged in
-
 Show / Hide comment box??
-
-Show note with username and date of comment
 
 Add options to change font and size??
 
