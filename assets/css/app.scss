@@ -20,8 +20,8 @@ a.white-text:hover {
 
 .noteTxt {
     display: none;
-    position: absolute;
-    top: 10%;
+    position: fixed;
+    top: 20px;
     right: 0;
     width: 300px;
 }
