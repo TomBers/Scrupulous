@@ -138,4 +138,35 @@ defmodule SampleData do
     ]
   end
 
+
+  def make_resources do
+    resources()
+    |> MapSet.new()
+    |> MapSet.to_list()
+    |> Enum.map(fn(resource) -> StaticContent.create_resource(resource) end)
+  end
+
+  def resources do
+    [
+      %{user_id: 1, category: "BUY", book_id: 1, label: "Blackwells", link: "https://blackwells.co.uk/bookshop/product/9780140447958" },
+      %{user_id: 1, category: "BUY", book_id: 2, label: "Daunt Books", link: "https://dauntbooks.co.uk/shop/books/anna-karenina-2/" },
+      %{user_id: 1, category: "BUY", book_id: 3, label: "Daunt Books", link: "https://dauntbooks.co.uk/shop/books/war-and-peace/" },
+      %{user_id: 1, category: "BUY", book_id: 4, label: "Daunt Books", link: "https://dauntbooks.co.uk/shop/books/the-idiot-2/" },
+      %{user_id: 1, category: "BUY", book_id: 5, label: "Blackwells", link: "https://blackwells.co.uk/bookshop/product/Rudin-by-Turgenev-Ivan/9783732637331" },
+      %{user_id: 1, category: "BUY", book_id: 6, label: "Blackwells", link: "https://blackwells.co.uk/bookshop/product/The-Possessed-the-Devils-by-Fyodor-Dostoyevsky-author/9781419178283" },
+      %{user_id: 1, category: "BUY", book_id: 7, label: "Blackwells", link: "https://blackwells.co.uk/bookshop/product/Eugene-Onegin-by-Aleksandr-Sergeevich-Pushkin-Stanley-Mitchell/9780140448108" },
+      %{user_id: 1, category: "BUY", book_id: 8, label: "Daunt Books", link: "https://dauntbooks.co.uk/shop/books/the-brothers-karamazov/" },
+      %{user_id: 1, category: "BUY", book_id: 9, label: "Daunt Books", link: "https://dauntbooks.co.uk/shop/books/notes-from-underground/" },
+      %{user_id: 1, category: "BUY", book_id: 10, label: "Blackwells", link: "https://blackwells.co.uk/bookshop/product/The-Daughter-of-the-Commandant-by-Aleksandr-Sergeyevich-Pushkin-author/9781679909153" },
+      %{user_id: 1, category: "BUY", book_id: 11, label: "Blackwells", link: "https://blackwells.co.uk/bookshop/product/Fathers-and-Children-by-Ivan-Sergeevich-Turgenev-Michael-R-Katz/9780393927979" },
+      %{user_id: 1, category: "BUY", book_id: 12, label: "Blackwells", link: "https://blackwells.co.uk/bookshop/product/The-Turn-of-the-Screw-by-Henry-James-David-Bromwich/9780141441351" },
+      %{user_id: 1, category: "BUY", book_id: 13, label: "Blackwells", link: "https://blackwells.co.uk/bookshop/product/Pragmatism-A-New-Name-for-Some-Old-Ways-of-Thinking-by-James-William/9781374916548" },
+      %{user_id: 1, category: "BUY", book_id: 14, label: "Blackwells", link: "https://blackwells.co.uk/bookshop/product/Fifty-Famous-Stories-Retold-by-James-Baldwin/9781603862066" },
+      %{user_id: 1, category: "BUY", book_id: 15, label: "Blackwells", link: "https://blackwells.co.uk/bookshop/product/The-Adventures-of-Tom-Sawyer-by-Mark-Twain-Peter-Stoneley/9780199536566" },
+      %{user_id: 1, category: "BUY", book_id: 16, label: "Blackwells", link: "https://blackwells.co.uk/bookshop/product/Adventures-of-Huckleberry-Finn-by-Mark-Twain-Emory-Elliott/9780199536559" },
+      %{user_id: 1, category: "BUY", book_id: 17, label: "Blackwells", link: "https://blackwells.co.uk/bookshop/product/The-Big-Trip-Up-Yonder-by-Kurt-Vonnegut-Jr-author/9781535304481" },
+    ]
+  end
+
+
 end
