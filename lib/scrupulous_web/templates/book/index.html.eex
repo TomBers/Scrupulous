@@ -1,13 +1,12 @@
-<h1>Listing Books</h1>
+<h1 class="title">Listing Books</h1>
 
-<table>
+<table class="table is-striped is-fullwidth">
   <thead>
     <tr>
       <th>Title</th>
       <th>Author</th>
       <th>Country</th>
       <th>Publication year</th>
-      <th>File name</th>
 
       <th></th>
     </tr>
@@ -15,20 +14,12 @@
   <tbody>
 <%= for book <- @books do %>
     <tr>
-      <td><%= book.title %></td>
+      <td><%= link book.title, to: Routes.page_path(@conn, :book_overview, book) %></td>
       <td><%= book.author %></td>
       <td><%= book.country %></td>
       <td><%= book.publication_year %></td>
-      <td><%= book.file_name %></td>
-
-      <td>
-        <span><%= link "Show", to: Routes.book_path(@conn, :show, book) %></span>
-        <span><%= link "Edit", to: Routes.book_path(@conn, :edit, book) %></span>
-        <span><%= link "Delete", to: Routes.book_path(@conn, :delete, book), method: :delete, data: [confirm: "Are you sure?"] %></span>
-      </td>
+    </a>
     </tr>
 <% end %>
   </tbody>
 </table>
-
-<span><%= link "New Book", to: Routes.book_path(@conn, :new) %></span>
