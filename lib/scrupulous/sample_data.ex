@@ -1,5 +1,6 @@
 defmodule SampleData do
   alias Scrupulous.StaticContent
+  alias Scrupulous.UserContent
 
   def books do
     [
@@ -33,6 +34,108 @@ defmodule SampleData do
     slug_title = title |> String.downcase |> String.replace(" ", "-")
     slug_author = author |> String.downcase |> String.replace(" ", "-")
     "#{slug_title}_#{slug_author}"
+  end
+
+  def make_edges do
+    edges()
+    |> MapSet.new()
+    |> MapSet.to_list()
+    |> Enum.map(fn(edge) -> UserContent.create_edge(edge) end)
+  end
+
+  def edges do
+    [
+      %{source_id: 1, target_id: 5, label: "A Hero of Our Time"},
+      %{source_id: 1, target_id: 7, label: "A Hero of Our Time"},
+      %{source_id: 1, target_id: 10, label: "A Hero of Our Time"},
+      %{source_id: 1, target_id: 2, label: "A Hero of Our Time"},
+      %{source_id: 1, target_id: 3, label: "A Hero of Our Time"},
+      %{source_id: 1, target_id: 4, label: "A Hero of Our Time"},
+      %{source_id: 1, target_id: 6, label: "A Hero of Our Time"},
+      %{source_id: 1, target_id: 8, label: "A Hero of Our Time"},
+      %{source_id: 1, target_id: 9, label: "A Hero of Our Time"},
+      %{source_id: 1, target_id: 11, label: "A Hero of Our Time"},
+      %{source_id: 2, target_id: 3, label: "Anna Karenina"},
+      %{source_id: 2, target_id: 4, label: "Anna Karenina"},
+      %{source_id: 2, target_id: 6, label: "Anna Karenina"},
+      %{source_id: 2, target_id: 8, label: "Anna Karenina"},
+      %{source_id: 2, target_id: 15, label: "Anna Karenina"},
+      %{source_id: 2, target_id: 16, label: "Anna Karenina"},
+      %{source_id: 2, target_id: 5, label: "Anna Karenina"},
+      %{source_id: 2, target_id: 7, label: "Anna Karenina"},
+      %{source_id: 2, target_id: 9, label: "Anna Karenina"},
+      %{source_id: 2, target_id: 10, label: "Anna Karenina"},
+      %{source_id: 2, target_id: 11, label: "Anna Karenina"},
+      %{source_id: 3, target_id: 4, label: "War and Peace"},
+      %{source_id: 3, target_id: 6, label: "War and Peace"},
+      %{source_id: 3, target_id: 9, label: "War and Peace"},
+      %{source_id: 3, target_id: 11, label: "War and Peace"},
+      %{source_id: 3, target_id: 5, label: "War and Peace"},
+      %{source_id: 3, target_id: 7, label: "War and Peace"},
+      %{source_id: 3, target_id: 8, label: "War and Peace"},
+      %{source_id: 3, target_id: 10, label: "War and Peace"},
+      %{source_id: 3, target_id: 11, label: "War and Peace"},
+      %{source_id: 4, target_id: 6, label: "The Idiot"},
+      %{source_id: 4, target_id: 8, label: "The Idiot"},
+      %{source_id: 4, target_id: 9, label: "The Idiot"},
+      %{source_id: 4, target_id: 15, label: "The Idiot"},
+      %{source_id: 4, target_id: 16, label: "The Idiot"},
+      %{source_id: 4, target_id: 5, label: "The Idiot"},
+      %{source_id: 4, target_id: 7, label: "The Idiot"},
+      %{source_id: 4, target_id: 10, label: "The Idiot"},
+      %{source_id: 4, target_id: 11, label: "The Idiot"},
+      %{source_id: 5, target_id: 7, label: "Rudin"},
+      %{source_id: 5, target_id: 10, label: "Rudin"},
+      %{source_id: 5, target_id: 6, label: "Rudin"},
+      %{source_id: 5, target_id: 7, label: "Rudin"},
+      %{source_id: 5, target_id: 8, label: "Rudin"},
+      %{source_id: 5, target_id: 9, label: "Rudin"},
+      %{source_id: 5, target_id: 11, label: "Rudin"},
+      %{source_id: 6, target_id: 8, label: "The Devils"},
+      %{source_id: 6, target_id: 9, label: "The Devils"},
+      %{source_id: 6, target_id: 11, label: "The Devils"},
+      %{source_id: 6, target_id: 15, label: "The Devils"},
+      %{source_id: 6, target_id: 7, label: "The Devils"},
+      %{source_id: 6, target_id: 10, label: "The Devils"},
+      %{source_id: 6, target_id: 8, label: "The Devils"},
+      %{source_id: 7, target_id: 10, label: "Eugene Onegin"},
+      %{source_id: 7, target_id: 8, label: "Eugene Onegin"},
+      %{source_id: 7, target_id: 9, label: "Eugene Onegin"},
+      %{source_id: 7, target_id: 11, label: "Eugene Onegin"},
+      %{source_id: 8, target_id: 15, label: "The Brothers Karamazov"},
+      %{source_id: 8, target_id: 16, label: "The Brothers Karamazov"},
+      %{source_id: 8, target_id: 9, label: "The Brothers Karamazov"},
+      %{source_id: 8, target_id: 10, label: "The Brothers Karamazov"},
+      %{source_id: 8, target_id: 11, label: "The Brothers Karamazov"},
+      %{source_id: 8, target_id: 9, label: "The Brothers Karamazov"},
+      %{source_id: 9, target_id: 11, label: "Notes from the Underground"},
+      %{source_id: 9, target_id: 10, label: "Notes from the Underground"},
+      %{source_id: 9, target_id: 11, label: "Notes from the Underground"},
+      %{source_id: 10, target_id: 11, label: "The Daughter of the Commandant"},
+      %{source_id: 10, target_id: 8, label: "The Daughter of the Commandant"},
+      %{source_id: 11, target_id: 10, label: "Fathers and Children"},
+      %{source_id: 11, target_id: 8, label: "Fathers and Children"},
+      %{source_id: 11, target_id: 10, label: "The Daughter of the Commandant"},
+      %{source_id: 12, target_id: 13, label: "The Turn of the Screw"},
+      %{source_id: 12, target_id: 14, label: "The Turn of the Screw"},
+      %{source_id: 12, target_id: 15, label: "The Turn of the Screw"},
+      %{source_id: 12, target_id: 16, label: "The Turn of the Screw"},
+      %{source_id: 12, target_id: 17, label: "The Turn of the Screw"},
+      %{source_id: 13, target_id: 14, label: "Pragmatism: A New Name for Some Old Ways of Thinking"},
+      %{source_id: 13, target_id: 15, label: "Pragmatism: A New Name for Some Old Ways of Thinking"},
+      %{source_id: 13, target_id: 16, label: "Pragmatism: A New Name for Some Old Ways of Thinking"},
+      %{source_id: 13, target_id: 17, label: "Pragmatism: A New Name for Some Old Ways of Thinking"},
+      %{source_id: 14, target_id: 15, label: "Fifty Famous Stories Retold"},
+      %{source_id: 14, target_id: 16, label: "Fifty Famous Stories Retold"},
+      %{source_id: 14, target_id: 17, label: "Fifty Famous Stories Retold"},
+      %{source_id: 15, target_id: 16, label: "The Adventures of Tom Sawyer"},
+      %{source_id: 15, target_id: 17, label: "The Adventures of Tom Sawyer"},
+      %{source_id: 15, target_id: 16, label: "The Adventures of Tom Sawyer"},
+      %{source_id: 16, target_id: 17, label: "Adventures of Huckleberry Finn"},
+      %{source_id: 16, target_id: 15, label: "Adventures of Huckleberry Finn"},
+      %{source_id: 17, target_id: 15, label: "The big trip up Yonder"},
+      %{source_id: 17, target_id: 16, label: "The big trip up Yonder"},
+    ]
   end
 
 end
