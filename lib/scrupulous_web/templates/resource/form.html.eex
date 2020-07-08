@@ -19,6 +19,7 @@
 
   <%= hidden_input f, :category %>
   <%= hidden_input f, :book_id %>
+  <%= hidden_input f, :user_id %>
 
   <div>
     <%= submit "Save", class: "button is-link" %>

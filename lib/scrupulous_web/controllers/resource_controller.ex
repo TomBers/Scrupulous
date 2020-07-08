@@ -15,7 +15,13 @@ defmodule ScrupulousWeb.ResourceController do
   end
 
   def new_for_book(conn, %{"book" => book_id, "category" => category}) do
-    changeset = StaticContent.change_resource(%Resource{book_id: book_id, category: category})
+    current_user = Map.get(conn.assigns, :current_user)
+    user_id = if current_user do
+      current_user.id
+    else
+      nil
+    end
+    changeset = StaticContent.change_resource(%Resource{book_id: book_id, category: category, user_id: user_id})
     render(conn, "new.html", changeset: changeset, book_id: book_id)
   end
 

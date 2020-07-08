@@ -1,5 +1,15 @@
 <div class="nav-black">
-        <span class="title white-text">Scrupulous</span>
-        <span><a class="white-text" href="/">Home</a></span>
-        <span><a class="white-text" href="/graph">Graph</a></span>
+    <span class="title white-text">Scrupulous</span>
+    <span><a class="white-text" href="/">Home</a></span>
+    <span><a class="white-text" href="/graph">Graph</a></span>
+
+    <%= if @current_user do %>
+    <span class="is-pulled-right white-text"><%= @current_user.email %> </span>
+    <span class="is-pulled-right"><%= link "Settings", to: Routes.user_settings_path(@conn, :edit) %> | </span>
+    <span class="is-pulled-right"><%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete %> | </span>
+    <% else %>
+    <span class="is-pulled-right"><%= link "Register", to: Routes.user_registration_path(@conn, :new) %></span>
+    <span class="is-pulled-right"><%= link "Log in", to: Routes.user_session_path(@conn, :new) %> | </span>
+    <% end %>
+
 </div>

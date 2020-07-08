@@ -11,9 +11,9 @@
     </div>
 
     <div class="tile is-parent is-vertical">
-        <%= render("resource_snippet.html", conn: @conn, book: @book, label: "Where to buy", category: "BUY", icon: "fa-shopping-cart") %>
-        <%= render("resource_snippet.html", conn: @conn, book: @book, label: "Critiques", category: "CRITIQUE", icon: "fa-chalkboard-teacher") %>
-        <%= render("resource_snippet.html", conn: @conn, book: @book, label: "Discussions", category: "DISCUSS", icon: "fa-comments") %>
+        <%= render("resource_snippet.html", conn: @conn, book: @book, label: "Where to buy", category: "BUY", icon: "fa-shopping-cart", user: @current_user) %>
+        <%= render("resource_snippet.html", conn: @conn, book: @book, label: "Critiques", category: "CRITIQUE", icon: "fa-chalkboard-teacher", user: @current_user) %>
+        <%= render("resource_snippet.html", conn: @conn, book: @book, label: "Discussions", category: "DISCUSS", icon: "fa-comments", user: @current_user) %>
     </div>
 </div>
 
