@@ -27,13 +27,12 @@ a.white-text:hover {
     font-style: italic;
 }
 
-
-.note {
+.note.activeIcon {
     color: #3273dc;
 }
 
-.line:hover {
-    // background-color: #a8d1ff;
+.note {
+    color: #a8d1ff;
 }
 
 .line.selected span {
