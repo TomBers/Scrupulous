@@ -21,15 +21,12 @@ a.white-text:hover {
 .noteTxt {
     display: none;
     position: fixed;
-    top: 20px;
+    top: 5%;
     right: 0;
     width: 300px;
-}
-
-.note:hover + .noteTxt {
-    display: block;
     font-style: italic;
 }
+
 
 .note {
     color: #3273dc;

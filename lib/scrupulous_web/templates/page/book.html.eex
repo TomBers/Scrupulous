@@ -10,7 +10,7 @@
             <button id="noteBtn" class="button is-info">Add note</button>
         </div>
     </div>
-<%= end %>
+<% end %>
 
 <%= for line <- @lines do %>
     <%= if line.txt == "\n" do %>
@@ -19,8 +19,8 @@
     <div class="line" id="<%= line.line %>">
         <span id="<%= line.line %>"><%= line.txt %></span>
         <%= if has_note(line.line, @notes) do %>
-            <span class="note">Notes</span>
-            <div class="noteTxt">
+            <span class="note" onclick="showNote('NOTE_<%= line.line %>');">Notes</span>
+            <div class="noteTxt" id="NOTE_<%= line.line %>">
                 <ol>
                     <%= for note <- get_notes(line.line, @notes) do %>
                         <li><%= format_email(note.user.email) %> - <%= note.note %> <br> <%= note.inserted_at %> </li>
@@ -39,6 +39,13 @@
     var startLine;
     var endLine;
     var noteElement = document.getElementById("note")
+
+    function showNote(noteId) {
+        var allNotes = document.getElementsByClassName('noteTxt');
+        Array.from(allNotes).forEach(openNote => openNote.style.display = 'none');
+        var note = document.getElementById(noteId);
+        note.style.display = 'block';
+    }
 
     document.addEventListener('selectionchange', () => {
     var select = document.getSelection();
