@@ -15,4 +15,11 @@ defmodule ScrupulousWeb.PageView do
     resources
     |> Enum.filter(fn(resource) -> resource.category == category end)
   end
+
+  def format_email(email) do
+    email
+    |> String.split("@")
+    |> List.first
+  end
+
 end
