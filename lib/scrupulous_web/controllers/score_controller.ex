@@ -5,7 +5,6 @@ defmodule ScrupulousWeb.ScoreController do
   def score_board(conn, _params) do
     notes = ScoreQueries.user_notes()
     skruples = ScoreQueries.skruples()
-
     scores = filter_notes_and_skruples(notes, skruples) |> Enum.sort_by(&(&1.score), &>=/2)
 
     render(conn, "score_board.html", scores: scores)
