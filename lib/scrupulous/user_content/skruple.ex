@@ -4,7 +4,8 @@ defmodule Scrupulous.UserContent.Skruple do
 
   schema "skruples" do
     field :note_id, :id
-    field :user_id, :id
+
+    belongs_to :user, Scrupulous.Accounts.User
 
     timestamps()
   end

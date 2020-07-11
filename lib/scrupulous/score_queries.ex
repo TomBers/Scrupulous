@@ -14,8 +14,9 @@ defmodule ScoreQueries do
   def skruples() do
     query =
       from s in Skruple,
-      select: %{user_id: s.user_id, count: count(s.id)},
-      group_by: s.user_id
+      join: u in assoc(s, :user),
+      select: %{user: u, count: count(s.id)},
+      group_by: u.id
     Repo.all(query)
   end
 

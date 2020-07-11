@@ -1,7 +1,5 @@
 MUST:
 
-Add Username to scoring boards
-
 Points for suggesting a resource??
 
 Nice to have:

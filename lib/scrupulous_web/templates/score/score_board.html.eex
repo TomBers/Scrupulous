@@ -13,7 +13,7 @@
     <tbody>
     <%= for score <- @scores do %>
     <tr>
-        <td><%= score.user_id %></td>
+        <td><a href="/scores/<%= score.user_id %>"><%= format_email(score.user_name) %></a></td>
         <td><%= score.note_count %></td>
         <td><%= score.my_notes_scruples %></td>
         <td><%= score.my_skruples %></td>
