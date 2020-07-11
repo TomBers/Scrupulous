@@ -53,6 +53,14 @@ defmodule Scrupulous.UserContent do
     Repo.all(query)
   end
 
+  def get_notes_for_user(user_id) do
+    query =
+      from note in Note,
+           where: note.user_id == ^"#{user_id}",
+           preload: [:book, :skruples]
+    Repo.all(query)
+  end
+
 #  def get_notes_between_lines(book, start_line, end_line) do
 #    query =
 #      from note in Note,
@@ -267,6 +275,14 @@ defmodule Scrupulous.UserContent do
 
   """
   def get_skruple!(id), do: Repo.get!(Skruple, id)
+
+  def count_skruples_for_user(user_id) do
+    query =
+      from skruple in Skruple,
+           select: count(skruple.id),
+           where: skruple.user_id == ^"#{user_id}"
+    Repo.one(query)
+  end
 
   @doc """
   Creates a skruple.

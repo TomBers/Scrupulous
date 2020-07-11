@@ -1,0 +1,5 @@
+<h1 class="title">Total score : <%= @score %></h1>
+
+<%= for note <- @notes do %>
+    <div><%= note.book.title %> <%= note.note %> <%= length(note.skruples) %></div>
+<% end %>

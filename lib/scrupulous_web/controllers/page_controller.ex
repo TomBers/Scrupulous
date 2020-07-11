@@ -29,7 +29,6 @@ defmodule ScrupulousWeb.PageController do
       UserContent.get_notes_between_lines(book.id, start_line, end_line)
       |> Enum.sort_by(&(length(&1.skruples)), &>=/2)
 
-
     lines = FileStream.read_book(book.file_name, start_line, end_line)
 
     render(conn, "book.html", title: book.title, book_id: book.id, notes: notes, lines: lines, next_page: page + 1, previous_page: page - 1, user_id: user_id)
