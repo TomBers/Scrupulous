@@ -1,7 +1,8 @@
 <div class="nav-black">
     <span class="title white-text">Skrupulus</span>
     <span><a class="white-text" href="/">Home</a> | </span>
-    <span><a class="white-text" href="/books">List</a> | </span>
+    <span><a class="white-text" href="/books">Book List</a> | </span>
+    <span><a class="white-text" href="/scores">Contributors</a> | </span>
     <span><a class="white-text" href="/graph">Graph</a></span>
 
     <%= if @current_user do %>
