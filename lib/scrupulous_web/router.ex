@@ -37,6 +37,7 @@ defmodule ScrupulousWeb.Router do
 
      resources "/notes", NoteController, except: [:new, :edit]
      resources "/edges", EdgeController, except: [:new, :edit]
+     resources "/skruples", SkrupleController, except: [:new, :edit]
    end
 
   # Enables LiveDashboard only for development
