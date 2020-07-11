@@ -101,8 +101,6 @@
             });
     }
 
-
-
     document.addEventListener('selectionchange', () => {
     var select = document.getSelection();
     function getNodeID(node) {
