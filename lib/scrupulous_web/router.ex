@@ -1,6 +1,7 @@
 defmodule ScrupulousWeb.Router do
   use ScrupulousWeb, :router
 
+  import Phoenix.LiveView.Router
   import ScrupulousWeb.UserAuth
 
   pipeline :browser do
@@ -20,6 +21,8 @@ defmodule ScrupulousWeb.Router do
     pipe_through :browser
     resources "/books", BookController
     resources "/resources", ResourceController
+
+    live "/reader/:book/page/:page", BookReader
 
     get "/", PageController, :index
     get "/scores", ScoreController, :score_board
