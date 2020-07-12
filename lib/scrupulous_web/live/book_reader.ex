@@ -3,6 +3,7 @@ defmodule ScrupulousWeb.BookReader do
 
   alias Scrupulous.UserContent
   alias Scrupulous.StaticContent
+  alias Scrupulous.UserContent.Note
 
   def handle_params(%{"book" => book, "page" => pageStr}, _uri, socket) do
     {page, _rem} = Integer.parse(pageStr)
@@ -17,20 +18,34 @@ defmodule ScrupulousWeb.BookReader do
     lines = FileStream.read_book(book.file_name, start_line, end_line)
 
 
-    {:noreply, assign(socket, title: book.title, book_id: book.id, notes: notes, lines: lines, next_page: page + 1, previous_page: page - 1, user_id: 1)}
+    {:noreply, assign(socket, title: book.title, book_id: book.id, notes: notes, lines: lines, page: page)}
   end
 
-  def mount(_params, _session, socket) do
-    {:ok, socket}
+  def mount(_params, %{"user_token" => user_token}, socket) do
+    current_user = Scrupulous.Accounts.get_user_by_session_token(user_token)
+    {:ok, assign(socket, current_user: current_user)}
   end
 
 
+  def handle_event("add_note", %{"startLine" => start_line, "endLine" => end_line, "noteText" => note_text }, socket) do
+
+    new_note = %{start_line: start_line, end_line: end_line, note: note_text, user_id: socket.assigns.current_user.id, book_id: socket.assigns.book_id}
+    UserContent.create_note(new_note)
+    {:noreply, assign(socket, notes: get_updated_notes(socket))}
+  end
 
   def handle_event("add_skruple", %{"note" => note_id}, socket) do
-    IO.inspect(note_id)
-    {:noreply, socket}
+    new_skruple = %{note_id: note_id, user_id: socket.assigns.current_user.id}
+    UserContent.create_skruple(new_skruple)
+    {:noreply, assign(socket, notes: get_updated_notes(socket))}
   end
 
+
+  def get_updated_notes(socket) do
+    start_line = socket.assigns.page * 50
+    UserContent.get_notes_between_lines(socket.assigns.book_id, start_line, start_line + 50)
+    |> Enum.sort_by(&(length(&1.skruples)), &>=/2)
+  end
 
 #  Helper funcs
 

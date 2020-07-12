@@ -1,14 +1,19 @@
 <h1 class="title"><a href="/book/<%= @book_id %>"><%= @title %></a></h1>
 
-<a href="/reader/<%= @book_id %>/page/<%= @previous_page %>">Back</a> <a
-        href="/reader/<%= @book_id %>/page/<%= @next_page %>">Next</a>
+<a href="/reader/<%= @book_id %>/page/<%= @page - 1 %>">Back</a> <a
+        href="/reader/<%= @book_id %>/page/<%= @page + 1 %>">Next</a>
 
-<%= if true do %>
+<%= if @current_user do %>
 <div class="field">
     <div class="control float-input">
-        <textarea id="note" class="textarea is-info" placeholder="Add note"></textarea>
-        <br>
-        <button id="noteBtn" class="button is-info">Add note</button>
+        <form phx-submit="add_note">
+            <textarea id="note" class="textarea is-info" placeholder="Add note" onkeyup="setNoteText()"></textarea>
+            <br>
+            <input type="hidden" id="noteText" name="noteText" value="">
+            <input type="hidden" id="startLine" name="startLine" value="">
+            <input type="hidden" id="endLine" name="endLine" value="">
+            <input type="submit" id="noteBtn" class="button is-info" />
+        </form>
     </div>
 </div>
 <% end %>
@@ -36,7 +41,7 @@
             <br>
             Skruples <%= length(note.skruples) %>
             <br>
-            <%= if false do %>
+            <%= if have_skruped(@current_user, note.skruples) do %>
             <i class="fas fa-heart"></i>
             <% else %>
             <div phx-click="add_skruple" phx-value-note="<%= note.id %>"><i class="far fa-heart"></i></div>
@@ -50,22 +55,23 @@
 <% end %>
 
 
-<a href="/reader/<%= @book_id %>/page/<%= @previous_page %>">Back</a>
-<a href="/reader/<%= @book_id %>/page/<%= @next_page %>">Next</a>
+<a href="/reader/<%= @book_id %>/page/<%= @page - 1 %>">Back</a>
+<a href="/reader/<%= @book_id %>/page/<%= @page + 1 %>">Next</a>
 
 <script>
     var startLine;
     var endLine;
     var noteElement = document.getElementById("note")
+    var hiddenNoteElement = document.getElementById("noteText");
 
-    function addSkruple(userId, noteId) {
-          var data = {
-            skruple: {
-                user_id: userId,
-                note_id: noteId,
-            }
-          }
-        postRequest('/api/skruples', JSON.stringify(data));
+
+    function setNoteText() {
+        hiddenNoteElement.value = noteElement.value;
+    }
+
+    function setLineNumbers(start, end) {
+        document.getElementById("startLine").value = start;
+        document.getElementById("endLine").value = end;
     }
 
     function showNote(noteId, openNote) {
@@ -78,30 +84,9 @@
         if(openNote) {
             var note = document.getElementById(noteId);
             note.style.display = 'block';
-
-
             var icon = document.getElementById("" + noteId + "_icon");
             icon.classList.add("activeIcon");
         }
-    }
-
-    function postRequest(url, data) {
-          fetch(url, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: data,
-            })
-            .then(response => response.json())
-            .then(data => {
-              console.log('Success:', data);
-              noteElement.value = "";
-              alert('Note added, refresh page to see it');
-            })
-            .catch((error) => {
-              console.error('Error:', error);
-            });
     }
 
     document.addEventListener('selectionchange', () => {
@@ -122,6 +107,8 @@
         startLine = baseLine <= extentLine ? baseLine : extentLine;
         endLine = baseLine >= extentLine ? baseLine : extentLine;
 
+        setLineNumbers(startLine, endLine);
+
         noteElement.placeholder = "Add note from " + startLine + " to " + endLine;
 
         var elems = document.querySelectorAll("div.line");
@@ -133,28 +120,6 @@
                 el.classList.remove("selected");
             }
          });
-
     }
-
 });
-document.getElementById("noteBtn").addEventListener("click", function(){
-  var noteElement = document.getElementById("note")
-  var note = noteElement.value;
-  var data = {
-    note: {
-        user_id: '<%= @user_id %>',
-        book_id: '<%= @book_id %>',
-        note : note,
-        start_line: startLine,
-        end_line: endLine
-    }
-  }
-
-
-  postRequest('/api/notes', JSON.stringify(data));
-
-});
-
-
-
 </script>
