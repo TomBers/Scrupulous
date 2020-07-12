@@ -22,6 +22,8 @@ defmodule ScrupulousWeb.Router do
     resources "/resources", ResourceController
 
     get "/", PageController, :index
+    get "/scores", ScoreController, :score_board
+    get "/scores/:user", ScoreController, :user_score
     get "/book/:book", PageController, :book_overview
     get "/book/:book/page/:page", PageController, :book
     get "/book/:book/resources/new/:category", ResourceController, :new_for_book
@@ -37,6 +39,7 @@ defmodule ScrupulousWeb.Router do
 
      resources "/notes", NoteController, except: [:new, :edit]
      resources "/edges", EdgeController, except: [:new, :edit]
+     resources "/skruples", SkrupleController, except: [:new, :edit]
    end
 
   # Enables LiveDashboard only for development

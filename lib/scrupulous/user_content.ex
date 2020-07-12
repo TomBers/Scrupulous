@@ -42,7 +42,7 @@ defmodule Scrupulous.UserContent do
     query =
       from note in Note,
            where: note.book_id == ^"#{book_id}" and note.start_line >= ^start_line and note.end_line <= ^end_line,
-           preload: [:user]
+           preload: [:user, :skruples]
     Repo.all(query)
   end
 
@@ -50,6 +50,14 @@ defmodule Scrupulous.UserContent do
     query =
       from note in Note,
            where: note.book_id == ^"#{book_id}"
+    Repo.all(query)
+  end
+
+  def get_notes_for_user(user_id) do
+    query =
+      from note in Note,
+           where: note.user_id == ^"#{user_id}",
+           preload: [:book, :skruples]
     Repo.all(query)
   end
 
@@ -235,5 +243,109 @@ defmodule Scrupulous.UserContent do
   """
   def change_edge(%Edge{} = edge, attrs \\ %{}) do
     Edge.changeset(edge, attrs)
+  end
+
+  alias Scrupulous.UserContent.Skruple
+
+  @doc """
+  Returns the list of skruples.
+
+  ## Examples
+
+      iex> list_skruples()
+      [%Skruple{}, ...]
+
+  """
+  def list_skruples do
+    Repo.all(Skruple)
+  end
+
+  @doc """
+  Gets a single skruple.
+
+  Raises `Ecto.NoResultsError` if the Skruple does not exist.
+
+  ## Examples
+
+      iex> get_skruple!(123)
+      %Skruple{}
+
+      iex> get_skruple!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_skruple!(id), do: Repo.get!(Skruple, id)
+
+  def count_skruples_for_user(user_id) do
+    query =
+      from skruple in Skruple,
+           select: count(skruple.id),
+           where: skruple.user_id == ^"#{user_id}"
+    Repo.one(query)
+  end
+
+  @doc """
+  Creates a skruple.
+
+  ## Examples
+
+      iex> create_skruple(%{field: value})
+      {:ok, %Skruple{}}
+
+      iex> create_skruple(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_skruple(attrs \\ %{}) do
+    %Skruple{}
+    |> Skruple.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a skruple.
+
+  ## Examples
+
+      iex> update_skruple(skruple, %{field: new_value})
+      {:ok, %Skruple{}}
+
+      iex> update_skruple(skruple, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_skruple(%Skruple{} = skruple, attrs) do
+    skruple
+    |> Skruple.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a skruple.
+
+  ## Examples
+
+      iex> delete_skruple(skruple)
+      {:ok, %Skruple{}}
+
+      iex> delete_skruple(skruple)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_skruple(%Skruple{} = skruple) do
+    Repo.delete(skruple)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking skruple changes.
+
+  ## Examples
+
+      iex> change_skruple(skruple)
+      %Ecto.Changeset{data: %Skruple{}}
+
+  """
+  def change_skruple(%Skruple{} = skruple, attrs \\ %{}) do
+    Skruple.changeset(skruple, attrs)
   end
 end

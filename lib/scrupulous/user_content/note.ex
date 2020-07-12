@@ -3,6 +3,7 @@ defmodule Scrupulous.UserContent.Note do
   import Ecto.Changeset
   alias Scrupulous.StaticContent.Book
   alias Scrupulous.Accounts.User
+  alias Scrupulous.UserContent.Skruple
 
   schema "notes" do
     field :end_line, :integer
@@ -10,6 +11,8 @@ defmodule Scrupulous.UserContent.Note do
     field :start_line, :integer
     belongs_to :book, Book
     belongs_to :user, User
+
+    has_many :skruples, Skruple, on_delete: :delete_all
 
     timestamps()
   end

@@ -23,12 +23,23 @@
         <% end %>
     </div>
         <%= if has_note(line.line, @notes) do %>
-
         <div class="noteTxt" id="NOTE_<%= line.line %>">
             <span onclick="showNote('NOTE_<%= line.line %>', false);"><i class="far fa-times-circle"></i></span>
             <ol>
                 <%= for note <- get_notes(line.line, @notes) do %>
-                <li><%= format_email(note.user.email) %> - <%= note.note %> <br> <%= note.inserted_at %> </li>
+                    <div>
+                        <a href="/scores/<%= note.user_id %>"><%= format_email(note.user.email) %></a> - <%= note.note %>
+                        <br>
+                        <%= note.inserted_at %>
+                        <br>
+                        Skruples <%= length(note.skruples) %>
+                        <br>
+                        <%= if have_skruped(@current_user, note.skruples) do %>
+                            <i class="fas fa-heart"></i>
+                        <% else %>
+                            <span onclick="addSkruple(<%= @current_user.id %>, <%= note.id %>)"><i class="far fa-heart"></i></span>
+                        <% end %>
+                    </div>
                 <% end %>
             </ol>
         </div>
@@ -43,6 +54,16 @@
     var startLine;
     var endLine;
     var noteElement = document.getElementById("note")
+
+    function addSkruple(userId, noteId) {
+          var data = {
+            skruple: {
+                user_id: userId,
+                note_id: noteId,
+            }
+          }
+        postRequest('/api/skruples', JSON.stringify(data));
+    }
 
     function showNote(noteId, openNote) {
         var allNotes = document.getElementsByClassName('noteTxt');
@@ -59,6 +80,25 @@
             var icon = document.getElementById("" + noteId + "_icon");
             icon.classList.add("activeIcon");
         }
+    }
+
+    function postRequest(url, data) {
+          fetch(url, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: data,
+            })
+            .then(response => response.json())
+            .then(data => {
+              console.log('Success:', data);
+              noteElement.value = "";
+              alert('Note added, refresh page to see it');
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
     }
 
     document.addEventListener('selectionchange', () => {
@@ -107,23 +147,8 @@ document.getElementById("noteBtn").addEventListener("click", function(){
     }
   }
 
-  var body = JSON.stringify(data)
-  fetch('/api/notes', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: body,
-})
-.then(response => response.json())
-.then(data => {
-  console.log('Success:', data);
-  noteElement.value = "";
-  alert('Note added, refresh page to see it');
-})
-.catch((error) => {
-  console.error('Error:', error);
-});
+
+  postRequest('/api/notes', JSON.stringify(data));
 
 });
 </script>

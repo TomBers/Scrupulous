@@ -22,4 +22,9 @@ defmodule ScrupulousWeb.PageView do
     |> List.first
   end
 
+  def have_skruped(user, skruples) do
+    skruples
+    |> Enum.any?(fn(skruple) -> skruple.user_id == user.id end)
+  end
+
 end

@@ -1,0 +1,25 @@
+<h1 class="title">Scoreboard</h1>
+
+<table class="table is-striped is-fullwidth">
+    <thead>
+    <tr>
+        <th>User id</th>
+        <th>Number of notes</th>
+        <th>Number of liked notes</th>
+        <th>Number of notes liked</th>
+        <th>Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    <%= for score <- @scores do %>
+    <tr>
+        <td><a href="/scores/<%= score.user_id %>"><%= format_email(score.user_name) %></a></td>
+        <td><%= score.note_count %></td>
+        <td><%= score.my_notes_scruples %></td>
+        <td><%= score.my_skruples %></td>
+        <td><%= score.score %></td>
+        </a>
+    </tr>
+    <% end %>
+    </tbody>
+</table>

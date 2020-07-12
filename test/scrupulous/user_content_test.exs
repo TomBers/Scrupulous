@@ -189,4 +189,61 @@ defmodule Scrupulous.UserContentTest do
       assert %Ecto.Changeset{} = UserContent.change_edge(edge)
     end
   end
+
+  describe "skruples" do
+    alias Scrupulous.UserContent.Skruple
+
+    @valid_attrs %{}
+    @update_attrs %{}
+    @invalid_attrs %{}
+
+    def skruple_fixture(attrs \\ %{}) do
+      {:ok, skruple} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> UserContent.create_skruple()
+
+      skruple
+    end
+
+    test "list_skruples/0 returns all skruples" do
+      skruple = skruple_fixture()
+      assert UserContent.list_skruples() == [skruple]
+    end
+
+    test "get_skruple!/1 returns the skruple with given id" do
+      skruple = skruple_fixture()
+      assert UserContent.get_skruple!(skruple.id) == skruple
+    end
+
+    test "create_skruple/1 with valid data creates a skruple" do
+      assert {:ok, %Skruple{} = skruple} = UserContent.create_skruple(@valid_attrs)
+    end
+
+    test "create_skruple/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = UserContent.create_skruple(@invalid_attrs)
+    end
+
+    test "update_skruple/2 with valid data updates the skruple" do
+      skruple = skruple_fixture()
+      assert {:ok, %Skruple{} = skruple} = UserContent.update_skruple(skruple, @update_attrs)
+    end
+
+    test "update_skruple/2 with invalid data returns error changeset" do
+      skruple = skruple_fixture()
+      assert {:error, %Ecto.Changeset{}} = UserContent.update_skruple(skruple, @invalid_attrs)
+      assert skruple == UserContent.get_skruple!(skruple.id)
+    end
+
+    test "delete_skruple/1 deletes the skruple" do
+      skruple = skruple_fixture()
+      assert {:ok, %Skruple{}} = UserContent.delete_skruple(skruple)
+      assert_raise Ecto.NoResultsError, fn -> UserContent.get_skruple!(skruple.id) end
+    end
+
+    test "change_skruple/1 returns a skruple changeset" do
+      skruple = skruple_fixture()
+      assert %Ecto.Changeset{} = UserContent.change_skruple(skruple)
+    end
+  end
 end

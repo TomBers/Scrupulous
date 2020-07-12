@@ -1,0 +1,21 @@
+<h1 class="title">Total score : <%= @score %></h1>
+
+<table class="table is-striped is-fullwidth">
+    <thead>
+    <tr>
+        <th>Book</th>
+        <th>Note</th>
+        <th>Skruples</th>
+    </tr>
+    </thead>
+    <tbody>
+    <%= for note <- @notes do %>
+    <tr>
+        <td><%= note.book.title %></td>
+        <td><%= note.note %> <a href="/book/<%= note.book.id %>/page/<%= div(note.end_line, 50) %>">Link</a></td>
+        <td><%= length(note.skruples) %></td>
+    </tr>
+    <% end %>
+    </tbody>
+</table>
+
