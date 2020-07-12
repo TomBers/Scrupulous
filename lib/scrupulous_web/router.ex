@@ -22,7 +22,7 @@ defmodule ScrupulousWeb.Router do
     resources "/books", BookController
     resources "/resources", ResourceController
 
-    live "/reader/:book/page/:page", BookReader
+    live "/reader/:book/page/:page", BookReader, layout: {ScrupulousWeb.LayoutView, :app}
 
     get "/", PageController, :index
     get "/scores", ScoreController, :score_board
