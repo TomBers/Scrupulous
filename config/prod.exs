@@ -15,6 +15,7 @@ host = System.get_env("APP_HOSTNAME")
 config :scrupulous, ScrupulousWeb.Endpoint,
        http: [port: {:system, "PORT"}],
        url: [scheme: "https", host: host, port: 443],
+       force_ssl: [rewrite_on: [:x_forwarded_proto]],
        cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
