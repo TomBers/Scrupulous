@@ -18,7 +18,7 @@ defmodule ScrupulousWeb.BookReader do
     lines = FileStream.read_book(book.file_name, start_line, end_line)
 
 
-    {:noreply, assign(socket, title: book.title, book_id: book.id, notes: notes, lines: lines, page: page, open_note: nil)}
+    {:noreply, assign(socket, title: book.title, book_id: book.id, notes: notes, lines: lines, page: page, open_note: nil, show_note_form: false)}
   end
 
   def mount(_params, %{"user_token" => user_token}, socket) do
@@ -53,6 +53,10 @@ defmodule ScrupulousWeb.BookReader do
   def handle_event("close_note", _params, socket) do
     {:noreply, assign(socket, open_note: nil)}
   end
+
+#  def handle_event("showNoteForm", _params, socket) do
+#    {:noreply, assign(socket, show_note_form: !socket.assigns.show_note_form)}
+#  end
 
 
 

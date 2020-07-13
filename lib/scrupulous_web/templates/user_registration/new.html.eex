@@ -8,15 +8,15 @@
   <% end %>
 
   <%= label f, :email %>
-  <%= email_input f, :email, required: true %>
+  <%= email_input f, :email, required: true, class: "input" %>
   <%= error_tag f, :email %>
 
   <%= label f, :password %>
-  <%= password_input f, :password, required: true %>
+  <%= password_input f, :password, required: true, class: "input" %>
   <%= error_tag f, :password %>
 
   <div>
-    <%= submit "Register" %>
+    <%= submit "Register", class: "button" %>
   </div>
 <% end %>
 
