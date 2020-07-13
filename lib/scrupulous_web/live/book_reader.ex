@@ -41,10 +41,11 @@ defmodule ScrupulousWeb.BookReader do
   end
 
   def handle_event("open_note", %{"line-number" => line_number}, socket) do
-    open_note = if is_nil(socket.assigns.open_note) do
-      String.to_integer(line_number)
+    open_note =
+      if is_nil(socket.assigns.open_note) do
+        String.to_integer(line_number)
       else
-      nil
+        nil
     end
     {:noreply, assign(socket, open_note: open_note)}
   end
@@ -65,7 +66,6 @@ defmodule ScrupulousWeb.BookReader do
 #  Helper funcs
 
   def is_note_open(line, open_note) do
-    IO.inspect(line == open_note)
     line == open_note
   end
 
@@ -94,5 +94,14 @@ defmodule ScrupulousWeb.BookReader do
     skruples
     |> Enum.any?(fn(skruple) -> skruple.user_id == user.id end)
   end
+
+  def get_note_class(line, open_note) do
+    if is_note_open(line, open_note) do
+      "note activeIcon"
+    else
+      "note"
+    end
+  end
+
 
 end

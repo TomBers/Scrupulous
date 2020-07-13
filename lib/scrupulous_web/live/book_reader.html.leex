@@ -1,58 +1,70 @@
-<h1 class="title"><a href="/book/<%= @book_id %>"><%= @title %></a></h1>
+<div class="columns">
+    <div class="column is-two-thirds">
+        <h1 class="title"><a href="/book/<%= @book_id %>"><%= @title %></a></h1>
 
-<a href="/reader/<%= @book_id %>/page/<%= @page - 1 %>">Back</a> <a
-        href="/reader/<%= @book_id %>/page/<%= @page + 1 %>">Next</a>
-
-<%= if @current_user do %>
-<div class="field">
-    <div class="control float-input">
-        <form phx-submit="add_note">
-            <textarea id="note" class="textarea is-info" placeholder="Add note" onkeyup="setNoteText()"></textarea>
-            <br>
-            <input type="hidden" id="noteText" name="noteText" value="">
-            <input type="hidden" id="startLine" name="startLine" value="">
-            <input type="hidden" id="endLine" name="endLine" value="">
-            <input type="submit" id="noteBtn" class="button is-info" />
-        </form>
-    </div>
-</div>
-<% end %>
-
-<%= for line <- @lines do %>
-<%= if line.txt == "\n" do %>
-<div class="spacer"></div>
-<% else %>
-<div class="line" id="<%= line.line %>">
-    <span id="<%= line.line %>"><%= line.txt %></span>
-    <%= if has_note(line.line, @notes) do %>
-    <span class="note" id="NOTE_<%= line.line %>_icon" phx-click="open_note" phx-value-line-number="<%= line.line %>"><i
-            class="fas fa-sticky-note"></i></span>
-    <% end %>
-</div>
-<%= if has_note(line.line, @notes) and is_note_open(line.line, @open_note) do %>
-<div class="noteTxt" id="NOTE_<%= line.line %>">
-    <span phx-click="close_note"><i class="far fa-times-circle"></i></span>
-    <ol>
-        <%= for note <- get_notes(line.line, @notes) do %>
-        <div>
-            <a href="/scores/<%= note.user_id %>"><%= format_email(note.user.email) %></a> - <%= note.note %>
-            <br>
-            <%= note.inserted_at %>
-            <br>
-            Skruples <%= length(note.skruples) %>
-            <br>
-            <%= if have_skruped(@current_user, note.skruples) do %>
-                <i class="fas fa-heart"></i>
+        <a href="/reader/<%= @book_id %>/page/<%= @page - 1 %>">Back</a>
+        <a href="/reader/<%= @book_id %>/page/<%= @page + 1 %>">Next</a>
+        <%= for line <- @lines do %>
+            <%= if line.txt == "\n" do %>
+            <div class="spacer"></div>
             <% else %>
-                <div phx-click="add_skruple" phx-value-note="<%= note.id %>"><i class="far fa-heart"></i></div>
+            <div class="line" id="<%= line.line %>">
+                <span id="<%= line.line %>"><%= line.txt %></span>
+                <%= if has_note(line.line, @notes) do %>
+                <span class="<%= get_note_class(line.line, @open_note) %>" phx-click="open_note" phx-value-line-number="<%= line.line %>"><i class="fas fa-sticky-note"></i></span>
+                <% end %>
+            </div>
             <% end %>
+        <% end %>
+    </div>
+    <div class="column">
+        <%= for line <- @lines do %>
+            <%= if has_note(line.line, @notes) and is_note_open(line.line, @open_note) do %>
+            <div class="noteTxt" id="NOTE_<%= line.line %>">
+                <span phx-click="close_note"><i class="far fa-times-circle"></i></span>
+                <ol>
+                    <%= for note <- get_notes(line.line, @notes) do %>
+                    <div>
+                        <a href="/scores/<%= note.user_id %>"><%= format_email(note.user.email) %></a> - <%= note.note %>
+                        <br>
+                        <%= note.inserted_at %>
+                        <br>
+                        Skruples <%= length(note.skruples) %>
+                        <br>
+                        <%= if have_skruped(@current_user, note.skruples) do %>
+                        <i class="fas fa-heart"></i>
+                        <% else %>
+                        <div phx-click="add_skruple" phx-value-note="<%= note.id %>"><i class="far fa-heart"></i></div>
+                        <% end %>
+                    </div>
+                    <% end %>
+                </ol>
+            </div>
+            <% end %>
+        <% end %>
+
+        <%= if @current_user do %>
+        <div class="field">
+            <div class="control float-input">
+                <form phx-submit="add_note">
+                    <textarea id="note" class="textarea is-info" placeholder="Add note" onkeyup="setNoteText()"></textarea>
+                    <br>
+                    <input type="hidden" id="noteText" name="noteText" value="">
+                    <input type="hidden" id="startLine" name="startLine" value="">
+                    <input type="hidden" id="endLine" name="endLine" value="">
+                    <input type="submit" id="noteBtn" class="button is-info" />
+                </form>
+            </div>
         </div>
         <% end %>
-    </ol>
+    </div>
 </div>
-<% end %>
-<% end %>
-<% end %>
+
+
+
+
+
+
 
 
 <a href="/reader/<%= @book_id %>/page/<%= @page - 1 %>">Back</a>
@@ -82,21 +94,7 @@
         }
     }
 
-  document.addEventListener('selectionchange', () => {
-    var select = document.getSelection();
-
-    if (select.anchorNode.nodeName == "#text") {
-
-        baseLine = getNodeID(select.anchorNode);
-        extentLine = getNodeID(select.focusNode);
-
-        startLine = baseLine <= extentLine ? baseLine : extentLine;
-        endLine = baseLine >= extentLine ? baseLine : extentLine;
-
-        setLineNumbers(startLine, endLine);
-
-        noteElement.placeholder = "Add note from " + startLine + " to " + endLine;
-
+    function selectLines() {
         var elems = document.querySelectorAll("div.line");
 
         elems.forEach.call(elems, function(el) {
@@ -106,6 +104,21 @@
                 el.classList.remove("selected");
             }
          });
+    }
+
+  document.addEventListener('selectionchange', () => {
+    var select = document.getSelection();
+
+    if (select.anchorNode.nodeName == "#text") {
+        var baseLine = getNodeID(select.anchorNode);
+        var extentLine = getNodeID(select.focusNode);
+
+        startLine = baseLine <= extentLine ? baseLine : extentLine;
+        endLine = baseLine >= extentLine ? baseLine : extentLine;
+
+        setLineNumbers(startLine, endLine);
+        noteElement.placeholder = "Add note from " + startLine + " to " + endLine;
+        selectLines();
     }
 });
 </script>
