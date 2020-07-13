@@ -1,6 +1,7 @@
 defmodule ScrupulousWeb.Router do
   use ScrupulousWeb, :router
 
+  import Phoenix.LiveView.Router
   import ScrupulousWeb.UserAuth
 
   pipeline :browser do
@@ -21,6 +22,8 @@ defmodule ScrupulousWeb.Router do
     resources "/books", BookController
     resources "/resources", ResourceController
 
+    live "/reader/:book/page/:page", BookReader, layout: {ScrupulousWeb.LayoutView, :app}
+
     get "/", PageController, :index
     get "/scores", ScoreController, :score_board
     get "/scores/:user", ScoreController, :user_score
@@ -29,7 +32,7 @@ defmodule ScrupulousWeb.Router do
     get "/book/:book/resources/new/:category", ResourceController, :new_for_book
     get "/graph/", PageController, :graph
     get "/graph/:book", PageController, :usergraph
-    get "/make/data", PageController, :makedata
+    get "/make/data/:type", PageController, :makedata
 
   end
 

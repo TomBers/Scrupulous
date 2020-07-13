@@ -10,15 +10,15 @@
   <% end %>
 
   <%= label f, :email %>
-  <%= email_input f, :email, required: true %>
+  <%= email_input f, :email, required: true, class: "input" %>
   <%= error_tag f, :email %>
 
   <%= label f, :current_password, for: "current_password_for_email" %>
-  <%= password_input f, :current_password, required: true, name: "current_password", id: "current_password_for_email" %>
+  <%= password_input f, :current_password, required: true, name: "current_password", id: "current_password_for_email", class: "input" %>
   <%= error_tag f, :current_password %>
 
   <div>
-    <%= submit "Change e-mail" %>
+    <%= submit "Change e-mail", class: "button" %>
   </div>
 <% end %>
 
@@ -32,18 +32,18 @@
   <% end %>
 
   <%= label f, :password, "New password" %>
-  <%= password_input f, :password, required: true %>
+  <%= password_input f, :password, required: true, class: "input" %>
   <%= error_tag f, :password %>
 
   <%= label f, :password_confirmation, "Confirm new password" %>
-  <%= password_input f, :password_confirmation, required: true %>
+  <%= password_input f, :password_confirmation, required: true, class: "input" %>
   <%= error_tag f, :password_confirmation %>
 
   <%= label f, :current_password, for: "current_password_for_password" %>
-  <%= password_input f, :current_password, required: true, name: "current_password", id: "current_password_for_password" %>
+  <%= password_input f, :current_password, required: true, name: "current_password", id: "current_password_for_password", class: "input" %>
   <%= error_tag f, :current_password %>
 
   <div>
-    <%= submit "Change password" %>
+    <%= submit "Change password", class: "button" %>
   </div>
 <% end %>

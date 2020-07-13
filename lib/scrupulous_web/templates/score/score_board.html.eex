@@ -1,13 +1,13 @@
-<h1 class="title">Scoreboard</h1>
+<h1 class="title">Contributors</h1>
 
 <table class="table is-striped is-fullwidth">
     <thead>
     <tr>
-        <th>User id</th>
-        <th>Number of notes</th>
-        <th>Number of liked notes</th>
-        <th>Number of notes liked</th>
-        <th>Total</th>
+        <th>User</th>
+        <th>Notes</th>
+        <th>Skruples on their notes</th>
+        <th>Skruples handed out</th>
+        <th>Skruple score</th>
     </tr>
     </thead>
     <tbody>
