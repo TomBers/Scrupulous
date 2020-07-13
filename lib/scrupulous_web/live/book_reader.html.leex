@@ -31,10 +31,12 @@
                         <br>
                         Skruples <%= length(note.skruples) %>
                         <br>
-                        <%= if have_skruped(@current_user, note.skruples) do %>
-                            <i class="fas fa-heart"></i>
-                        <% else %>
-                            <div phx-click="add_skruple" phx-value-note="<%= note.id %>"><i class="far fa-heart"></i></div>
+                        <%= if @current_user do %>
+                            <%= if have_skruped(@current_user, note.skruples) do %>
+                                <i class="fas fa-heart"></i>
+                            <% else %>
+                                <div phx-click="add_skruple" phx-value-note="<%= note.id %>"><i class="far fa-heart"></i></div>
+                            <% end %>
                         <% end %>
                     </div>
                     <% end %>

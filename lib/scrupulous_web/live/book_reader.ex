@@ -17,13 +17,16 @@ defmodule ScrupulousWeb.BookReader do
 
     lines = FileStream.read_book(book.file_name, start_line, end_line)
 
-
     {:noreply, assign(socket, title: book.title, book_id: book.id, notes: notes, lines: lines, page: page, open_note: nil, show_note_form: false)}
   end
 
   def mount(_params, %{"user_token" => user_token}, socket) do
     current_user = Scrupulous.Accounts.get_user_by_session_token(user_token)
     {:ok, assign(socket, current_user: current_user)}
+  end
+
+  def mount(_params, _session, socket) do
+    {:ok, assign(socket, current_user: nil)}
   end
 
 
