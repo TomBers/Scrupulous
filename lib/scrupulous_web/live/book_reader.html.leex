@@ -1,9 +1,10 @@
 <div class="columns">
     <div class="column is-two-thirds">
-        <h1 class="title"><a href="/book/<%= @book_id %>"><%= @title %></a></h1>
+        <h1 class="subtitle"><%= @title %></h1>
 
-        <a href="/reader/<%= @book_id %>/page/<%= @page - 1 %>">Back</a>
-        <a href="/reader/<%= @book_id %>/page/<%= @page + 1 %>">Next</a>
+        <a href="/reader/<%= @book_id %>/page/<%= @page - 1 %>"><i class="fas fa-arrow-left bigIcon"></i></a>
+        <a href="/book/<%= @book_id %>"><i class="fas fa-info-circle bigIcon"></i></a>
+        <a href="/reader/<%= @book_id %>/page/<%= @page + 1 %>"><i class="fas fa-arrow-right bigIcon"></i></a>
         <%= for line <- @lines do %>
             <%= if line.txt == "\n" do %>
                 <div class="spacer"></div>
@@ -65,8 +66,9 @@
 </div>
 
 
-<a href="/reader/<%= @book_id %>/page/<%= @page - 1 %>">Back</a>
-<a href="/reader/<%= @book_id %>/page/<%= @page + 1 %>">Next</a>
+<a href="/reader/<%= @book_id %>/page/<%= @page - 1 %>"><i class="fas fa-arrow-left bigIcon"></i></a>
+<a href="/book/<%= @book_id %>"><i class="fas fa-info-circle bigIcon"></i></a>
+<a href="/reader/<%= @book_id %>/page/<%= @page + 1 %>"><i class="fas fa-arrow-right bigIcon"></i></a>
 
 <script>
     var startLine;
