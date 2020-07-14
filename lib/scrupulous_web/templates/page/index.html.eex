@@ -9,9 +9,11 @@
 <br>
 <p>Here are some books to get started</p>
 <div class="content">
-  <ul>
-    <li><a href="/book/9">Notes from the Underground</a></li>
-    <li><a href="/book/16">Adventures of Huckleberry Finn</a></li>
-    <li><a href="/book/3">War and Peace</a></li>
-  </ul>
+    <ul>
+        <li><a href="/book/9">Notes from the Underground</a></li>
+        <li><a href="/book/16">Adventures of Huckleberry Finn</a></li>
+        <li><a href="/book/3">War and Peace</a></li>
+    </ul>
 </div>
+
+<%= render("twitter_button.html", text: "BOB") %>
