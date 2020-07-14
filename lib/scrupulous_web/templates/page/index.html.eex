@@ -1,17 +1,19 @@
-<h1 class="title">Welcome to Skrupulus</h1>
-<p>This is a POC of a tool to map the relationships between and share notes</p>
-<p>The goal is to encourage a new way of seeing how literature relates to its context and other books, and to encourage a deeper commenting system than currently exists.</p>
+<h1 class="subtitle">Welcome to Skrupulus</h1>
+
+<p>A library for the future, browse books and share related resources</p>
+<p>Note tool allows everyone to share their notes with the world, highlighting the best</p>
+<p>Explores relations between books; visualising connections</p>
+
 
 <br>
 <br>
-<a href="/graph">See a sample graph</a>
-<br>
-<br>
-<p>Or some books to get started</p>
+<p>Here are some books to get started</p>
 <div class="content">
-  <ul>
-    <li><a href="/book/9">Notes from the Underground</a></li>
-    <li><a href="/book/16">Adventures of Huckleberry Finn</a></li>
-    <li><a href="/book/3">War and Peace</a></li>
-  </ul>
+    <ul>
+        <li><a href="/book/9">Notes from the Underground</a></li>
+        <li><a href="/book/16">Adventures of Huckleberry Finn</a></li>
+        <li><a href="/book/3">War and Peace</a></li>
+    </ul>
 </div>
+
+<%= render("twitter_button.html", text: "Read and share at https://skrupulus.com") %>

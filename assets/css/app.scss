@@ -1,6 +1,18 @@
 /* This file is for your main application css. */
 @import "./bulma.css";
 
+.logo {
+    font-size: x-large;
+}
+
+.notAlwaysVisible {
+    visibility: hidden;
+}
+
+.neverVisible {
+  visibility: hidden;
+}
+
 .nav-black {
     background-color: #363636;
     width: 100%;

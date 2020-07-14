@@ -1,17 +1,35 @@
-<div class="nav-black">
-    <span class="title white-text">Skrupulus</span>
-    <span><a class="white-text" href="/">Home</a> | </span>
-    <span><a class="white-text" href="/books">Book List</a> | </span>
-    <span><a class="white-text" href="/scores">Contributors</a> | </span>
-    <span><a class="white-text" href="/graph">Graph</a></span>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item logo" href="/">
+            <span class="logo">Skrupulus</span>
+        </a>
 
-    <%= if @current_user do %>
-    <span class="is-pulled-right white-text"><%= @current_user.email %> </span>
-    <span class="is-pulled-right"><%= link "Settings", to: Routes.user_settings_path(@conn, :edit) %> | </span>
-    <span class="is-pulled-right"><%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete %> | </span>
-    <% else %>
-    <span class="is-pulled-right"><%= link "Register", to: Routes.user_registration_path(@conn, :new) %></span>
-    <span class="is-pulled-right"><%= link "Log in", to: Routes.user_session_path(@conn, :new) %> | </span>
-    <% end %>
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarMenuContainer" id="navBurger">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
 
-</div>
+    <div id="navbarMenuContainer" class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item" href="/books">Book List</a>
+            <a class="navbar-item" href="/scores">Contributors</a>
+            <a class="navbar-item" href="/graph">Graph</a>
+        </div>
+
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <%= if @current_user do %>
+                        <%= link "Settings", to: Routes.user_settings_path(@conn, :edit), class: "button is-primary" %>
+                        <%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete, class: "button is-light" %>
+                    <% else %>
+                        <%= link "Register", to: Routes.user_registration_path(@conn, :new), class: "button is-primary" %>
+                        <%= link "Log in", to: Routes.user_session_path(@conn, :new), class: "button is-light" %>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

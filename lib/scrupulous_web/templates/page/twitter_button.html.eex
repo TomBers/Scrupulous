@@ -1,0 +1,10 @@
+<a class="button is-info" data-social-network="Twitter" data-social-action="tweet"
+   data-social-target="https://skrupulus.com" target="_blank"
+   href="https://twitter.com/intent/tweet?text=<%= @text %>">
+              <span class="icon">
+                   <i class="fab fa-twitter"></i>
+              </span>
+    <span>
+                Tweet
+              </span>
+</a>
