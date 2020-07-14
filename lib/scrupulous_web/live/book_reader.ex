@@ -57,6 +57,11 @@ defmodule ScrupulousWeb.BookReader do
     {:noreply, assign(socket, open_note: nil)}
   end
 
+  def handle_event("close_form", _params, socket) do
+    rand = Enum.random(1..10000)
+    {:noreply, assign(socket, show_note_form: rand)}
+  end
+
 #  def handle_event("showNoteForm", _params, socket) do
 #    {:noreply, assign(socket, show_note_form: !socket.assigns.show_note_form)}
 #  end

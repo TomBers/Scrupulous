@@ -48,15 +48,17 @@
         <%= if @current_user do %>
                 <div class="field">
                     <div class="control float-input">
+                        <span phx-click="close_form" class="notAlwaysVisible"><i class="far fa-times-circle"></i></span>
                         <form phx-submit="add_note">
-                            <textarea id="note" class="textarea is-info" placeholder="Add note" onkeyup="setNoteText()"></textarea>
+                            <textarea id="note" class="textarea is-info notAlwaysVisible" placeholder="Add note" onkeyup="setNoteText()"></textarea>
                             <br>
                             <input type="hidden" id="noteText" name="noteText" value="">
                             <input type="hidden" id="startLine" name="startLine" value="">
                             <input type="hidden" id="endLine" name="endLine" value="">
-                            <input type="submit" id="noteBtn" class="button is-info" />
+                            <input type="submit" id="noteBtn" class="button is-info notAlwaysVisible" />
                         </form>
                     </div>
+                    <span class="neverVisible"><%= @show_note_form %></span>
                 </div>
         <% end %>
     </div>
@@ -90,6 +92,13 @@
         }
     }
 
+    function showNoteForm() {
+        var elems = document.querySelectorAll(".notAlwaysVisible");
+        elems.forEach.call(elems, function(ele) {
+            ele.classList.remove("notAlwaysVisible");
+        });
+    }
+
     function selectLines() {
         var elems = document.querySelectorAll("div.line");
 
@@ -115,6 +124,7 @@
         setLineNumbers(startLine, endLine);
         noteElement.placeholder = "Add note from " + startLine + " to " + endLine;
         selectLines();
+        showNoteForm();
     }
 });
 </script>
