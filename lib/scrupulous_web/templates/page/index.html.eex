@@ -1,13 +1,13 @@
 <h1 class="title">Welcome to Skrupulus</h1>
-<p>This is a POC of a tool to map the relationships between and share notes</p>
-<p>The goal is to encourage a new way of seeing how literature relates to its context and other books, and to encourage a deeper commenting system than currently exists.</p>
+
+<p>A hub for books, bringing together the best resources in one place</p>
+<p>Note tool allows everyone to contribute to sharing their notes with the world and highlighting the best</p>
+<p>Explores relations between books; visualising connections</p>
+
 
 <br>
 <br>
-<a href="/graph">See a sample graph</a>
-<br>
-<br>
-<p>Or some books to get started</p>
+<p>Here are some books to get started</p>
 <div class="content">
   <ul>
     <li><a href="/book/9">Notes from the Underground</a></li>
