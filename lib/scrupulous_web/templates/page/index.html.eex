@@ -16,4 +16,4 @@
     </ul>
 </div>
 
-<%= render("twitter_button.html", text: "BOB") %>
+<%= render("twitter_button.html", text: "Read and share at https://skrupulus.com") %>
