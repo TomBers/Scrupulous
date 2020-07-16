@@ -3,7 +3,7 @@
 <script>
     var elements = [];
     <%= for node <- @nodes do %>
-        elements.push({data: {id: '<%= node.id %>', node_col: '<%= node.col %>', href: "/book/<%= node.book_id %>" }})
+        elements.push({data: {id: '<%= node.id %>', node_col: '<%= node.col %>', href: "/reader/<%= node.book_id %>" }})
     <% end %>
     <%= for edge <- @edges do %>
         elements.push({data: {id: '<%= edge.id %>', source: '<%= edge.source %>', target: '<%= edge.target %>', edge_col: '<%= edge.col %>', edge_width: '<%= edge.edge_width %>' }})

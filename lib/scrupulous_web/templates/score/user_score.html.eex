@@ -12,7 +12,7 @@
     <%= for note <- @notes do %>
     <tr>
         <td><%= note.book.title %></td>
-        <td><%= note.note %> <a href="/book/<%= note.book.id %>/page/<%= div(note.end_line, 50) %>">Link</a></td>
+        <td><%= note.note %> <a href="/book/<%= note.book.id %>/reader/<%= div(note.end_line, 50) %>">Link</a></td>
         <td><%= length(note.skruples) %></td>
     </tr>
     <% end %>
