@@ -25,8 +25,8 @@ defmodule ScrupulousWeb.Router do
     live "/reader/:book/page/:page", BookReader, layout: {ScrupulousWeb.LayoutView, :app}
 
     get "/", PageController, :index
-    get "/scores", ScoreController, :score_board
-    get "/scores/:user", ScoreController, :user_score
+    get "/contributors", ScoreController, :score_board
+    get "/contributors/:user", ScoreController, :user_score
     get "/book/:book", PageController, :book_overview
     get "/book/:book/resources/new/:category", ResourceController, :new_for_book
     get "/graph/", PageController, :graph

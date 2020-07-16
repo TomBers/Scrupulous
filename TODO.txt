@@ -1,8 +1,5 @@
 MUST:
 
-CHANGE Score page to point to /reader instead of /book
-
-CHANGE - make sure not minus page numbers
 
 Add - Bookmarks for books
 
