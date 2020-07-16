@@ -26,7 +26,7 @@
                 <ol>
                     <%= for note <- get_notes(line.line, @notes) do %>
                     <div>
-                        <a href="/scores/<%= note.user_id %>"><%= format_email(note.user.email) %></a> - <%= note.note %>
+                        <a href="/contributors/<%= note.user_id %>"><%= format_email(note.user.email) %></a> - <%= note.note %>
                         <br>
                         <%= note.inserted_at %>
                         <br>

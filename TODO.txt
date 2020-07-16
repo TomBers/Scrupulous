@@ -1,16 +1,8 @@
 MUST:
-
-
 Add - Bookmarks for books
-
-Think about data setup for live version:  Need to migrate edges and resources
-Issue - Resources needs a user that has been create!
-
 Points for suggesting a resource??
 
 Nice to have:
-
-Show / Hide comment box??
 
 Add options to change font and size??
 
