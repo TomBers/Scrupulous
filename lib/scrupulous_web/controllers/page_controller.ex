@@ -13,27 +13,6 @@ defmodule ScrupulousWeb.PageController do
     render(conn, "book_overview.html", book: book)
   end
 
-  def book(conn, %{"book" => book, "page" => pageStr}) do
-    current_user = Map.get(conn.assigns, :current_user)
-    user_id = if current_user do
-      current_user.id
-      else
-      nil
-    end
-    {page, _rem} = Integer.parse(pageStr)
-    start_line = page * 50
-    end_line = start_line + 50
-
-    book = StaticContent.get_book!(book)
-    notes =
-      UserContent.get_notes_between_lines(book.id, start_line, end_line)
-      |> Enum.sort_by(&(length(&1.skruples)), &>=/2)
-
-    lines = FileStream.read_book(book.file_name, start_line, end_line)
-
-    render(conn, "book.html", title: book.title, book_id: book.id, notes: notes, lines: lines, next_page: page + 1, previous_page: page - 1, user_id: user_id)
-  end
-
   def graph(conn, _params) do
     books = StaticContent.list_books()
     nodes = books
