@@ -17,12 +17,25 @@ defmodule ScrupulousWeb.BookReader do
 
     lines = FileStream.read_book(book.file_name, start_line, end_line)
 
-    {:noreply, assign(socket, title: book.title, book_id: book.id, notes: notes, lines: lines, page: page, open_note: nil, show_note_form: false)}
+    {:noreply, assign(socket, title: book.title, book_id: book.id, notes: notes, lines: lines, page: page, show_note_form: false)}
   end
 
-  def mount(_params, %{"user_token" => user_token}, socket) do
-    current_user = Scrupulous.Accounts.get_user_by_session_token(user_token)
-    {:ok, assign(socket, current_user: current_user)}
+  def mount(%{"book" => book, "page" => page, "note" => note_id}, %{"user_token" => user_token}, socket) do
+    if String.to_integer(page) >= 0 do
+      current_user = Scrupulous.Accounts.get_user_by_session_token(user_token)
+      {:ok, assign(socket, current_user: current_user, open_note: String.to_integer(note_id))}
+    else
+      {:ok, redirect(socket, to: "/reader/#{book}/page/0")}
+    end
+  end
+
+  def mount(%{"book" => book, "page" => page}, %{"user_token" => user_token}, socket) do
+    if String.to_integer(page) >= 0 do
+      current_user = Scrupulous.Accounts.get_user_by_session_token(user_token)
+      {:ok, assign(socket, current_user: current_user, open_note: nil)}
+    else
+      {:ok, redirect(socket, to: "/reader/#{book}/page/0")}
+    end
   end
 
   def mount(_params, _session, socket) do
