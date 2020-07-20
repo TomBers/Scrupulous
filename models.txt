@@ -17,3 +17,5 @@ mix phx.gen.json UserContent Edge edges source_id:references:books target_id:ref
 
 
 mix phx.gen.json UserContent Skruple skruples note_id:references:notes user_id:references:users
+
+mix phx.gen.html UserContent Bookmark bookmarks user_id:references:users book_id:references:books page:integer

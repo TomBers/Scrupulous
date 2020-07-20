@@ -22,6 +22,7 @@
             <div class="navbar-item">
                 <div class="buttons">
                     <%= if @current_user do %>
+                        <%= link "My Bookmarks", to: Routes.bookmark_path(@conn, :index), class: "button is-primary" %>
                         <%= link "Settings", to: Routes.user_settings_path(@conn, :edit), class: "button is-primary" %>
                         <%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete, class: "button is-light" %>
                     <% else %>

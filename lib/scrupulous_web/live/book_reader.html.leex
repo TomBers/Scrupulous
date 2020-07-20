@@ -1,9 +1,20 @@
 <div class="columns">
     <div class="column is-two-thirds">
-        <h1 class="subtitle"><%= @title %> <a href="/book/<%= @book_id %>"><i class="fas fa-home"></i></a></h1>
+        <h1 class="title"><%= @title %> <a href="/book/<%= @book.id %>"></h1>
+        <h2 class="subtitle">
+            <i class="fas fa-home bigIcon"></i></a>
+            <%= if @current_user do %>
+                <%= if length(@bookmarks) > 0 do %>
+                    <span><i class="fas fa-bookmark bigIcon"></i></span>
+                <% else %>
+                    <span phx-click="bookmark"><i class="far fa-bookmark bigIcon"></i></span>
+                <% end %>
+            <% end %>
+        </h2>
 
-        <a href="/reader/<%= @book_id %>/page/<%= @page - 1 %>"><i class="fas fa-arrow-left bigIcon"></i></a>
-        <a href="/reader/<%= @book_id %>/page/<%= @page + 1 %>" class="is-pulled-right"><i class="fas fa-arrow-right bigIcon"></i></a>
+        <a href="/reader/<%= @book.id %>/page/<%= @page - 1 %>"><i class="fas fa-arrow-left bigIcon"></i></a>
+
+        <a href="/reader/<%= @book.id %>/page/<%= @page + 1 %>" class="is-pulled-right"><i class="fas fa-arrow-right bigIcon"></i></a>
         <br><br>
         <%= for line <- @lines do %>
             <%= if line.txt == "\n" do %>
@@ -66,8 +77,8 @@
 </div>
 
 
-<a href="/reader/<%= @book_id %>/page/<%= @page - 1 %>"><i class="fas fa-arrow-left bigIcon"></i></a>
-<a href="/reader/<%= @book_id %>/page/<%= @page + 1 %>" class="is-pulled-right"><i class="fas fa-arrow-right bigIcon"></i></a>
+<a href="/reader/<%= @book.id %>/page/<%= @page - 1 %>"><i class="fas fa-arrow-left bigIcon"></i></a>
+<a href="/reader/<%= @book.id %>/page/<%= @page + 1 %>" class="is-pulled-right"><i class="fas fa-arrow-right bigIcon"></i></a>
 
 <script>
     var startLine;

@@ -10,9 +10,8 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 
-host = System.get_env("APP_HOSTNAME")
-IO.inspect("APP_HOSTNAME")
-IO.inspect(host)
+#host = System.get_env("APP_HOSTNAME")
+
 
 config :scrupulous, ScrupulousWeb.Endpoint,
        http: [port: {:system, "PORT"}],

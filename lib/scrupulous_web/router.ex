@@ -21,6 +21,7 @@ defmodule ScrupulousWeb.Router do
     pipe_through :browser
     resources "/books", BookController
     resources "/resources", ResourceController
+    resources "/bookmarks", BookmarkController
 
     live "/reader/:book/page/:page", BookReader, layout: {ScrupulousWeb.LayoutView, :app}
 
