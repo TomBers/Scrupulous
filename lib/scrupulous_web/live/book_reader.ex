@@ -39,7 +39,7 @@ defmodule ScrupulousWeb.BookReader do
   end
 
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, current_user: nil)}
+    {:ok, assign(socket, current_user: nil, open_note: nil)}
   end
 
 
