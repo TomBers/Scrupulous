@@ -246,4 +246,63 @@ defmodule Scrupulous.UserContentTest do
       assert %Ecto.Changeset{} = UserContent.change_skruple(skruple)
     end
   end
+
+  describe "bookmarks" do
+    alias Scrupulous.UserContent.Bookmark
+
+    @valid_attrs %{page: 42}
+    @update_attrs %{page: 43}
+    @invalid_attrs %{page: nil}
+
+    def bookmark_fixture(attrs \\ %{}) do
+      {:ok, bookmark} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> UserContent.create_bookmark()
+
+      bookmark
+    end
+
+    test "list_bookmarks/0 returns all bookmarks" do
+      bookmark = bookmark_fixture()
+      assert UserContent.list_bookmarks() == [bookmark]
+    end
+
+    test "get_bookmark!/1 returns the bookmark with given id" do
+      bookmark = bookmark_fixture()
+      assert UserContent.get_bookmark!(bookmark.id) == bookmark
+    end
+
+    test "create_bookmark/1 with valid data creates a bookmark" do
+      assert {:ok, %Bookmark{} = bookmark} = UserContent.create_bookmark(@valid_attrs)
+      assert bookmark.page == 42
+    end
+
+    test "create_bookmark/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = UserContent.create_bookmark(@invalid_attrs)
+    end
+
+    test "update_bookmark/2 with valid data updates the bookmark" do
+      bookmark = bookmark_fixture()
+      assert {:ok, %Bookmark{} = bookmark} = UserContent.update_bookmark(bookmark, @update_attrs)
+      assert bookmark.page == 43
+    end
+
+    test "update_bookmark/2 with invalid data returns error changeset" do
+      bookmark = bookmark_fixture()
+      assert {:error, %Ecto.Changeset{}} = UserContent.update_bookmark(bookmark, @invalid_attrs)
+      assert bookmark == UserContent.get_bookmark!(bookmark.id)
+    end
+
+    test "delete_bookmark/1 deletes the bookmark" do
+      bookmark = bookmark_fixture()
+      assert {:ok, %Bookmark{}} = UserContent.delete_bookmark(bookmark)
+      assert_raise Ecto.NoResultsError, fn -> UserContent.get_bookmark!(bookmark.id) end
+    end
+
+    test "change_bookmark/1 returns a bookmark changeset" do
+      bookmark = bookmark_fixture()
+      assert %Ecto.Changeset{} = UserContent.change_bookmark(bookmark)
+    end
+  end
 end

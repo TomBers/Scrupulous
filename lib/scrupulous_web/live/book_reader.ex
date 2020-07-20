@@ -17,7 +17,13 @@ defmodule ScrupulousWeb.BookReader do
 
     lines = FileStream.read_book(book.file_name, start_line, end_line)
 
-    {:noreply, assign(socket, title: book.title, book_id: book.id, notes: notes, lines: lines, page: page, show_note_form: false)}
+    bookmarks =
+      if socket.assigns.current_user do
+        UserContent.bookmark_for_page(socket.assigns.current_user.id, book.id, page)
+      else
+       nil
+      end
+    {:noreply, assign(socket, title: book.title, book: book, notes: notes, lines: lines, page: page, show_note_form: false, bookmarks: bookmarks)}
   end
 
   def mount(%{"book" => book, "page" => page, "note" => note_id}, %{"user_token" => user_token}, socket) do
@@ -39,12 +45,22 @@ defmodule ScrupulousWeb.BookReader do
   end
 
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, current_user: nil)}
+    {:ok, assign(socket, current_user: nil, open_note: nil)}
   end
 
 
-  def handle_event("add_note", %{"startLine" => start_line, "endLine" => end_line, "noteText" => note_text }, socket) do
+  def handle_event("bookmark", _params, socket) do
+    bookmark = %{
+      user_id: socket.assigns.current_user.id,
+      book_id: socket.assigns.book.id,
+      page: socket.assigns.page
+    }
+    UserContent.create_bookmark(bookmark)
+#    Adding the bookmarks list as we test that it is not empty in the template.  Could put in the result, but no point
+    {:noreply, assign(socket, bookmarks: [1])}
+  end
 
+  def handle_event("add_note", %{"startLine" => start_line, "endLine" => end_line, "noteText" => note_text }, socket) do
     new_note = %{start_line: start_line, end_line: end_line, note: note_text, user_id: socket.assigns.current_user.id, book_id: socket.assigns.book_id}
     UserContent.create_note(new_note)
     {:noreply, assign(socket, notes: get_updated_notes(socket))}
