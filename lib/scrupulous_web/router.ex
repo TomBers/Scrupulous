@@ -19,9 +19,9 @@ defmodule ScrupulousWeb.Router do
 
   scope "/", ScrupulousWeb do
     pipe_through :browser
-    resources "/books", BookController
-    resources "/resources", ResourceController
-    resources "/bookmarks", BookmarkController
+    resources "/books", BookController, except: [:show, :edit, :delete]
+    resources "/resources", ResourceController, except: [:index, :show, :edit, :delete]
+    resources "/bookmarks", BookmarkController, except: [:show, :edit]
 
     live "/reader/:book/page/:page", BookReader, layout: {ScrupulousWeb.LayoutView, :app}
 
@@ -40,9 +40,9 @@ defmodule ScrupulousWeb.Router do
    scope "/api", ScrupulousWeb do
      pipe_through :api
 
-     resources "/notes", NoteController, except: [:new, :edit]
-     resources "/edges", EdgeController, except: [:new, :edit]
-     resources "/skruples", SkrupleController, except: [:new, :edit]
+     resources "/notes", NoteController, except: [:new, :edit, :delete]
+     resources "/edges", EdgeController, except: [:new, :edit, :delete]
+     resources "/skruples", SkrupleController, except: [:new, :edit, :delete]
    end
 
   # Enables LiveDashboard only for development

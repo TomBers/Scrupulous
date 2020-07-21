@@ -61,7 +61,7 @@ defmodule ScrupulousWeb.BookReader do
   end
 
   def handle_event("add_note", %{"startLine" => start_line, "endLine" => end_line, "noteText" => note_text }, socket) do
-    new_note = %{start_line: start_line, end_line: end_line, note: note_text, user_id: socket.assigns.current_user.id, book_id: socket.assigns.book_id}
+    new_note = %{start_line: start_line, end_line: end_line, note: note_text, user_id: socket.assigns.current_user.id, book_id: socket.assigns.book.id}
     UserContent.create_note(new_note)
     {:noreply, assign(socket, notes: get_updated_notes(socket))}
   end
@@ -100,7 +100,7 @@ defmodule ScrupulousWeb.BookReader do
 
   def get_updated_notes(socket) do
     start_line = socket.assigns.page * 50
-    UserContent.get_notes_between_lines(socket.assigns.book_id, start_line, start_line + 50)
+    UserContent.get_notes_between_lines(socket.assigns.book.id, start_line, start_line + 50)
     |> Enum.sort_by(&(length(&1.skruples)), &>=/2)
   end
 
