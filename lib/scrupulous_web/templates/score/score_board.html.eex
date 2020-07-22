@@ -7,17 +7,17 @@
         <th>Notes</th>
         <th>Skruples on their notes</th>
         <th>Skruples handed out</th>
-        <th>Skruple score</th>
+        <th>Links added</th>
     </tr>
     </thead>
     <tbody>
-    <%= for score <- @scores do %>
+    <%= for user <- @users do %>
     <tr>
-        <td><a href="/contributors/<%= score.user_id %>"><%= format_email(score.user_name) %></a></td>
-        <td><%= score.note_count %></td>
-        <td><%= score.my_notes_scruples %></td>
-        <td><%= score.my_skruples %></td>
-        <td><%= score.score %></td>
+        <td><a href="/contributors/<%= user.id %>"><%= format_email(user.email) %></a></td>
+        <td><%= length(user.notes) %></td>
+        <td><%= calc_scruples_on_notes(user.notes) %></td>
+        <td><%= length(user.skruples) %></td>
+        <td><%= length(user.resources) %></td>
         </a>
     </tr>
     <% end %>
