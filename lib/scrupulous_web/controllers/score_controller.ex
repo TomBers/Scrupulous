@@ -3,11 +3,8 @@ defmodule ScrupulousWeb.ScoreController do
   alias Scrupulous.UserContent
 
   def score_board(conn, _params) do
-    notes = ScoreQueries.user_notes()
-    skruples = ScoreQueries.skruples()
-    scores = filter_notes_and_skruples(notes, skruples) |> Enum.sort_by(&(&1.score), &>=/2)
-
-    render(conn, "score_board.html", scores: scores)
+    users = ScoreQueries.users() |> Enum.sort_by(&(length(&1.notes)), &>=/2)
+    render(conn, "score_board.html", users: users)
   end
 
   def user_score(conn, %{"user" => user}) do
@@ -26,26 +23,8 @@ defmodule ScrupulousWeb.ScoreController do
     (notes * note_weight) + (liked_my_notes * note_liked_weight) + (liked_others_notes * liked_note_weight)
   end
 
-  def filter_notes_and_skruples(notes, skruples) do
-    skruples
-    |> Enum.map(fn (s) -> extract_map(s, notes) end)
-  end
 
-  def extract_map(%{user: user, count: my_skruples}, notes) do
-    user_notes = notes
-                 |> Enum.filter(fn (n) -> n.user_id == user.id end)
-    my_notes_scruples = Enum.reduce(user_notes, 0, fn (note, acc) -> acc + length(note.skruples) end)
-    note_count = length(user_notes)
 
-    %{
-      user_id: user.id,
-      user_name: user.email,
-      note_count: note_count,
-      my_notes_scruples: my_notes_scruples,
-      my_skruples: my_skruples,
-      score: calc_score(note_count, my_notes_scruples, my_skruples)
-    }
-  end
 
 
 

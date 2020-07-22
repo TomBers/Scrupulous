@@ -2,12 +2,21 @@ defmodule Scrupulous.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Scrupulous.UserContent.Note
+  alias Scrupulous.UserContent.Skruple
+  alias Scrupulous.StaticContent.Resource
+
+
   @derive {Inspect, except: [:password]}
   schema "users" do
     field :email, :string
     field :password, :string, virtual: true
     field :hashed_password, :string
     field :confirmed_at, :naive_datetime
+
+    has_many :notes, Note, on_delete: :delete_all
+    has_many :skruples, Skruple, on_delete: :delete_all
+    has_many :resources, Resource, on_delete: :delete_all
 
     timestamps()
   end

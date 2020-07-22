@@ -7,4 +7,9 @@ defmodule ScrupulousWeb.ScoreView do
     |> List.first
   end
 
+  def calc_scruples_on_notes(notes) do
+    notes
+    |> Enum.reduce(0, fn(note, acc) -> acc + length(note.skruples) end)
+  end
+
 end
