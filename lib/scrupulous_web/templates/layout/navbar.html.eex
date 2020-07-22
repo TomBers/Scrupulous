@@ -13,7 +13,7 @@
 
     <div id="navbarMenuContainer" class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item" href="/books">Book List</a>
+            <a class="navbar-item" href="/books">Library</a>
             <a class="navbar-item" href="/contributors">Contributors</a>
             <a class="navbar-item" href="/graph">Graph</a>
         </div>
