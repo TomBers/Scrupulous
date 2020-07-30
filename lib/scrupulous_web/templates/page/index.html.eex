@@ -1,3 +1,4 @@
+<div class="container">
 <h1 class="subtitle">Welcome to Skrupulus</h1>
 
 <p>A library for the future, brings together original texts with the best notes, critiques and discussions.</p>
@@ -26,3 +27,5 @@
 </div>
 
 <%= render("twitter_button.html", text: "Read and share at https://skrupulus.com") %>
+
+</div>

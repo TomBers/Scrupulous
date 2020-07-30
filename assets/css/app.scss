@@ -29,8 +29,14 @@
   src: url("../fonts/Vollkorn-SemiboldItalic.woff2") format("woff2");
 }
 
+.text-div {
+    padding-left: 5%;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
 .line {
-  font-size: 1.4em;
+  font-size: 1.6em;
   font-family: "Vollkorn";
 }
 
@@ -65,14 +71,6 @@ a.white-text:hover {
 
 .spacer {
     height: 15px;
-}
-
-.noteTxt {
-    position: fixed;
-    top: 7%;
-    right: 0;
-    width: 300px;
-    font-style: italic;
 }
 
 .note.activeIcon {

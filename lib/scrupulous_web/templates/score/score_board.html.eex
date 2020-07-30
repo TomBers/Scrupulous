@@ -1,25 +1,27 @@
-<h1 class="title">Contributors</h1>
+<div class="container">
+    <h1 class="title">Contributors</h1>
 
-<table class="table is-striped is-fullwidth">
-    <thead>
-    <tr>
-        <th>User</th>
-        <th>Notes</th>
-        <th>Skruples on their notes</th>
-        <th>Skruples handed out</th>
-        <th>Links added</th>
-    </tr>
-    </thead>
-    <tbody>
-    <%= for user <- @users do %>
-    <tr>
-        <td><a href="/contributors/<%= user.id %>"><%= format_email(user.email) %></a></td>
-        <td><%= length(user.notes) %></td>
-        <td><%= calc_scruples_on_notes(user.notes) %></td>
-        <td><%= length(user.skruples) %></td>
-        <td><%= length(user.resources) %></td>
-        </a>
-    </tr>
-    <% end %>
-    </tbody>
-</table>
+    <table class="table is-striped is-fullwidth">
+        <thead>
+        <tr>
+            <th>User</th>
+            <th>Notes</th>
+            <th>Skruples on their notes</th>
+            <th>Skruples handed out</th>
+            <th>Links added</th>
+        </tr>
+        </thead>
+        <tbody>
+        <%= for user <- @users do %>
+        <tr>
+            <td><a href="/contributors/<%= user.id %>"><%= format_email(user.email) %></a></td>
+            <td><%= length(user.notes) %></td>
+            <td><%= calc_scruples_on_notes(user.notes) %></td>
+            <td><%= length(user.skruples) %></td>
+            <td><%= length(user.resources) %></td>
+            </a>
+        </tr>
+        <% end %>
+        </tbody>
+    </table>
+</div>

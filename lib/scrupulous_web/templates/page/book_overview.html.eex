@@ -17,11 +17,3 @@
     </div>
 </div>
 
-<div class="content">
-    <ol>
-        <%= for note <- @book.notes do %>
-            <li><%= note.note %> <a href="/reader/<%= @book.id %>/page/<%= div(note.end_line, 50) %>?note=<%= note.end_line %>">Link</a></li>
-        <% end %>
-    </ol>
-</div>
-
