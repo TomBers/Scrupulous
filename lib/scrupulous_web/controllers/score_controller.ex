@@ -23,10 +23,4 @@ defmodule ScrupulousWeb.ScoreController do
     (notes * note_weight) + (liked_my_notes * note_liked_weight) + (liked_others_notes * liked_note_weight)
   end
 
-
-
-
-
-
-
 end

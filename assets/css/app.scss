@@ -1,8 +1,47 @@
 /* This file is for your main application css. */
 @import "./bulma.css";
 
+@font-face {
+  font-family: "Vollkorn";
+  font-weight: 400;
+  font-style: normal;
+  src: url("../fonts/Vollkorn-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Vollkorn";
+  font-weight: 400;
+  font-style: italic;
+  src: url("../fonts/Vollkorn-Italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Vollkorn";
+  font-weight: 500;
+  font-style: normal;
+  src: url("../fonts/Vollkorn-Semibold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Vollkorn";
+  font-weight: 500;
+  font-style: italic;
+  src: url("../fonts/Vollkorn-SemiboldItalic.woff2") format("woff2");
+}
+
+.text-div {
+    padding-left: 5%;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.line {
+  font-size: 1.6em;
+  font-family: "Vollkorn";
+}
+
 .bigIcon {
-    font-size: x-large;
+  font-size: x-large;
 }
 
 .logo {
@@ -32,14 +71,6 @@ a.white-text:hover {
 
 .spacer {
     height: 15px;
-}
-
-.noteTxt {
-    position: fixed;
-    top: 7%;
-    right: 0;
-    width: 300px;
-    font-style: italic;
 }
 
 .note.activeIcon {
