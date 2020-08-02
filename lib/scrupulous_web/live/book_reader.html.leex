@@ -34,7 +34,7 @@
             <a href="/reader/<%= @book.id %>/page/<%= @page - 1 %>"><i class="fas fa-arrow-left bigIcon"></i></a>
             <a href="/reader/<%= @book.id %>/page/<%= @page + 1 %>" class="is-pulled-right"><i class="fas fa-arrow-right bigIcon"></i></a>
         </div>
-        <div class="column">
+        <div class="column stick-notes-to-top">
             <%= for line <- @lines do %>
                 <%= if has_note(line.line, @notes) and is_note_open(line.line, @open_note) do %>
                 <div>
