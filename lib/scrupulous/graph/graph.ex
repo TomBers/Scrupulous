@@ -36,6 +36,9 @@ defmodule Scrupulous.Graph do
     end
   end
 
+  def get_cols(year) when is_nil(year) do
+    '#0A2F51'
+  end
 
   def get_cols(year) do
     max = 1954
@@ -55,6 +58,10 @@ defmodule Scrupulous.Graph do
     ]
 #    TODO - make this respect the date range - at the moment a bit of a hack
     Enum.at(cols, div(gap, 10))
+  end
+
+  def range_func(a, b, range) when is_nil(a) or is_nil(b) do
+    false
   end
 
   def range_func(a, b, range \\ 10) do
