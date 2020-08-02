@@ -1,27 +1,28 @@
-<h1 class="title">My Bookmarks</h1>
+<div class="container">
+  <h1 class="title">My Bookmarks</h1>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Book</th>
-      <th>Author</th>
-      <th>Page</th>
-      <th>Link</th>
-      <th></th>
+  <table class="table is-striped is-fullwidth">
+    <thead>
+      <tr>
+        <th>Book</th>
+        <th>Author</th>
+        <th>Page</th>
+        <th>Link</th>
+        <th></th>
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for bookmark <- @bookmarks do %>
-    <tr>
-      <td><%= bookmark.book.title %></td>
-      <td><%= bookmark.book.author %></td>
-      <td><%= bookmark.page %></td>
-      <td><span><a href="/reader/<%= bookmark.book.id %>/page/<%= bookmark.page %>">Continue</a></span></td>
-      <td><span><%= link "Delete", to: Routes.bookmark_path(@conn, :delete, bookmark), method: :delete, data: [confirm: "Are you sure?"] %></span></td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
-
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+  <%= for bookmark <- @bookmarks do %>
+      <tr>
+        <td><%= bookmark.book.title %></td>
+        <td><%= bookmark.book.author %></td>
+        <td><%= bookmark.page %></td>
+        <td><span><a href="/reader/<%= bookmark.book.id %>/page/<%= bookmark.page %>">Continue reading</a></span></td>
+        <td><span><%= link "Delete", to: Routes.bookmark_path(@conn, :delete, bookmark), method: :delete, data: [confirm: "Are you sure?"], class: "button is-small is-danger" %></span></td>
+      </tr>
+  <% end %>
+    </tbody>
+  </table>
+</div>

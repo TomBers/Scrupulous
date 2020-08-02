@@ -20,7 +20,7 @@ defmodule FileStream do
     |> Stream.with_index()
     |> Stream.map(fn({line, indx}) -> %{line: indx, txt: line} end)
     |> Stream.take(end_line)
-    |> Stream.filter(fn(%{line: indx, txt: line}) -> indx >= start_line end)
+    |> Stream.filter(fn(%{line: indx}) -> indx >= start_line end)
     |> Enum.to_list
   end
 

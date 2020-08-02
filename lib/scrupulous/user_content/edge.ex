@@ -2,6 +2,8 @@ defmodule Scrupulous.UserContent.Edge do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Scrupulous.StaticContent.Book
+
   schema "edges" do
     field :label, :string
 

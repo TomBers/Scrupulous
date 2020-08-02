@@ -27,7 +27,7 @@ defmodule ScrupulousWeb.ResourceController do
 
   def create(conn, %{"resource" => resource_params}) do
     case StaticContent.create_resource(resource_params) do
-      {:ok, resource} ->
+      {:ok, _resource} ->
         conn
         |> put_flash(:info, "Resource created successfully.")
         |> redirect(to: Routes.page_path(conn, :book_overview, Map.get(resource_params, "book_id")))

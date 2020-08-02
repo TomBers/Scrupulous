@@ -22,7 +22,7 @@
                     <%= if line.txt == "\n" do %>
                         <div class="spacer"></div>
                     <% else %>
-                        <div class="line" id="<%= line.line %>">
+                        <div class='<%= get_line_class(line.line, @open_note, @notes) %>' id="<%= line.line %>">
                             <span id="<%= line.line %>"><%= line.txt %></span>
                             <%= if has_note(line.line, @notes) do %>
                                 <a href="#" class="<%= get_note_class(line.line, @open_note) %>" phx-click="open_note" phx-value-line-number="<%= line.line %>"><i class="fas fa-sticky-note"></i></a>
@@ -31,59 +31,61 @@
                     <% end %>
                 <% end %>
             </div>
+            <a href="/reader/<%= @book.id %>/page/<%= @page - 1 %>"><i class="fas fa-arrow-left bigIcon"></i></a>
+            <a href="/reader/<%= @book.id %>/page/<%= @page + 1 %>" class="is-pulled-right"><i class="fas fa-arrow-right bigIcon"></i></a>
         </div>
         <div class="column">
             <%= for line <- @lines do %>
                 <%= if has_note(line.line, @notes) and is_note_open(line.line, @open_note) do %>
-                <div>
-                    <a href="#" phx-click="close_note"><i class="far fa-times-circle"></i></a>
-                    <ol>
-                        <%= for note <- get_notes(line.line, @notes) do %>
-                        <div>
-                            <p><%= note.note %></p>
-                            <a href="/contributors/<%= note.user_id %>"><%= format_email(note.user.email) %></a>
-                            <br>
-                            <%= note.inserted_at %>
-                            <br>
-                            <%= length(note.skruples) %> Skruples
-                            <br>
-                            <%= if @current_user do %>
-                                <%= if have_skruped(@current_user, note.skruples) do %>
-                                    <i class="fas fa-heart"></i>
-                                <% else %>
-                                    <a href="#" phx-click="add_skruple" phx-value-note="<%= note.id %>"><i class="far fa-heart"></i></a>
-                                <% end %>
-                            <% end %>
+                    <%= for note <- get_notes(line.line, @notes) do %>
+                    <div class="tile is-ancestor">
+                        <div class="tile is-vertical is-12">
+                            <div class="tile">
+                                <div class="tile is-parent is-vertical">
+                                    <article class="tile is-child notification">
+                                        <a href="#" phx-click="close_note"><i class="far fa-times-circle"></i></a>
+                                        <p class="title"><%= note.note %></p>
+                                        <p class="subtitle"><a href="/contributors/<%= note.user_id %>"><%= format_email(note.user.email) %></a></p>
+                                        <p class="subtitle">
+                                            <%= if @current_user do %>
+                                            <%= if have_skruped(@current_user, note.skruples) do %>
+                                                <i class="fas fa-heart"></i>
+                                            <% else %>
+                                                <a href="#" phx-click="add_skruple" phx-value-note="<%= note.id %>"><i class="far fa-heart"></i></a>
+                                            <% end %>
+                                        <% end %>
+                                        </p>
+                                        <p><%= length(note.skruples) %> Skruples</p>
+                                    </article>
+                                </div>
+                            </div>
                         </div>
-                        <% end %>
-                    </ol>
-                </div>
-                <% end %>
-            <% end %>
-
-            <%= if @current_user do %>
-                    <div class="field">
-                        <div class="control float-input">
-                            <a href="#" phx-click="close_form" class="notAlwaysVisible"><i class="far fa-times-circle"></i></a>
-                            <form phx-submit="add_note">
-                                <textarea id="note" class="textarea is-info notAlwaysVisible" placeholder="Add note" onkeyup="setNoteText()"></textarea>
-                                <br>
-                                <input type="hidden" id="noteText" name="noteText" value="">
-                                <input type="hidden" id="startLine" name="startLine" value="">
-                                <input type="hidden" id="endLine" name="endLine" value="">
-                                <input type="submit" id="noteBtn" class="button is-info notAlwaysVisible" />
-                            </form>
-                        </div>
-                        <span class="neverVisible"><%= @show_note_form %></span>
                     </div>
+                    <% end %>
+                <% end %>
             <% end %>
         </div>
     </div>
+    <%= if @current_user do %>
+        <div class="field stick-to-bottom">
+            <div class="control">
+                <a href="#" phx-click="close_form" class="notAlwaysVisible"><i class="far fa-times-circle"></i></a>
+                <form phx-submit="add_note">
+                    <textarea id="note" class="textarea notAlwaysVisible" placeholder="Add note" onkeyup="setNoteText()"></textarea>
+                    <br>
+                    <input type="hidden" id="noteText" name="noteText" value="">
+                    <input type="hidden" id="startLine" name="startLine" value="">
+                    <input type="hidden" id="endLine" name="endLine" value="">
+                    <input type="submit" id="noteBtn" value="Add note" class="button is-light notAlwaysVisible" />
+                </form>
+            </div>
+            <span class="neverVisible"><%= @show_note_form %></span>
+        </div>
+    <% end %>
 </div>
 
 
-<a href="/reader/<%= @book.id %>/page/<%= @page - 1 %>"><i class="fas fa-arrow-left bigIcon"></i></a>
-<a href="/reader/<%= @book.id %>/page/<%= @page + 1 %>" class="is-pulled-right"><i class="fas fa-arrow-right bigIcon"></i></a>
+
 
 <script>
     var startLine;
