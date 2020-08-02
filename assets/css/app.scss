@@ -49,7 +49,7 @@
 }
 
 .notAlwaysVisible {
-   visibility: hidden;
+    visibility: hidden;
 }
 
 .neverVisible {
@@ -88,13 +88,6 @@ a.white-text:hover {
 .stick-to-bottom {
     position: fixed;
     bottom: 0;
-    right: 0;
-    width: 300px;
-}
-
-.stick-notes-to-top {
-    position: fixed;
-    top: 50px;
     right: 0;
     width: 300px;
 }
