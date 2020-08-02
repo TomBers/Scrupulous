@@ -3,7 +3,6 @@ defmodule ScrupulousWeb.BookReader do
 
   alias Scrupulous.UserContent
   alias Scrupulous.StaticContent
-  alias Scrupulous.UserContent.Note
 
   def handle_params(%{"book" => book, "page" => pageStr}, _uri, socket) do
     {page, _rem} = Integer.parse(pageStr)

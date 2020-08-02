@@ -5,6 +5,8 @@ defmodule Scrupulous.Graph do
   @country_col '#D3D3D3'
   @author_col '#778899'
 
+  @year_range 10
+
   def gen_edges(nodes) do
     year = nodes
             |> Enum.flat_map(fn(node) -> make_edges(node, nodes, :publication_year, &range_func/3, @year_col, 2) end)
@@ -24,7 +26,7 @@ defmodule Scrupulous.Graph do
   def make_edges(node, nodes, key, equality, col, edge_width) do
     match_val = Map.get(node, key)
     nodes
-    |> Enum.filter(fn(nde) -> nde != node and equality.(Map.get(nde, key), match_val, 10) end)
+    |> Enum.filter(fn(nde) -> nde != node and equality.(Map.get(nde, key), match_val, @year_range) end)
     |> Enum.map(fn(x) -> %{id: "#{to_string(key)}_#{x.title}_#{node.title}", source: node.id, target: x.id, col: col, edge_width: edge_width} end)
   end
 
@@ -41,7 +43,7 @@ defmodule Scrupulous.Graph do
   end
 
   def get_cols(year) do
-    max = 1954
+    # max = 1954
     min = 1864
     gap = year - min
     cols = [
@@ -60,11 +62,11 @@ defmodule Scrupulous.Graph do
     Enum.at(cols, div(gap, 10))
   end
 
-  def range_func(a, b, range) when is_nil(a) or is_nil(b) do
+  def range_func(a, b, _range) when is_nil(a) or is_nil(b) do
     false
   end
 
-  def range_func(a, b, range \\ 10) do
+  def range_func(a, b, range) do
     a >= b - range and a <= b + range
   end
 

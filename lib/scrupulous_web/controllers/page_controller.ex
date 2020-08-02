@@ -1,6 +1,6 @@
 defmodule ScrupulousWeb.PageController do
   use ScrupulousWeb, :controller
-  alias Scrupulous.UserContent
+
   alias Scrupulous.Graph
   alias Scrupulous.StaticContent
 
