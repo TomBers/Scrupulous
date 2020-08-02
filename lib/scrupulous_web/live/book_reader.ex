@@ -91,12 +91,6 @@ defmodule ScrupulousWeb.BookReader do
     {:noreply, assign(socket, show_note_form: rand)}
   end
 
-#  def handle_event("showNoteForm", _params, socket) do
-#    {:noreply, assign(socket, show_note_form: !socket.assigns.show_note_form)}
-#  end
-
-
-
 
   def get_updated_notes(socket) do
     start_line = socket.assigns.page * 50
@@ -120,11 +114,6 @@ defmodule ScrupulousWeb.BookReader do
     |> Enum.filter(fn(note) -> line >= note.start_line and line <= note.end_line end)
   end
 
-  def get_category_links(resources, category) do
-    resources
-    |> Enum.filter(fn(resource) -> resource.category == category end)
-  end
-
   def format_email(email) do
     email
     |> String.split("@")
@@ -141,6 +130,19 @@ defmodule ScrupulousWeb.BookReader do
       "note activeIcon"
     else
       "note"
+    end
+  end
+
+  def get_line_class(line, open_note, notes) do
+    if Enum.any?(
+         notes,
+         fn (note) ->
+           open_note >= note.start_line and open_note <= note.end_line and line >= note.start_line and line <= note.end_line
+         end
+       ) do
+      "line selected"
+    else
+      "line"
     end
   end
 

@@ -22,7 +22,7 @@
                     <%= if line.txt == "\n" do %>
                         <div class="spacer"></div>
                     <% else %>
-                        <div class="line" id="<%= line.line %>">
+                        <div class='<%= get_line_class(line.line, @open_note, @notes) %>' id="<%= line.line %>">
                             <span id="<%= line.line %>"><%= line.txt %></span>
                             <%= if has_note(line.line, @notes) do %>
                                 <a href="#" class="<%= get_note_class(line.line, @open_note) %>" phx-click="open_note" phx-value-line-number="<%= line.line %>"><i class="fas fa-sticky-note"></i></a>
@@ -31,6 +31,8 @@
                     <% end %>
                 <% end %>
             </div>
+            <a href="/reader/<%= @book.id %>/page/<%= @page - 1 %>"><i class="fas fa-arrow-left bigIcon"></i></a>
+            <a href="/reader/<%= @book.id %>/page/<%= @page + 1 %>" class="is-pulled-right"><i class="fas fa-arrow-right bigIcon"></i></a>
         </div>
         <div class="column">
             <%= for line <- @lines do %>
@@ -62,28 +64,27 @@
             <% end %>
 
             <%= if @current_user do %>
-                    <div class="field">
-                        <div class="control float-input">
-                            <a href="#" phx-click="close_form" class="notAlwaysVisible"><i class="far fa-times-circle"></i></a>
-                            <form phx-submit="add_note">
-                                <textarea id="note" class="textarea is-info notAlwaysVisible" placeholder="Add note" onkeyup="setNoteText()"></textarea>
-                                <br>
-                                <input type="hidden" id="noteText" name="noteText" value="">
-                                <input type="hidden" id="startLine" name="startLine" value="">
-                                <input type="hidden" id="endLine" name="endLine" value="">
-                                <input type="submit" id="noteBtn" class="button is-info notAlwaysVisible" />
-                            </form>
-                        </div>
-                        <span class="neverVisible"><%= @show_note_form %></span>
+                <div class="field">
+                    <div class="control stick-to-bottom">
+                        <a href="#" phx-click="close_form" class="notAlwaysVisible"><i class="far fa-times-circle"></i></a>
+                        <form phx-submit="add_note">
+                            <textarea id="note" class="textarea is-info notAlwaysVisible" placeholder="Add note" onkeyup="setNoteText()"></textarea>
+                            <br>
+                            <input type="hidden" id="noteText" name="noteText" value="">
+                            <input type="hidden" id="startLine" name="startLine" value="">
+                            <input type="hidden" id="endLine" name="endLine" value="">
+                            <input type="submit" id="noteBtn" class="button is-info notAlwaysVisible" />
+                        </form>
                     </div>
+                    <span class="neverVisible"><%= @show_note_form %></span>
+                </div>
             <% end %>
         </div>
     </div>
 </div>
 
 
-<a href="/reader/<%= @book.id %>/page/<%= @page - 1 %>"><i class="fas fa-arrow-left bigIcon"></i></a>
-<a href="/reader/<%= @book.id %>/page/<%= @page + 1 %>" class="is-pulled-right"><i class="fas fa-arrow-right bigIcon"></i></a>
+
 
 <script>
     var startLine;
