@@ -29,8 +29,24 @@
   src: url("../fonts/Vollkorn-SemiboldItalic.woff2") format("woff2");
 }
 
+.stick-to-bottom {
+    position: fixed;
+    background-color: white;
+    width: 300px;
+    bottom: 40px;
+    right: 0;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 768px) {
+    .stick-to-bottom {
+        background-color: whitesmoke;
+        width: 100%;
+    }
+}
+
+
 .text-div {
-    padding-left: 5%;
     text-align: justify;
     text-justify: inter-word;
 }
@@ -49,11 +65,15 @@
 }
 
 .notAlwaysVisible {
-    visibility: hidden;
+   visibility: hidden;
 }
 
 .neverVisible {
   visibility: hidden;
+}
+
+.bringToFront {
+    z-index: -4;
 }
 
 .nav-black {
@@ -83,13 +103,6 @@ a.white-text:hover {
 
 .line.selected span {
     background-color: #a8d1ff;
-}
-
-.stick-to-bottom {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    width: 300px;
 }
 
 
