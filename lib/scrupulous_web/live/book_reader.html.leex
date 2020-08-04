@@ -60,7 +60,7 @@
         <% end %>
     </div>
     <a href="/reader/<%= @book.id %>/page/<%= @page - 1 %>"><i class="fas fa-arrow-left bigIcon"></i></a>
-    <a href="/reader/<%= @book.id %>/page/<%= @page + 1 %>" class="is-pulled-right bringToFront"><i class="fas fa-arrow-right bigIcon"></i></a>
+    <a href="/reader/<%= @book.id %>/page/<%= @page + 1 %>" class="is-pulled-right"><i class="fas fa-arrow-right bigIcon"></i></a>
 
     <%= if @current_user do %>
         <div class="field stick-to-bottom notAlwaysVisible">
