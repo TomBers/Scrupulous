@@ -3,67 +3,64 @@
     <h2 class="subtitle">
         <i class="fas fa-home bigIcon"></i></a>
         <%= if @current_user do %>
-        <%= if length(@bookmarks) > 0 do %>
-        <span><i class="fas fa-bookmark bigIcon"></i></span>
-        <% else %>
-        <a href="#" phx-click="bookmark"><i class="far fa-bookmark bigIcon"></i></a>
-        <% end %>
+            <%= if length(@bookmarks) > 0 do %>
+                <span><i class="fas fa-bookmark bigIcon"></i></span>
+            <% else %>
+                <a href="#" phx-click="bookmark"><i class="far fa-bookmark bigIcon"></i></a>
+            <% end %>
         <% end %>
     </h2>
 
     <a href="/reader/<%= @book.id %>/page/<%= @page - 1 %>"><i class="fas fa-arrow-left bigIcon"></i></a>
 
-    <a href="/reader/<%= @book.id %>/page/<%= @page + 1 %>" class="is-pulled-right"><i
-            class="fas fa-arrow-right bigIcon"></i></a>
+    <a href="/reader/<%= @book.id %>/page/<%= @page + 1 %>" class="is-pulled-right"><i class="fas fa-arrow-right bigIcon"></i></a>
     <br><br>
     <div class="text-div">
         <%= for line <- @lines do %>
-        <%= if line.txt == "\n" do %>
-        <div class="spacer"></div>
-        <% else %>
-        <div class='<%= get_line_class(line.line, @open_note, @notes) %>' id="<%= line.line %>">
-            <span id="<%= line.line %>"><%= line.txt %></span>
-            <%= if has_note(line.line, @notes) do %>
-            <a href="#" class="<%= get_note_class(line.line, @open_note) %>" phx-click="open_note"
-               phx-value-line-number="<%= line.line %>"><i class="fas fa-sticky-note"></i></a>
-                <%= if is_note_open(line.line, @open_note) do %>
-                    <%= for note <- get_notes(line.line, @notes) do %>
-                    <div class="tile is-ancestor">
-                        <div class="tile is-vertical is-12">
-                            <div class="tile">
-                                <div class="tile is-parent is-vertical">
-                                    <article class="tile is-child notification">
-                                        <a href="#" phx-click="close_note"><i class="far fa-times-circle"></i></a>
-                                        <p class="title"><%= note.note %></p>
-                                        <p class="subtitle"><a href="/contributors/<%= note.user_id %>"><%=
-                                            format_email(note.user.email) %></a></p>
-                                        <p class="subtitle">
-                                            <%= if @current_user do %>
-                                            <%= if have_skruped(@current_user, note.skruples) do %>
-                                            <i class="fas fa-heart"></i>
-                                            <% else %>
-                                            <a href="#" phx-click="add_skruple" phx-value-note="<%= note.id %>"><i
-                                                    class="far fa-heart"></i></a>
-                                            <% end %>
-                                            <% end %>
-                                        </p>
-                                        <p><%= length(note.skruples) %> Skruples</p>
-                                    </article>
+            <%= if line.txt == "\n" do %>
+            <div class="spacer"></div>
+            <% else %>
+            <div class='<%= get_line_class(line.line, @open_note, @notes) %>' id="<%= line.line %>">
+                <span id="<%= line.line %>"><%= line.txt %></span>
+                <%= if has_note(line.line, @notes) do %>
+                <a href="#" class="<%= get_note_class(line.line, @open_note) %>" phx-click="open_note"
+                   phx-value-line-number="<%= line.line %>"><i class="fas fa-sticky-note"></i></a>
+                    <%= if is_note_open(line.line, @open_note) do %>
+                        <%= for note <- get_notes(line.line, @notes) do %>
+                        <div class="tile is-ancestor">
+                            <div class="tile is-vertical is-12">
+                                <div class="tile">
+                                    <div class="tile is-parent is-vertical">
+                                        <article class="tile is-child notification">
+                                            <a href="#" phx-click="close_note"><i class="far fa-times-circle"></i></a>
+                                            <p class="title"><%= note.note %></p>
+                                            <p class="subtitle"><a href="/contributors/<%= note.user_id %>"><%=
+                                                format_email(note.user.email) %></a></p>
+                                            <p class="subtitle">
+                                                <%= if @current_user do %>
+                                                <%= if have_skruped(@current_user, note.skruples) do %>
+                                                <i class="fas fa-heart"></i>
+                                                <% else %>
+                                                <a href="#" phx-click="add_skruple" phx-value-note="<%= note.id %>"><i
+                                                        class="far fa-heart"></i></a>
+                                                <% end %>
+                                                <% end %>
+                                            </p>
+                                            <p><%= length(note.skruples) %> Skruples</p>
+                                        </article>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <% end %>
                     <% end %>
                 <% end %>
+            </div>
             <% end %>
-        </div>
-        <% end %>
         <% end %>
     </div>
     <a href="/reader/<%= @book.id %>/page/<%= @page - 1 %>"><i class="fas fa-arrow-left bigIcon"></i></a>
-    <a href="/reader/<%= @book.id %>/page/<%= @page + 1 %>" class="is-pulled-right bringToFront"><i
-            class="fas fa-arrow-right bigIcon"></i></a>
-
+    <a href="/reader/<%= @book.id %>/page/<%= @page + 1 %>" class="is-pulled-right bringToFront"><i class="fas fa-arrow-right bigIcon"></i></a>
 
     <%= if @current_user do %>
         <div class="field stick-to-bottom notAlwaysVisible">
@@ -97,8 +94,12 @@
     }
 
     function setLineNumbers(start, end) {
-        document.getElementById("startLine").value = start;
-        document.getElementById("endLine").value = end;
+        try {
+            document.getElementById("startLine").value = start;
+            document.getElementById("endLine").value = end;
+        } catch(error) {
+            console.error(error)
+        }
     }
 
     function getNodeID(node) {
@@ -143,6 +144,6 @@
         selectLines();
         showNoteForm();
     }
-});
+}, false);
 
 </script>
