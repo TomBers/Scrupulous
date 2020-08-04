@@ -43,6 +43,10 @@ defmodule ScrupulousWeb.BookReader do
     end
   end
 
+  def mount(%{"note" => note_id}, _session, socket) do
+    {:ok, assign(socket, current_user: nil, open_note: String.to_integer(note_id))}
+  end
+
   def mount(_params, _session, socket) do
     {:ok, assign(socket, current_user: nil, open_note: nil)}
   end
