@@ -37,12 +37,23 @@
     right: 0;
 }
 
+.line {
+  font-size: 1.6em;
+  font-family: "Vollkorn";
+}
+
+
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 768px) {
     .stick-to-bottom {
         background-color: whitesmoke;
         width: 100%;
     }
+
+    .line {
+      font-size: 0.85em;
+    }
+
 }
 
 
@@ -51,10 +62,6 @@
     text-justify: inter-word;
 }
 
-.line {
-  font-size: 1.6em;
-  font-family: "Vollkorn";
-}
 
 .bigIcon {
   font-size: x-large;
