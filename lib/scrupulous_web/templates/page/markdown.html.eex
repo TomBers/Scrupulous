@@ -12,8 +12,8 @@
         var elementId = node.parentElement.id;
 
         try {
-            var tmp = parseInt(elementId.slice(5), 10);
-            return isNaN(tmp) ? getNodeID(node.parentElement) : tmp;
+            var lineID = parseInt(elementId.replace("<%= @prefix %>", ""), 10);
+            return isNaN(lineID) ? getNodeID(node.parentElement) : lineID;
          } catch (e) {
             return getNodeID(node.parentElement);
          }

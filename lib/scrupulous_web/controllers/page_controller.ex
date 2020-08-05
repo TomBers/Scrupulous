@@ -41,16 +41,19 @@ defmodule ScrupulousWeb.PageController do
   end
 
   def markdown(conn, _params) do
+
+    prefix = "line_"
+
     markdown = return_markdown()
     {:ok, ast, []} = EarmarkParser.as_ast(markdown)
     new_ast =
       ast
       |> Enum.with_index(1)
-      |> Enum.map(fn({{ele, props, content, misc}, indx} ) -> {ele, props ++ [{"id", "line_#{indx}"}], content, misc} end)
+      |> Enum.map(fn({{ele, props, content, misc}, indx} ) -> {ele, props ++ [{"id", "#{prefix}#{indx}"}], content, misc} end)
     html_doc = Earmark.Transform.transform(new_ast)
 
 #    {:ok, html_doc, []} = Earmark.as_html(markdown)
-    render(conn, "markdown.html", content: html_doc,  layout: {ScrupulousWeb.LayoutView, "basic.html"})
+    render(conn, "markdown.html", content: html_doc, prefix: prefix,  layout: {ScrupulousWeb.LayoutView, "basic.html"})
   end
 
   def return_markdown do
