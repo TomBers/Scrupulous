@@ -40,6 +40,24 @@ defmodule ScrupulousWeb.PageController do
     render(conn, "index.html")
   end
 
+  def markdown(conn, _params) do
+    markdown = return_markdown()
+    {:ok, ast, []} = EarmarkParser.as_ast(markdown)
+    new_ast =
+      ast
+      |> Enum.with_index
+      |> Enum.map(fn({{ele, props, content, misc}, indx} ) -> {ele, props ++ [{"id", "line_#{indx}"}], content, misc} end)
+    html_doc = Earmark.Transform.transform(new_ast)
 
+#    {:ok, html_doc, []} = Earmark.as_html(markdown)
+    render(conn, "markdown.html", content: html_doc,  layout: {ScrupulousWeb.LayoutView, "basic.html"})
+  end
+
+  def return_markdown do
+    case File.read("./sample.md") do
+      {:ok, body} -> body
+      {:error, reason} -> IO.inspect(reason); ""
+    end
+  end
 
 end
