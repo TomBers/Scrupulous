@@ -1,5 +1,37 @@
 <%= raw(@content) %>
 
+<script>
+    var startLine;
+    var endLine;
+
+
+    function getNodeID(node) {
+        if(node == null) {
+            return null;
+        }
+        var elementId = node.parentElement.id;
+
+        try {
+            var tmp = parseInt(elementId.slice(5), 10);
+            return isNaN(tmp) ? getNodeID(node.parentElement) : tmp;
+         } catch (e) {
+            return getNodeID(node.parentElement);
+         }
+    }
+
+  document.addEventListener('selectionchange', () => {
+    var select = document.getSelection();
+    var baseLine = getNodeID(select.anchorNode);
+    var extentLine = getNodeID(select.focusNode);
+
+    startLine = baseLine <= extentLine ? baseLine : extentLine;
+    endLine = baseLine >= extentLine ? baseLine : extentLine;
+
+    console.log(startLine);
+    console.log(endLine);
+}, false);
+
+</script>
 
 <style>
     /* Based on http://kevinburke.bitbucket.org/markdowncss/ */

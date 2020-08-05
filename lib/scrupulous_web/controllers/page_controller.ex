@@ -45,7 +45,7 @@ defmodule ScrupulousWeb.PageController do
     {:ok, ast, []} = EarmarkParser.as_ast(markdown)
     new_ast =
       ast
-      |> Enum.with_index
+      |> Enum.with_index(1)
       |> Enum.map(fn({{ele, props, content, misc}, indx} ) -> {ele, props ++ [{"id", "line_#{indx}"}], content, misc} end)
     html_doc = Earmark.Transform.transform(new_ast)
 
