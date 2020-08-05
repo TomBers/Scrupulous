@@ -139,10 +139,12 @@
         startLine = baseLine <= extentLine ? baseLine : extentLine;
         endLine = baseLine >= extentLine ? baseLine : extentLine;
 
-        setLineNumbers(startLine, endLine);
-        noteElement.placeholder = "Add note from " + startLine + " to " + endLine;
-        selectLines();
-        showNoteForm();
+        if(!isNaN(startLine) && !isNaN(endLine)) {
+            setLineNumbers(startLine, endLine);
+            noteElement.placeholder = "Add note from " + startLine + " to " + endLine;
+            selectLines();
+            showNoteForm();
+        }
     }
 }, false);
 
