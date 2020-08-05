@@ -1,31 +1,32 @@
 <div class="container">
-<h1 class="subtitle">Welcome to Skrupulus</h1>
+    <div class="section">
+    <h1 class="subtitle">Welcome to Skrupulus</h1>
 
-<p>A library for the future, brings together original texts with the best notes, critiques and discussions.</p>
-<br>
-<p>How does it work?</p>
-<br>
-<p>Simply choose a book, and you can get reading straight away.  The books home page includes related articles and dicussions.</p>
-<p>While you are reading you will see <i class="fas fa-sticky-note"></i> clicking on this will open notes that other people have left.</p>
-<br>
-<p>If you you log in you can contribute.</p>
-<br>
-<p>Liking notes that you think offer insight into the line / paragraph or adding your own note at any point in the book, shared with everyone.</p>
-<p>To add a note simple select the text the note refers to, and a text area will appear.</p>
-<p>All contributions are recorded and can be seen on the contributors page.</p>
+    <p>A library for the future, brings together original texts with the best notes, critiques and discussions.</p>
+    <br>
+    <p>How does it work?</p>
+    <br>
+    <p>Simply choose a book, and you can get reading straight away.  The books home page includes related articles and dicussions.</p>
+    <p>While you are reading you will see <i class="fas fa-sticky-note"></i> clicking on this will open notes that other people have left.</p>
+    <br>
+    <p>If you you log in you can contribute.</p>
+    <br>
+    <p>Liking notes that you think offer insight into the line / paragraph or adding your own note at any point in the book, shared with everyone.</p>
+    <p>To add a note simple select the text the note refers to, and a text area will appear.</p>
+    <p>All contributions are recorded and can be seen on the contributors page.</p>
 
 
-<br>
-<br>
-<p>Here are some books to get started</p>
-<div class="content">
-    <ul>
-        <li><a href="/book/9">Notes from the Underground</a></li>
-        <li><a href="/book/16">Adventures of Huckleberry Finn</a></li>
-        <li><a href="/book/3">War and Peace</a></li>
-    </ul>
-</div>
+    <br>
+    <br>
+    <p>Here are some books to get started</p>
+    <div class="content">
+        <ul>
+            <li><a href="/book/9">Notes from the Underground</a></li>
+            <li><a href="/book/16">Adventures of Huckleberry Finn</a></li>
+            <li><a href="/book/3">War and Peace</a></li>
+        </ul>
+    </div>
 
-<%= render("twitter_button.html", text: "Read and share at https://skrupulus.com") %>
-
+    <%= render("twitter_button.html", text: "Read and share at https://skrupulus.com") %>
+    </div>
 </div>
