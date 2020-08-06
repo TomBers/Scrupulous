@@ -1,5 +1,94 @@
 <%= Phoenix.HTML.raw(@content) %>
 
+
+<div class="field stick-to-bottom">
+    <div class="control">
+        <a href="#" phx-click="close_form"><i class="far fa-times-circle bigIcon"></i></a>
+        <form phx-submit="add_note">
+                    <textarea id="note" class="textarea" placeholder="Add note"
+                              onkeyup="setNoteText()"></textarea>
+            <br>
+            <input type="hidden" id="noteText" name="noteText" value="">
+            <input type="hidden" id="startLine" name="startLine" value="">
+            <input type="hidden" id="endLine" name="endLine" value="">
+            <input type="submit" id="noteBtn" value="Add note" class="button is-light"/>
+        </form>
+    </div>
+</div>
+
+<script>
+    var startLine;
+    var endLine;
+    var noteElement = document.getElementById("note")
+    var hiddenNoteElement = document.getElementById("noteText");
+
+
+    function setNoteText() {
+        hiddenNoteElement.value = noteElement.value;
+    }
+
+    function setLineNumbers(start, end) {
+        try {
+            document.getElementById("startLine").value = start;
+            document.getElementById("endLine").value = end;
+        } catch(error) {
+            console.error(error)
+        }
+    }
+
+    function getNodeID(node) {
+        if(node == null) {
+            return null;
+        }
+        var elementId = node.parentElement.id;
+        try {
+            var lineID = parseInt(elementId.replace("<%= @prefix %>", ""), 10);
+            return isNaN(lineID) ? getNodeID(node.parentElement) : lineID;
+         } catch (e) {
+            return getNodeID(node.parentElement);
+         }
+    }
+
+    function showNoteForm() {
+        var elems = document.querySelectorAll(".notAlwaysVisible");
+        elems.forEach.call(elems, function(ele) {
+            ele.classList.remove("notAlwaysVisible");
+        });
+    }
+
+    function selectLines() {
+        var elems = document.querySelectorAll("div.line");
+
+        elems.forEach.call(elems, function(el) {
+           if(el.id >= startLine && el.id <= endLine) {
+               el.classList.add("selected");
+            } else {
+                el.classList.remove("selected");
+            }
+         });
+    }
+
+  document.addEventListener('selectionchange', () => {
+    var select = document.getSelection();
+
+    if (select.anchorNode.nodeName == "#text") {
+        var baseLine = getNodeID(select.anchorNode);
+        var extentLine = getNodeID(select.focusNode);
+
+        startLine = baseLine <= extentLine ? baseLine : extentLine;
+        endLine = baseLine >= extentLine ? baseLine : extentLine;
+
+        if(!isNaN(startLine) && !isNaN(endLine)) {
+            setLineNumbers(startLine, endLine);
+            noteElement.placeholder = "Add note from " + startLine + " to " + endLine;
+            selectLines();
+            showNoteForm();
+        }
+    }
+}, false);
+
+</script>
+
 <style>
     /* Based on http://kevinburke.bitbucket.org/markdowncss/ */
 

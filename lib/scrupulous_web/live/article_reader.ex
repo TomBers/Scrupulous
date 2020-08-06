@@ -1,14 +1,21 @@
 defmodule ScrupulousWeb.ArticleReader do
   use Phoenix.LiveView
 
+  alias Scrupulous.StaticContent
+  alias Scrupulous.UserContent
+
   @prefix "line_"
 
+  @book_id 20
+
   def handle_params(_params, _uri, socket) do
-    {:noreply, socket}
+    book = StaticContent.get_book!(@book_id)
+    notes = UserContent.get_notes_for_book(@book_id)
+    {:noreply, assign(socket, content: calc_html(notes), prefix: @prefix)}
   end
 
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, content: calc_html(), prefix: @prefix)}
+    {:ok, socket}
   end
 
   def handle_event("hitme", params, socket) do
@@ -16,9 +23,16 @@ defmodule ScrupulousWeb.ArticleReader do
     {:noreply, socket}
   end
 
-  def calc_html do
+  def handle_event("add_note", %{"startLine" => start_line, "endLine" => end_line, "noteText" => note_text }, socket) do
+    new_note = %{start_line: start_line, end_line: end_line, note: note_text, user_id: 4, book_id: 20}
+    UserContent.create_note(new_note)
+    new_notes = UserContent.get_notes_for_book(@book_id)
+
+    {:noreply, assign(socket, notes: new_notes, content: calc_html(new_notes))}
+  end
+
+  def calc_html(notes) do
     markdown = return_markdown()
-    notes = return_notes()
 
     {:ok, ast, []} = EarmarkParser.as_ast(markdown)
 
@@ -32,14 +46,19 @@ defmodule ScrupulousWeb.ArticleReader do
 
   def calc_node(ele, props, content, misc, indx, notes) do
     if Enum.any?(notes, fn(note) -> note.end_line == indx end) do
-#      We can add the notes contents here by appending elements
-      [
-        {ele, props ++ [{"id", "#{@prefix}#{indx}"}], content ++ note_link(indx) , misc},
-        {"div", [], ["I WILL be a note"], %{}}
-      ]
+      create_notes_elements(ele, props, content, misc, indx, notes)
     else
       {ele, props ++ [{"id", "#{@prefix}#{indx}"}], content, misc}
     end
+  end
+
+  def create_notes_elements(ele, props, content, misc, indx, notes) do
+    note_icon = [{ele, props ++ [{"id", "#{@prefix}#{indx}"}], content ++ note_link(indx) , misc}]
+    notes_text =
+      notes
+      |> Enum.filter(fn(note) -> note.end_line == indx end)
+      |> Enum.map(fn(note) ->  {"div", [], [note.note], %{}} end)
+    note_icon ++ notes_text
   end
 
   def note_link(indx) do
@@ -51,12 +70,6 @@ defmodule ScrupulousWeb.ArticleReader do
       {:ok, body} -> body
       {:error, reason} -> IO.inspect(reason); ""
     end
-  end
-
-  def return_notes do
-    [
-      %{start_line: 1, end_line: 2, note: "I am a note"}
-    ]
   end
 
 end
