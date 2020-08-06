@@ -32,7 +32,11 @@ defmodule ScrupulousWeb.ArticleReader do
 
   def calc_node(ele, props, content, misc, indx, notes) do
     if Enum.any?(notes, fn(note) -> note.end_line == indx end) do
-      {ele, props ++ [{"id", "#{@prefix}#{indx}"}], content ++ note_link(indx) , misc}
+#      We can add the notes contents here by appending elements
+      [
+        {ele, props ++ [{"id", "#{@prefix}#{indx}"}], content ++ note_link(indx) , misc},
+        {"div", [], ["I WILL be a note"], %{}}
+      ]
     else
       {ele, props ++ [{"id", "#{@prefix}#{indx}"}], content, misc}
     end
@@ -51,7 +55,7 @@ defmodule ScrupulousWeb.ArticleReader do
 
   def return_notes do
     [
-      %{start_line: 1, end_line: 39, note: "I am a note"}
+      %{start_line: 1, end_line: 2, note: "I am a note"}
     ]
   end
 
