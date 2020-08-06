@@ -57,7 +57,6 @@ defmodule ScrupulousWeb.PageController do
       |> Enum.with_index(1)
       |> Enum.map(fn({{ele, props, content, misc}, indx} ) -> calc_node(ele, props, content, misc, indx, notes) end)
 
-    IO.inspect(new_ast)
     html_doc = Earmark.Transform.transform(new_ast)
 
 #    {:ok, html_doc, []} = Earmark.as_html(markdown)
