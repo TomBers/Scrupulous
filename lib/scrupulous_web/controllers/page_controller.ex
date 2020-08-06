@@ -4,6 +4,8 @@ defmodule ScrupulousWeb.PageController do
   alias Scrupulous.Graph
   alias Scrupulous.StaticContent
 
+  @prefix "line_"
+
   def index(conn, _params) do
     render(conn, "index.html")
   end
@@ -42,18 +44,36 @@ defmodule ScrupulousWeb.PageController do
 
   def markdown(conn, _params) do
 
-    prefix = "line_"
+
 
     markdown = return_markdown()
+
+    notes = return_notes()
+
     {:ok, ast, []} = EarmarkParser.as_ast(markdown)
+
     new_ast =
       ast
       |> Enum.with_index(1)
-      |> Enum.map(fn({{ele, props, content, misc}, indx} ) -> {ele, props ++ [{"id", "#{prefix}#{indx}"}], content, misc} end)
+      |> Enum.map(fn({{ele, props, content, misc}, indx} ) -> calc_node(ele, props, content, misc, indx, notes) end)
+
+    IO.inspect(new_ast)
     html_doc = Earmark.Transform.transform(new_ast)
 
 #    {:ok, html_doc, []} = Earmark.as_html(markdown)
-    render(conn, "markdown.html", content: html_doc, prefix: prefix,  layout: {ScrupulousWeb.LayoutView, "basic.html"})
+    render(conn, "markdown.html", content: html_doc, prefix: @prefix,  layout: {ScrupulousWeb.LayoutView, "basic.html"})
+  end
+
+  def calc_node(ele, props, content, misc, indx, notes) do
+    if Enum.any?(notes, fn(note) -> note.end_line == indx end) do
+      {ele, props ++ [{"id", "#{@prefix}#{indx}"}], content ++ note_link() , misc}
+    else
+      {ele, props ++ [{"id", "#{@prefix}#{indx}"}], content, misc}
+    end
+  end
+
+  def note_link do
+    [{"a", [{"href", "#"}, {"class", "noteLink"}], ["note"], %{}}]
   end
 
   def return_markdown do
@@ -61,6 +81,12 @@ defmodule ScrupulousWeb.PageController do
       {:ok, body} -> body
       {:error, reason} -> IO.inspect(reason); ""
     end
+  end
+
+  def return_notes do
+    [
+    %{start_line: 1, end_line: 20, note: "I am a note"}
+    ]
   end
 
 end
