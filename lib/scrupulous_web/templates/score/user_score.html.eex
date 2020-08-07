@@ -16,7 +16,7 @@
             <tr>
                 <td><%= String.slice(note.note, 0..30) %> ...</td>
                 <td><%= note.book.title %></td>
-                <td><a href="/reader/<%= note.book.id %>/page/<%= div(note.end_line, 50) %>?note=<%= note.end_line %>">Read</a></td>
+                <td><a href="<%= get_note_url(note) %>">Read</a></td>
                 <td><%= length(note.skruples) %></td>
             </tr>
             <% end %>

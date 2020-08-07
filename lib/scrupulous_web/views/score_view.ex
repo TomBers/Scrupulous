@@ -12,4 +12,12 @@ defmodule ScrupulousWeb.ScoreView do
     |> Enum.reduce(0, fn(note, acc) -> acc + length(note.skruples) end)
   end
 
+  def get_note_url(note) do
+    if is_nil(note.book.type) do
+      "/reader/#{note.book.id}/page/#{div(note.end_line, 50)}?note=#{note.end_line}"
+    else
+      "/article/#{note.book.slug}?note=#{note.end_line}"
+    end
+  end
+
 end
