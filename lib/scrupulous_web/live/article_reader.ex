@@ -11,24 +11,49 @@ defmodule ScrupulousWeb.ArticleReader do
   def handle_params(_params, _uri, socket) do
     book = StaticContent.get_book!(@book_id)
     notes = UserContent.get_notes_for_book(@book_id)
-    {:noreply, assign(socket, content: calc_html(notes), prefix: @prefix)}
+    {:noreply, assign(socket, book: book, content: calc_html(notes), prefix: @prefix, notes: notes, open_note: nil)}
   end
 
-  def mount(_params, _session, socket) do
-    {:ok, socket}
+  def mount(%{"article" => article}, %{"user_token" => user_token}, socket) do
+      current_user = Scrupulous.Accounts.get_user_by_session_token(user_token)
+      {:ok, assign(socket, current_user: current_user, open_note: nil)}
   end
 
-  def handle_event("hitme", params, socket) do
-    IO.inspect(params)
-    {:noreply, socket}
+  def mount(%{"article" => article}, _session, socket) do
+    {:ok, assign(socket, current_user: nil, open_note: nil)}
+  end
+
+  def handle_event("open_note", %{"line-number" => line}, socket) do
+    open_note =
+      if is_nil(socket.assigns.open_note) do
+        String.to_integer(line)
+      else
+        nil
+      end
+    {:noreply, assign(socket, open_note: open_note)}
+  end
+
+  def handle_event("close_note", _params, socket) do
+    {:noreply, assign(socket, open_note: nil)}
   end
 
   def handle_event("add_note", %{"startLine" => start_line, "endLine" => end_line, "noteText" => note_text }, socket) do
-    new_note = %{start_line: start_line, end_line: end_line, note: note_text, user_id: 4, book_id: 20}
+    new_note = %{start_line: start_line, end_line: end_line, note: note_text, user_id: socket.assigns.current_user.id, book_id: socket.assigns.book.id}
     UserContent.create_note(new_note)
     new_notes = UserContent.get_notes_for_book(@book_id)
 
     {:noreply, assign(socket, notes: new_notes, content: calc_html(new_notes))}
+  end
+
+  def format_email(email) do
+    email
+    |> String.split("@")
+    |> List.first
+  end
+
+  def get_notes(line, notes) do
+    notes
+    |> Enum.filter(fn(note) -> line >= note.start_line and line <= note.end_line end)
   end
 
   def calc_html(notes) do
@@ -53,17 +78,12 @@ defmodule ScrupulousWeb.ArticleReader do
   end
 
   def create_notes_elements(ele, props, content, misc, indx, notes) do
-    note_icon = [{ele, props ++ [{"id", "#{@prefix}#{indx}"}], content ++ note_link(indx) , misc}]
-    notes_text =
-      notes
-      |> Enum.filter(fn(note) -> note.end_line == indx end)
-      |> Enum.map(fn(note) ->  {"div", [], [note.note], %{}} end)
-    note_icon ++ notes_text
+    [{ele, props ++ [{"id", "#{@prefix}#{indx}"}], content ++ note_link(indx) , misc}]
   end
 
   def note_link(indx) do
 #    [{"a", [{"href", "#"}, {"class", "noteLink"}, {"phx-click", "hitme"}, {"phx-value-line-number", "#{indx}"}], ["note"], %{}}]
-    [{"a", [{"href", "#"}, {"class", "noteLink"}, {"phx-click", "hitme"}, {"phx-value-line-number", "#{indx}"}], [{"i", [{"class", "fas fa-sticky-note"}], [], %{}}], %{}}]
+    [{"a", [{"href", "#"}, {"class", "noteLink"}, {"phx-click", "open_note"}, {"phx-value-line-number", "#{indx}"}], [{"i", [{"class", "fas fa-sticky-note"}], [], %{}}], %{}}]
   end
 
   def return_markdown do

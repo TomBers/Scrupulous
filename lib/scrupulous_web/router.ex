@@ -24,7 +24,7 @@ defmodule ScrupulousWeb.Router do
     resources "/bookmarks", BookmarkController, except: [:show, :edit]
 
     live "/reader/:book/page/:page", BookReader, layout: {ScrupulousWeb.LayoutView, :app}
-    live "/article", ArticleReader, layout: {ScrupulousWeb.LayoutView, :app}
+    live "/article/:article", ArticleReader, layout: {ScrupulousWeb.LayoutView, :app}
 
     get "/", PageController, :index
     get "/markdown", PageController, :markdown

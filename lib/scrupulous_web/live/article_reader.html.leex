@@ -1,19 +1,49 @@
-<%= Phoenix.HTML.raw(@content) %>
+<div class="container">
+    <div class="columns">
+        <div class="column is-three-quarters">
+            <%= Phoenix.HTML.raw(@content) %>
+        </div>
+        <div class="column">
+            <%= for note <- get_notes(@open_note, @notes) do %>
+            <div class="tile is-ancestor">
+                <div class="tile is-vertical is-12">
+                    <div class="tile">
+                        <div class="tile is-parent is-vertical">
+                            <article class="tile is-child notification">
+                                <a href="#" phx-click="close_note"><i class="far fa-times-circle"></i></a>
+                                <p class="title"><%= note.note %></p>
+                                <p class="subtitle"><a href="/contributors/<%= note.user_id %>"><%=
+                                    format_email(note.user.email) %></a></p>
+                                <p class="subtitle">
 
-
-<div class="field stick-to-bottom">
-    <div class="control">
-        <a href="#" phx-click="close_form"><i class="far fa-times-circle bigIcon"></i></a>
-        <form phx-submit="add_note">
-                    <textarea id="note" class="textarea" placeholder="Add note"
-                              onkeyup="setNoteText()"></textarea>
-            <br>
-            <input type="hidden" id="noteText" name="noteText" value="">
-            <input type="hidden" id="startLine" name="startLine" value="">
-            <input type="hidden" id="endLine" name="endLine" value="">
-            <input type="submit" id="noteBtn" value="Add note" class="button is-light"/>
-        </form>
+                                    <a href="#" phx-click="add_skruple" phx-value-note="<%= note.id %>"><i
+                                            class="far fa-heart"></i></a>
+                                </p>
+                                <p><%= length(note.skruples) %> Skruples</p>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+        </div>
+            <% end %>
     </div>
+
+    <%= if @current_user do %>
+        <div class="field stick-to-bottom">
+            <div class="control">
+                <a href="#" phx-click="close_form"><i class="far fa-times-circle bigIcon"></i></a>
+                <form phx-submit="add_note">
+                            <textarea id="note" class="textarea" placeholder="Add note"
+                                      onkeyup="setNoteText()"></textarea>
+                    <br>
+                    <input type="hidden" id="noteText" name="noteText" value="">
+                    <input type="hidden" id="startLine" name="startLine" value="">
+                    <input type="hidden" id="endLine" name="endLine" value="">
+                    <input type="submit" id="noteBtn" value="Add note" class="button is-light"/>
+                </form>
+            </div>
+        </div>
+    <% end %>
 </div>
 
 <script>
@@ -92,14 +122,6 @@
 <style>
     /* Based on http://kevinburke.bitbucket.org/markdowncss/ */
 
-body{
-    margin: 0 auto;
-    font-family: Georgia, Palatino, serif;
-    color: #444444;
-    line-height: 1;
-    max-width: 960px;
-    padding: 30px;
-}
 h1, h2, h3, h4 {
     color: #111111;
     font-weight: 400;
