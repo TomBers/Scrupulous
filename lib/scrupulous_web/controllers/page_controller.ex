@@ -4,7 +4,6 @@ defmodule ScrupulousWeb.PageController do
   alias Scrupulous.Graph
   alias Scrupulous.StaticContent
 
-  @prefix "line_"
 
   def index(conn, _params) do
     render(conn, "index.html")
