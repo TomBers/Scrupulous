@@ -6,11 +6,10 @@ defmodule ScrupulousWeb.ArticleReader do
 
   @prefix "line_"
 
-  @book_id 20
-
-  def handle_params(_params, _uri, socket) do
-    book = StaticContent.get_book!(@book_id)
-    notes = UserContent.get_notes_for_book(@book_id)
+  def handle_params(%{"article" => article}, _uri, socket) do
+    book = StaticContent.get_book_from_slug(article)
+#    TODO - can make this one query with the right preloads
+    notes = UserContent.get_notes_for_book(book.id)
     {:noreply, assign(socket, book: book, content: calc_html(notes), prefix: @prefix, notes: notes, open_note: nil)}
   end
 
@@ -38,9 +37,10 @@ defmodule ScrupulousWeb.ArticleReader do
   end
 
   def handle_event("add_note", %{"startLine" => start_line, "endLine" => end_line, "noteText" => note_text }, socket) do
-    new_note = %{start_line: start_line, end_line: end_line, note: note_text, user_id: socket.assigns.current_user.id, book_id: socket.assigns.book.id}
+    book_id = socket.assigns.book.id
+    new_note = %{start_line: start_line, end_line: end_line, note: note_text, user_id: socket.assigns.current_user.id, book_id: book_id }
     UserContent.create_note(new_note)
-    new_notes = UserContent.get_notes_for_book(@book_id)
+    new_notes = UserContent.get_notes_for_book(book_id)
 
     {:noreply, assign(socket, notes: new_notes, content: calc_html(new_notes))}
   end
