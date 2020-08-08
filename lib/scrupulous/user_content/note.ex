@@ -21,6 +21,6 @@ defmodule Scrupulous.UserContent.Note do
   def changeset(note, attrs) do
     note
     |> cast(attrs, [:start_line, :end_line, :note, :book_id, :user_id])
-    |> validate_required([:start_line, :end_line, :note])
+    |> validate_required([:start_line, :end_line, :note, :book_id, :user_id])
   end
 end

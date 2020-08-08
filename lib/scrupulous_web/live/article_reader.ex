@@ -6,6 +6,8 @@ defmodule ScrupulousWeb.ArticleReader do
   alias Scrupulous.StaticContent
   alias Scrupulous.UserContent
 
+  alias ScrupulousWeb.ReaderHelpers
+
   def handle_params(params, _uri, socket) do
     {article, open_note_line} = extract_prams(params)
     book = StaticContent.get_book_from_slug(article)
@@ -50,16 +52,15 @@ defmodule ScrupulousWeb.ArticleReader do
 
   def handle_event("add_note", %{"startLine" => start_line, "endLine" => end_line, "noteText" => note_text }, socket) do
     book_id = socket.assigns.book.id
-    new_note = %{start_line: start_line, end_line: end_line, note: note_text, user_id: socket.assigns.current_user.id, book_id: book_id }
-    UserContent.create_note(new_note)
-    new_notes = UserContent.get_notes_for_book(book_id)
+    user = socket.assigns.current_user
+    ReaderHelpers.make_note(start_line, end_line, note_text, user, book_id)
 
+    new_notes = UserContent.get_notes_for_book(book_id)
     {:noreply, assign(socket, notes: new_notes, content: BuildHtml.calc_html(socket.assigns.book, new_notes))}
   end
 
   def handle_event("add_skruple", %{"note" => note_id}, socket) do
-    new_skruple = %{note_id: note_id, user_id: socket.assigns.current_user.id}
-    UserContent.create_skruple(new_skruple)
+    ReaderHelpers.make_skruple(note_id, socket.assigns.current_user)
     {:noreply, assign(socket, notes: UserContent.get_notes_for_book(socket.assigns.book.id))}
   end
 

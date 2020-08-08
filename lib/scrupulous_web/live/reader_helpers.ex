@@ -1,5 +1,25 @@
 defmodule ScrupulousWeb.ReaderHelpers do
 
+  alias Scrupulous.UserContent
+
+  def make_note(_start_line, _end_line, _note, user, _book_id) when is_nil(user) do
+    nil
+  end
+
+  def make_note(start_line, end_line, note, user, book_id) do
+    new_note = %{start_line: start_line, end_line: end_line, note: note, user_id: user.id, book_id: book_id }
+    UserContent.create_note(new_note)
+  end
+
+  def make_skruple(_note_id, user) when is_nil(user) do
+    nil
+  end
+
+  def make_skruple(note_id, user) do
+    new_skruple = %{note_id: note_id, user_id: user.id}
+    UserContent.create_skruple(new_skruple)
+  end
+
   def format_email(email) do
     email
     |> String.split("@")

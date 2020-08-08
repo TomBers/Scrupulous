@@ -4,6 +4,8 @@ defmodule ScrupulousWeb.BookReader do
   alias Scrupulous.UserContent
   alias Scrupulous.StaticContent
 
+  alias ScrupulousWeb.ReaderHelpers
+
   def handle_params(%{"book" => book, "page" => pageStr}, _uri, socket) do
     {page, _rem} = Integer.parse(pageStr)
     start_line = page * 50
@@ -64,14 +66,14 @@ defmodule ScrupulousWeb.BookReader do
   end
 
   def handle_event("add_note", %{"startLine" => start_line, "endLine" => end_line, "noteText" => note_text }, socket) do
-    new_note = %{start_line: start_line, end_line: end_line, note: note_text, user_id: socket.assigns.current_user.id, book_id: socket.assigns.book.id}
-    UserContent.create_note(new_note)
+    book_id = socket.assigns.book.id
+    user = socket.assigns.current_user
+    ReaderHelpers.make_note(start_line, end_line, note_text, user, book_id)
     {:noreply, assign(socket, notes: get_updated_notes(socket))}
   end
 
   def handle_event("add_skruple", %{"note" => note_id}, socket) do
-    new_skruple = %{note_id: note_id, user_id: socket.assigns.current_user.id}
-    UserContent.create_skruple(new_skruple)
+    ReaderHelpers.make_skruple(note_id, socket.assigns.current_user)
     {:noreply, assign(socket, notes: get_updated_notes(socket))}
   end
 
@@ -100,10 +102,5 @@ defmodule ScrupulousWeb.BookReader do
     UserContent.get_notes_between_lines(socket.assigns.book.id, start_line, start_line + 50)
     |> Enum.sort_by(&(length(&1.skruples)), &>=/2)
   end
-
-#  Helper funcs
-
-
-
 
 end
