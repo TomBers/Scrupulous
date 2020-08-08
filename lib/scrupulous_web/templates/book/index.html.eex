@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-  <%= for book <- @books do %>
+  <%= for book <- only_show_books(@books) do %>
       <tr>
         <td><%= link book.title, to: Routes.page_path(@conn, :book_overview, book) %></td>
         <td><%= book.author %></td>

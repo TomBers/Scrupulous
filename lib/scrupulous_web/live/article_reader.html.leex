@@ -1,9 +1,7 @@
 <div class="container">
-    <div class="columns">
-        <div class="column is-three-quarters">
-            <%= Phoenix.HTML.raw(@content) %>
-        </div>
-        <div class="column">
+    <%= Phoenix.HTML.raw(@content) %>
+
+        <div class="notesBoxTop">
             <%= for note <- ScrupulousWeb.ReaderHelpers.get_notes(@open_note, @notes) do %>
             <div class="tile is-ancestor">
                 <div class="tile is-vertical is-12">
@@ -33,11 +31,12 @@
     </div>
 
     <%= if @current_user do %>
-        <div class="field stick-to-bottom">
+        <div class="field stick-to-bottom noteForm notAlwaysVisible">
             <div class="control">
+                <a href="#" onclick="hideNoteForm()"><i class="far fa-times-circle bigIcon"></i></a>
                 <form phx-submit="add_note">
-                            <textarea id="note" class="textarea" placeholder="Add note"
-                                      onkeyup="setNoteText()"></textarea>
+                    <textarea id="note" class="textarea" placeholder="Add note"
+                              onkeyup="setNoteText()"></textarea>
                     <br>
                     <input type="hidden" id="noteText" name="noteText" value="">
                     <input type="hidden" id="startLine" name="startLine" value="">
@@ -54,7 +53,6 @@
     var endLine;
     var noteElement = document.getElementById("note")
     var hiddenNoteElement = document.getElementById("noteText");
-
 
     function setNoteText() {
         hiddenNoteElement.value = noteElement.value;
@@ -92,12 +90,20 @@
         });
     }
 
-    function selectLines() {
+    function hideNoteForm() {
+        var elems = document.querySelectorAll(".noteForm");
+        elems.forEach.call(elems, function(ele) {
+            ele.classList.add("notAlwaysVisible");
+        });
+    }
+
+
+    function selectLines(sLine, eLine) {
         var elems = document.querySelectorAll(".selectableLine");
 
         elems.forEach.call(elems, function(el) {
             var elementId = getLineFromId(el);
-           if(elementId >= startLine && elementId <= endLine) {
+           if(elementId >= sLine && elementId <= eLine) {
                el.classList.add("selected");
             } else {
                 el.classList.remove("selected");
@@ -118,7 +124,7 @@
         if(!isNaN(startLine) && !isNaN(endLine)) {
             setLineNumbers(startLine, endLine);
             noteElement.placeholder = "Add note from " + startLine + " to " + endLine;
-            selectLines();
+            selectLines(startLine, endLine);
             showNoteForm();
         }
     }
@@ -128,6 +134,13 @@
 
 <style>
     /* Based on http://kevinburke.bitbucket.org/markdowncss/ */
+
+.notesBoxTop{
+    position: fixed;
+    width: 350px;
+    top: 52px;
+    right: 0;
+}
 
 h1, h2, h3, h4 {
     color: #111111;
