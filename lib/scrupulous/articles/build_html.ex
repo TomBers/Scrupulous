@@ -19,13 +19,13 @@ defmodule Scrupulous.BuildHtml do
 
   def calc_node(ele, props, content, misc, indx, notes) do
     if Enum.any?(notes, fn(note) -> note.end_line == indx end) do
-      create_notes_elements(ele, props, content, misc, indx, notes)
+      create_notes_elements(ele, props, content, misc, indx)
     else
       {ele, props ++ [{"id", "#{@prefix}#{indx}"}, {"class", "selectableLine"}], content, misc}
     end
   end
 
-  def create_notes_elements(ele, props, content, misc, indx, notes) do
+  def create_notes_elements(ele, props, content, misc, indx) do
     [{ele, props ++ [{"id", "#{@prefix}#{indx}"}, {"class", "selectableLine"}], content ++ note_link(indx) , misc}]
   end
 
