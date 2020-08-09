@@ -4,7 +4,7 @@
 
 <div class="form-group">
     <label class="subtitle">Mardown file</label>
-    <%= file_input f, :docfile, class: "input form-control" %>
+    <%= file_input f, :docfile, class: "input form-control", accept: ".md" %>
 </div>
 <br>
 <div class="form-group">

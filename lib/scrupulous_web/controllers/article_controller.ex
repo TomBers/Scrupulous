@@ -4,7 +4,13 @@ defmodule ScrupulousWeb.ArticleController do
   alias Scrupulous.BuildHtml
 
   def index(conn, _params) do
-    render(conn, "make_article.html")
+    if is_nil(conn.assigns.current_user) do
+      conn
+      |> put_flash(:info, "You need to be logged in.")
+      |> redirect(to: Routes.page_path(conn, :index))
+    else
+      render(conn, "make_article.html")
+    end
   end
 
   def create(conn, %{"upload" => upload}) do
