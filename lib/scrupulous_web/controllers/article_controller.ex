@@ -5,8 +5,11 @@ defmodule ScrupulousWeb.ArticleController do
   alias Scrupulous.ArticleContent.Article
   alias Scrupulous.BuildHtml
 
+  plug :ensure_logged_in_user
+
   def index(conn, _params) do
-    articles = ArticleContent.list_articles()
+    user = conn.assigns.current_user
+    articles = ArticleContent.list_my_articles(user.id)
     render(conn, "index.html", articles: articles)
   end
 
@@ -75,4 +78,18 @@ defmodule ScrupulousWeb.ArticleController do
     |> put_flash(:info, "Article deleted successfully.")
     |> redirect(to: Routes.article_path(conn, :index))
   end
+
+  defp ensure_logged_in_user(conn, _opts) do
+    if is_nil(conn.assigns.current_user) do
+      conn
+      |> put_flash(:error, "You must be logged in")
+      |> redirect(to: "/")
+      |> halt()
+    else
+      conn
+    end
+  end
+
 end
+
+

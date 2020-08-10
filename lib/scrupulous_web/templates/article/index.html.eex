@@ -1,6 +1,7 @@
-<h1>Listing Articles</h1>
+<div class="container">
+<h1 class="title">Listing Articles</h1>
 
-<table>
+<table class="table is-striped is-fullwidth">
   <thead>
     <tr>
       <th>Title</th>
@@ -28,3 +29,4 @@
 </table>
 
 <span><%= link "New Article", to: Routes.article_path(@conn, :new) %></span>
+</div>

@@ -23,6 +23,13 @@ defmodule Scrupulous.ArticleContent do
     Repo.all(Article)
   end
 
+  def list_my_articles(user_id) do
+    query =
+      from articles in Article,
+           where: articles.user_id == ^user_id
+    Repo.all(query)
+  end
+
   @doc """
   Gets a single article.
 

@@ -8,7 +8,7 @@ defmodule Scrupulous.Repo.Migrations.ArticleNotesAndSkruples do
       add :start_line, :integer
       add :end_line, :integer
       add :note, :text
-      add :article_id, references(:articles, on_delete: :nothing)
+      add :article_id, references(:articles, on_delete: :delete_all)
       add :user_id, references(:users, on_delete: :nothing)
 
       timestamps()
@@ -17,7 +17,7 @@ defmodule Scrupulous.Repo.Migrations.ArticleNotesAndSkruples do
     create index(:article_notes, [:article_id])
 
     create table(:article_skruples) do
-      add :note_id, references(:article_notes, on_delete: :nothing)
+      add :note_id, references(:article_notes, on_delete: :delete_all)
       add :user_id, references(:users, on_delete: :nothing)
 
       timestamps()

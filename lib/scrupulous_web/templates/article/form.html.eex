@@ -5,16 +5,19 @@
     </div>
   <% end %>
 
-  <%= label f, :title %>
-  <%= text_input f, :title %>
+  <%= label f, :title, class: "subtitle" %>
+  <%= text_input f, :title, class: "input" %>
   <%= error_tag f, :title %>
-
+<br>
+<br>
   <div class="form-group">
     <label class="subtitle">Mardown file</label>
     <%= file_input f, :docfile, class: "input form-control", accept: ".md" %>
   </div>
 
+<br>
+
   <div>
-    <%= submit "Save" %>
+    <%= submit "Save", class: "button" %>
   </div>
 <% end %>
