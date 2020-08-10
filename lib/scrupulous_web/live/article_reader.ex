@@ -3,15 +3,15 @@ defmodule ScrupulousWeb.ArticleReader do
 
   alias Scrupulous.BuildHtml
 
-  alias Scrupulous.StaticContent
+  alias Scrupulous.ArticleContent
   alias Scrupulous.UserContent
 
   alias ScrupulousWeb.ReaderHelpers
 
   def handle_params(params, _uri, socket) do
     {article, open_note_line} = extract_prams(params)
-    book = StaticContent.get_book_from_slug(article)
-    notes = UserContent.get_notes_for_book(book.id)
+    book = ArticleContent.get_article_from_slug(article)
+    notes = [] #UserContent.get_notes_for_book(book.id)
     {:noreply, assign(socket, book: book, content: BuildHtml.calc_html(book, notes), prefix: BuildHtml.get_prefix(), notes: notes, open_note: open_note_line)}
   end
 
