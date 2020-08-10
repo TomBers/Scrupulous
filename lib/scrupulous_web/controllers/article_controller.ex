@@ -6,6 +6,7 @@ defmodule ScrupulousWeb.ArticleController do
   alias Scrupulous.BuildHtml
 
   plug :ensure_logged_in_user
+  plug :check_article_ownership when action in [:show, :edit, :update, :delete]
 
   def index(conn, _params) do
     user = conn.assigns.current_user
@@ -42,19 +43,19 @@ defmodule ScrupulousWeb.ArticleController do
   end
 
   def show(conn, %{"id" => id}) do
-    article = ArticleContent.get_article!(id)
+    article = conn.assigns.article
     content = BuildHtml.preview_html(article)
     render(conn, "show.html", article: article, content: content)
   end
 
   def edit(conn, %{"id" => id}) do
-    article = ArticleContent.get_article!(id)
+    article = conn.assigns.article
     changeset = ArticleContent.change_article(article)
     render(conn, "edit.html", article: article, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "article" => article_params}) do
-    article = ArticleContent.get_article!(id)
+    article = conn.assigns.article
 
     user = conn.assigns.current_user
     updated_article = article_from_params(article_params, user)
@@ -71,7 +72,7 @@ defmodule ScrupulousWeb.ArticleController do
   end
 
   def delete(conn, %{"id" => id}) do
-    article = ArticleContent.get_article!(id)
+    article = conn.assigns.article
     {:ok, _article} = ArticleContent.delete_article(article)
 
     conn
@@ -89,6 +90,22 @@ defmodule ScrupulousWeb.ArticleController do
       conn
     end
   end
+
+  defp check_article_ownership(conn, _opts) do
+    id = get_path_params(conn.path_params)
+    article = ArticleContent.get_article!(id)
+    if article.user_id == conn.assigns.current_user.id do
+      conn
+      |> assign(:article, article)
+    else
+      conn
+      |> put_flash(:error, "Article not found")
+      |> redirect(to: "/")
+      |> halt()
+    end
+  end
+
+  def get_path_params(%{"id" => id}), do: id
 
 end
 
