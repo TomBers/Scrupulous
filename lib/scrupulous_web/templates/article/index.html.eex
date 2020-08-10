@@ -1,11 +1,12 @@
 <div class="container">
-<h1 class="title">Listing Articles</h1>
+<h1 class="title">My Articles</h1>
 
 <table class="table is-striped is-fullwidth">
   <thead>
     <tr>
       <th>Title</th>
       <th>Public URL</th>
+      <th>Notes</th>
       <th></th>
       <th></th>
       <th></th>
@@ -16,7 +17,7 @@
     <tr>
       <td><%= article.title %></td>
       <td><a href="<%= Routes.live_path(@conn, ScrupulousWeb.ArticleReader, article.slug) %>">https://skrupulus.com/article/<%= article.slug %></a></td>
-
+      <td><%= length(article.notes) %></td>
       <td><%= link "Preview", to: Routes.article_path(@conn, :show, article) %></td>
       <td><%= link "Edit", to: Routes.article_path(@conn, :edit, article) %></td>
       <td><%= link "Delete", to: Routes.article_path(@conn, :delete, article), method: :delete, data: [confirm: "Are you sure?"] %></td>
@@ -25,5 +26,5 @@
   </tbody>
 </table>
 
-<span><%= link "New Article", to: Routes.article_path(@conn, :new) %></span>
+<span><%= link "New Article", to: Routes.article_path(@conn, :new), class: "button is-info" %></span>
 </div>

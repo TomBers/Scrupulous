@@ -26,7 +26,8 @@ defmodule Scrupulous.ArticleContent do
   def list_my_articles(user_id) do
     query =
       from articles in Article,
-           where: articles.user_id == ^user_id
+           where: articles.user_id == ^user_id,
+           preload: [:notes]
     Repo.all(query)
   end
 
