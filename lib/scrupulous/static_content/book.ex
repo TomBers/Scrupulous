@@ -12,7 +12,6 @@ defmodule Scrupulous.StaticContent.Book do
     field :publication_year, :integer
     field :title, :string
     field :slug, :string
-    field :type, :string
 
     has_many :notes, Note, on_delete: :delete_all
     has_many :resources, Resource, on_delete: :delete_all

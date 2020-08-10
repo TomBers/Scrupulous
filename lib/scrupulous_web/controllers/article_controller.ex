@@ -34,7 +34,7 @@ defmodule ScrupulousWeb.ArticleController do
     file = params["docfile"]
     case File.read(file.path) do
       {:ok, body} -> %{user_id: user.id, title: title, content: body, slug: title |> String.downcase |> String.replace(" ", "-") }
-      {:error, reason} -> %{}
+      {:error, _reason} -> %{}
     end
   end
 

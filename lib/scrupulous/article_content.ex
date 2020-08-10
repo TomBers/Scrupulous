@@ -7,6 +7,8 @@ defmodule Scrupulous.ArticleContent do
   alias Scrupulous.Repo
 
   alias Scrupulous.ArticleContent.Article
+  alias Scrupulous.ArticleContent.Note
+  alias Scrupulous.ArticleContent.Skruple
 
   @doc """
   Returns the list of articles.
@@ -43,6 +45,15 @@ defmodule Scrupulous.ArticleContent do
            where: articles.slug == ^slug
     Repo.one(query)
   end
+
+  def get_notes_for_article(article_id) do
+    query =
+      from note in Note,
+           where: note.article_id == ^"#{article_id}",
+           preload: [:user, :article_skruples]
+    Repo.all(query)
+  end
+
 
   @doc """
   Creates a article.
@@ -108,4 +119,17 @@ defmodule Scrupulous.ArticleContent do
   def change_article(%Article{} = article, attrs \\ %{}) do
     Article.changeset(article, attrs)
   end
+
+  def create_note(attrs \\ %{}) do
+    %Note{}
+    |> Note.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def create_skruple(attrs \\ %{}) do
+    %Skruple{}
+    |> Skruple.changeset(attrs)
+    |> Repo.insert()
+  end
+
 end

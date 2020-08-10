@@ -14,14 +14,14 @@
                                     ScrupulousWeb.ReaderHelpers.format_email(note.user.email) %></a></p>
                                 <p class="subtitle">
                                     <%= if @current_user do %>
-                                        <%= if ScrupulousWeb.ReaderHelpers.have_skruped(@current_user, note.skruples) do %>
+                                        <%= if ScrupulousWeb.ReaderHelpers.have_skruped(@current_user, note.article_skruples) do %>
                                             <i class="fas fa-heart"></i>
                                         <% else %>
                                             <a href="#" phx-click="add_skruple" phx-value-note="<%= note.id %>"><i class="far fa-heart"></i></a>
                                         <% end %>
                                     <% end %>
                                 </p>
-                                <p><%= length(note.skruples) %> Skruples</p>
+                                <p><%= length(note.article_skruples) %> Skruples</p>
                             </article>
                         </div>
                     </div>
