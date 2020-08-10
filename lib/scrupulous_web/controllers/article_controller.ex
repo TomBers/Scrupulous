@@ -42,19 +42,19 @@ defmodule ScrupulousWeb.ArticleController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{"id" => _id}) do
     article = conn.assigns.article
     content = BuildHtml.preview_html(article)
     render(conn, "show.html", article: article, content: content)
   end
 
-  def edit(conn, %{"id" => id}) do
+  def edit(conn, %{"id" => _id}) do
     article = conn.assigns.article
     changeset = ArticleContent.change_article(article)
     render(conn, "edit.html", article: article, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "article" => article_params}) do
+  def update(conn, %{"id" => _id, "article" => article_params}) do
     article = conn.assigns.article
 
     user = conn.assigns.current_user
@@ -71,7 +71,7 @@ defmodule ScrupulousWeb.ArticleController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
+  def delete(conn, %{"id" => _id}) do
     article = conn.assigns.article
     {:ok, _article} = ArticleContent.delete_article(article)
 
