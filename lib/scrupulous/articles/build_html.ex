@@ -35,7 +35,6 @@ defmodule Scrupulous.BuildHtml do
   end
 
   def note_link(indx) do
-    #    [{"a", [{"href", "#"}, {"class", "noteLink"}, {"phx-click", "hitme"}, {"phx-value-line-number", "#{indx}"}], ["note"], %{}}]
     [{"a", [{"href", "#"}, {"class", "noteLink"}, {"phx-click", "open_note"}, {"phx-value-line-number", "#{indx}"}], [{"i", [{"class", "fas fa-sticky-note"}], [], %{}}], %{}}]
   end
 
@@ -45,19 +44,6 @@ defmodule Scrupulous.BuildHtml do
       {:ok, body} -> body
       {:error, reason} -> IO.inspect(reason); ""
     end
-  end
-
-  def get_article_path(book) do
-    #    Server path
-    deploy_path = "/app/lib/scrupulous-0.1.0/priv/static/static_book_txt"
-    local_path = "priv/static/static_book_txt"
-    static_path = if File.exists?(deploy_path) do
-      deploy_path
-    else
-      local_path
-    end
-    file_path = "#{book.file_name}.md"
-    "#{static_path}/#{file_path}"
   end
 
 end
