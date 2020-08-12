@@ -1,7 +1,8 @@
 <div class="container">
 <h1 class="title">New Article</h1>
-
+    <a href="https://daringfireball.net/projects/markdown/syntax" target="_blank">Markdown guide</a>
+<br><br>
 <%= render "form.html", Map.put(assigns, :action, Routes.article_path(@conn, :create)) %>
-
+<br>
 <span><%= link "Back", to: Routes.article_path(@conn, :index) %></span>
 </div>
