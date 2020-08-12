@@ -46,6 +46,13 @@ defmodule Scrupulous.StaticContent do
 
   def get_book_with_notes!(id), do: Repo.get!(Book, id) |> Repo.preload([:notes, :resources])
 
+  def get_book_from_slug(slug) do
+    query =
+      from books in Book,
+           where: books.slug == ^slug
+    Repo.one(query)
+    end
+
   @doc """
   Creates a book.
 

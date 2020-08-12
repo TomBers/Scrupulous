@@ -49,7 +49,8 @@ defmodule Scrupulous.UserContent do
   def get_notes_for_book(book_id) do
     query =
       from note in Note,
-           where: note.book_id == ^"#{book_id}"
+           where: note.book_id == ^"#{book_id}",
+           preload: [:user, :skruples]
     Repo.all(query)
   end
 

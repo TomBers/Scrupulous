@@ -20,13 +20,13 @@
             <%= if line.txt == "\n" do %>
             <div class="spacer"></div>
             <% else %>
-            <div class='<%= get_line_class(line.line, @open_note, @notes) %>' id="<%= line.line %>">
+            <div class='<%= ScrupulousWeb.ReaderHelpers.get_line_class(line.line, @open_note, @notes) %>' id="<%= line.line %>">
                 <span id="<%= line.line %>"><%= line.txt %></span>
-                <%= if has_note(line.line, @notes) do %>
-                <a href="#" class="<%= get_note_class(line.line, @open_note) %>" phx-click="open_note"
+                <%= if ScrupulousWeb.ReaderHelpers.has_note(line.line, @notes) do %>
+                <a href="#" class="<%= ScrupulousWeb.ReaderHelpers.get_note_class(line.line, @open_note) %>" phx-click="open_note"
                    phx-value-line-number="<%= line.line %>"><i class="fas fa-sticky-note"></i></a>
-                    <%= if is_note_open(line.line, @open_note) do %>
-                        <%= for note <- get_notes(line.line, @notes) do %>
+                    <%= if ScrupulousWeb.ReaderHelpers.is_note_open(line.line, @open_note) do %>
+                        <%= for note <- ScrupulousWeb.ReaderHelpers.get_notes(line.line, @notes) do %>
                         <div class="tile is-ancestor">
                             <div class="tile is-vertical is-12">
                                 <div class="tile">
@@ -35,10 +35,10 @@
                                             <a href="#" phx-click="close_note"><i class="far fa-times-circle"></i></a>
                                             <p class="title"><%= note.note %></p>
                                             <p class="subtitle"><a href="/contributors/<%= note.user_id %>"><%=
-                                                format_email(note.user.email) %></a></p>
+                                                ScrupulousWeb.ReaderHelpers.format_email(note.user.email) %></a></p>
                                             <p class="subtitle">
                                                 <%= if @current_user do %>
-                                                <%= if have_skruped(@current_user, note.skruples) do %>
+                                                <%= if ScrupulousWeb.ReaderHelpers.have_skruped(@current_user, note.skruples) do %>
                                                 <i class="fas fa-heart"></i>
                                                 <% else %>
                                                 <a href="#" phx-click="add_skruple" phx-value-note="<%= note.id %>"><i

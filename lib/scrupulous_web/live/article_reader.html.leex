@@ -1,0 +1,347 @@
+<div class="container">
+    <%= Phoenix.HTML.raw(@content) %>
+
+        <div class="notesBoxTop">
+            <%= for note <- ScrupulousWeb.ReaderHelpers.get_notes(@open_note, @notes) do %>
+            <div class="tile is-ancestor">
+                <div class="tile is-vertical is-12">
+                    <div class="tile">
+                        <div class="tile is-parent is-vertical">
+                            <article class="tile is-child notification">
+                                <a href="#" phx-click="close_note"><i class="far fa-times-circle"></i></a>
+                                <p class="title"><%= note.note %></p>
+                                <p class="subtitle"><a href="/contributors/<%= note.user_id %>"><%=
+                                    ScrupulousWeb.ReaderHelpers.format_email(note.user.email) %></a></p>
+                                <p class="subtitle">
+                                    <%= if @current_user do %>
+                                        <%= if ScrupulousWeb.ReaderHelpers.have_skruped(@current_user, note.article_skruples) do %>
+                                            <i class="fas fa-heart"></i>
+                                        <% else %>
+                                            <a href="#" phx-click="add_skruple" phx-value-note="<%= note.id %>"><i class="far fa-heart"></i></a>
+                                        <% end %>
+                                    <% end %>
+                                </p>
+                                <p><%= length(note.article_skruples) %> Skruples</p>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+        </div>
+            <% end %>
+    </div>
+
+    <%= if @current_user do %>
+        <div class="field stick-to-bottom noteForm notAlwaysVisible">
+            <div class="control">
+                <a href="#" onclick="hideNoteForm()"><i class="far fa-times-circle bigIcon"></i></a>
+                <form phx-submit="add_note">
+                    <textarea id="note" class="textarea" placeholder="Add note"
+                              onkeyup="setNoteText()"></textarea>
+                    <br>
+                    <input type="hidden" id="noteText" name="noteText" value="">
+                    <input type="hidden" id="startLine" name="startLine" value="">
+                    <input type="hidden" id="endLine" name="endLine" value="">
+                    <input type="submit" id="noteBtn" value="Add note" class="button is-light"/>
+                </form>
+            </div>
+        </div>
+    <% end %>
+</div>
+
+<script>
+    var startLine;
+    var endLine;
+    var noteElement = document.getElementById("note")
+    var hiddenNoteElement = document.getElementById("noteText");
+
+    function setNoteText() {
+        hiddenNoteElement.value = noteElement.value;
+    }
+
+    function setLineNumbers(start, end) {
+        try {
+            document.getElementById("startLine").value = start;
+            document.getElementById("endLine").value = end;
+        } catch(error) {
+            console.error(error)
+        }
+    }
+
+    function getLineFromId(element) {
+        return parseInt(element.id.replace("<%= @prefix %>", ""), 10)
+    }
+
+    function getNodeID(node) {
+        if(node == null) {
+            return null;
+        }
+        try {
+            var lineID = getLineFromId(node.parentElement);
+            return isNaN(lineID) ? getNodeID(node.parentElement) : lineID;
+         } catch (e) {
+            return getNodeID(node.parentElement);
+         }
+    }
+
+    function showNoteForm() {
+        var elems = document.querySelectorAll(".notAlwaysVisible");
+        elems.forEach.call(elems, function(ele) {
+            ele.classList.remove("notAlwaysVisible");
+        });
+    }
+
+    function hideNoteForm() {
+        var elems = document.querySelectorAll(".noteForm");
+        elems.forEach.call(elems, function(ele) {
+            ele.classList.add("notAlwaysVisible");
+        });
+    }
+
+
+    function selectLines(sLine, eLine) {
+        var elems = document.querySelectorAll(".selectableLine");
+
+        elems.forEach.call(elems, function(el) {
+            var elementId = getLineFromId(el);
+           if(elementId >= sLine && elementId <= eLine) {
+               el.classList.add("selected");
+            } else {
+                el.classList.remove("selected");
+            }
+         });
+    }
+
+  document.addEventListener('selectionchange', () => {
+    var select = document.getSelection();
+
+    if (select.anchorNode.nodeName == "#text") {
+        var baseLine = getNodeID(select.anchorNode);
+        var extentLine = getNodeID(select.focusNode);
+
+        startLine = baseLine <= extentLine ? baseLine : extentLine;
+        endLine = baseLine >= extentLine ? baseLine : extentLine;
+
+        if(!isNaN(startLine) && !isNaN(endLine)) {
+            setLineNumbers(startLine, endLine);
+            noteElement.placeholder = "Add note from " + startLine + " to " + endLine;
+            selectLines(startLine, endLine);
+            showNoteForm();
+        }
+    }
+}, false);
+
+</script>
+
+<style>
+
+.notesBoxTop{
+    position: fixed;
+    width: 350px;
+    top: 52px;
+    right: 0;
+}
+
+/* https://markdowncss.github.io/ */
+
+@media print {
+  *,
+  *:before,
+  *:after {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: "";
+  }
+
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+
+  img {
+    max-width: 100% !important;
+  }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+}
+
+html {
+  font-size: 12px;
+}
+
+@media screen and (min-width: 32rem) and (max-width: 48rem) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media screen and (min-width: 48rem) {
+  html {
+    font-size: 16px;
+  }
+}
+
+body {
+  line-height: 1.85;
+}
+
+p,
+.air-p {
+  font-size: 1rem;
+  margin-bottom: 1.3rem;
+}
+
+h1,
+.air-h1,
+h2,
+.air-h2,
+h3,
+.air-h3,
+h4,
+.air-h4 {
+  margin: 1.414rem 0 .5rem;
+  font-weight: inherit;
+  line-height: 1.42;
+}
+
+h1,
+.air-h1 {
+  margin-top: 0;
+  font-size: 3.998rem;
+}
+
+h2,
+.air-h2 {
+  font-size: 2.827rem;
+}
+
+h3,
+.air-h3 {
+  font-size: 1.999rem;
+}
+
+h4,
+.air-h4 {
+  font-size: 1.414rem;
+}
+
+h5,
+.air-h5 {
+  font-size: 1.121rem;
+}
+
+h6,
+.air-h6 {
+  font-size: .88rem;
+}
+
+small,
+.air-small {
+  font-size: .707em;
+}
+
+/* https://github.com/mrmrs/fluidity */
+
+img,
+canvas,
+iframe,
+video,
+svg,
+select,
+textarea {
+  max-width: 100%;
+}
+
+
+.container {
+  color: #444;
+  font-family: 'Open Sans', Helvetica, sans-serif;
+  font-weight: 300;
+  margin: 0rem auto 0rem;
+  max-width: 60rem;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+img {
+  border-radius: 50%;
+  height: 200px;
+  margin: 0 auto;
+  width: 200px;
+}
+
+pre {
+  background-color: #fafafa;
+  padding: 1rem;
+  text-align: left;
+}
+
+blockquote {
+  margin: 0;
+  border-left: 5px solid #7a7a7a;
+  font-style: italic;
+  padding: 1.33em;
+  text-align: left;
+}
+
+ul,
+ol,
+li {
+  text-align: left;
+}
+
+p {
+  color: #777;
+}
+</style>
