@@ -34,12 +34,25 @@ defmodule ScrupulousWeb.ArticleController do
   end
 
   def article_from_params(params, user) do
-    title = params["title"]
+    title = clean_title(params["title"])
     file = params["docfile"]
+
     case File.read(file.path) do
-      {:ok, body} -> %{user_id: user.id, title: title, content: body, slug: title |> String.downcase |> String.replace(" ", "-") }
+      {:ok, body} -> %{user_id: user.id, title: title, content: body, slug: slug_from_title(title) }
       {:error, _reason} -> %{}
     end
+  end
+
+  def clean_title(title) do
+    title
+    |> String.replace(~r/[^\w\s]/iu, "")
+    |> String.replace_trailing(" ", "")
+  end
+
+  def slug_from_title(title) do
+    title
+    |> String.downcase
+    |> String.replace(" ", "-")
   end
 
   def show(conn, %{"id" => _id}) do
@@ -56,8 +69,8 @@ defmodule ScrupulousWeb.ArticleController do
 
   def update(conn, %{"id" => _id, "article" => article_params}) do
     article = conn.assigns.article
-
     user = conn.assigns.current_user
+
     updated_article = article_from_params(article_params, user)
 
     case ArticleContent.update_article(article, updated_article) do
