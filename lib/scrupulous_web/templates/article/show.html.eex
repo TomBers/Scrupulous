@@ -4,13 +4,6 @@
 
 <style>
 
-.notesBoxTop{
-    position: fixed;
-    width: 350px;
-    top: 52px;
-    right: 0;
-}
-
 /* https://markdowncss.github.io/ */
 
 @media print {
