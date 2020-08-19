@@ -5,8 +5,13 @@ defmodule ScrupulousWeb.ArticleController do
   alias Scrupulous.ArticleContent.Article
   alias Scrupulous.BuildHtml
 
-  plug :ensure_logged_in_user
+  plug :ensure_logged_in_user when action not in [:all_articles]
   plug :check_article_ownership when action in [:show, :edit, :update, :delete]
+
+  def all_articles(conn, _params) do
+    articles = ArticleContent.list_articles()
+    render(conn, "all_articles.html", articles: articles)
+  end
 
   def index(conn, _params) do
     user = conn.assigns.current_user
