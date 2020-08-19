@@ -34,6 +34,7 @@ defmodule ScrupulousWeb.Router do
     get "/book/:book/resources/new/:category", ResourceController, :new_for_book
     get "/graph/", PageController, :graph
     get "/graph/:book", PageController, :usergraph
+    get "/list/articles", ArticleController, :all_articles
 #    get "/make/data/:type", PageController, :makedata
 
   end

@@ -4,13 +4,6 @@
 
 <style>
 
-.notesBoxTop{
-    position: fixed;
-    width: 350px;
-    top: 52px;
-    right: 0;
-}
-
 /* https://markdowncss.github.io/ */
 
 @media print {
@@ -40,6 +33,8 @@
   a[href^="javascript:"]:after {
     content: "";
   }
+
+
 
   pre,
   blockquote {
@@ -95,8 +90,8 @@ body {
 
 p,
 .air-p {
-  font-size: 1rem;
-  margin-bottom: 1.3rem;
+  font-size: 1.2rem;
+  font-weight: 300;
 }
 
 h1,
@@ -209,10 +204,6 @@ ul,
 ol,
 li {
   text-align: left;
-}
-
-p {
-  color: #777;
 }
 </style>
 
