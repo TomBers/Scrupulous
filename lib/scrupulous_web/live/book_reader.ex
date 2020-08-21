@@ -22,7 +22,7 @@ defmodule ScrupulousWeb.BookReader do
       else
        nil
       end
-    {:noreply, assign(socket, title: book.title, book: book, notes: notes, lines: lines, page: page, show_note_form: false, bookmarks: bookmarks)}
+    {:noreply, assign(socket, title: book.title, book: book, notes: notes, lines: lines, page: page, show_note_form: false, bookmarks: bookmarks, search: [])}
   end
 
   def mount(%{"book" => book, "page" => page, "note" => note_id}, %{"user_token" => user_token}, socket) do
@@ -92,6 +92,16 @@ defmodule ScrupulousWeb.BookReader do
   def handle_event("close_form", _params, socket) do
     rand = Enum.random(1..10000)
     {:noreply, assign(socket, show_note_form: rand)}
+  end
+
+  def handle_event("search", %{"_target" => _target, "query" => query}, socket) do
+    len = String.length(query)
+    search = if  len > 6 do
+        FileStream.find_phrase(socket.assigns.book.file_name, query)
+      else
+        []
+    end
+    {:noreply, assign(socket, search: search)}
   end
 
 

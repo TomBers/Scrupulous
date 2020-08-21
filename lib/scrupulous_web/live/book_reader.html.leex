@@ -11,8 +11,18 @@
         <% end %>
     </h2>
 
+    <form phx-change="search" class="search-form">
+        <input type="text" id="search" name="query" class="input searchInput" placeholder="Search" phx-debounce="300" phx-change="search">
+    </form>
+    <div class="content">
+        <ol type="1">
+            <%= for res <- @search do %>
+                <li><a href="/reader/<%= @book.id %>/page/<%= div(res.line, 50) %>"><%= res.txt %></a></li>
+        <% end %>
+        </ol>
+    </div>
+    <br>
     <a href="/reader/<%= @book.id %>/page/<%= @page - 1 %>"><i class="fas fa-arrow-left bigIcon"></i></a>
-
     <a href="/reader/<%= @book.id %>/page/<%= @page + 1 %>" class="is-pulled-right"><i class="fas fa-arrow-right bigIcon"></i></a>
     <br><br>
     <div class="text-div">
