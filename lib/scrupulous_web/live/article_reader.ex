@@ -9,7 +9,7 @@ defmodule ScrupulousWeb.ArticleReader do
     {article_slug, open_note_line} = extract_prams(params)
     article = ArticleContent.get_article_from_slug(article_slug)
     notes = ArticleContent.get_notes_for_article(article.id)
-    {:noreply, assign(socket, article: article, content: BuildHtml.calc_html(article, notes), prefix: BuildHtml.get_prefix(), notes: notes, open_note: open_note_line)}
+    {:noreply, assign(socket, article: article, content: BuildHtml.calc_html(article, notes, socket.assigns.current_user), prefix: BuildHtml.get_prefix(), notes: notes, open_note: open_note_line)}
   end
 
   def extract_prams(%{"article" => article, "note" => note}) do
@@ -39,11 +39,12 @@ defmodule ScrupulousWeb.ArticleReader do
     make_note(start_line, end_line, note_text, user, article_id)
 
     new_notes = ArticleContent.get_notes_for_article(article_id)
-    {:noreply, assign(socket, notes: new_notes, content: BuildHtml.calc_html(socket.assigns.article, new_notes))}
+    {:noreply, assign(socket, notes: new_notes, content: BuildHtml.calc_html(socket.assigns.article, new_notes, socket.assigns.current_user))}
   end
 
   def handle_event("add_skruple", %{"note" => note_id}, socket) do
     make_skruple(note_id, socket.assigns.current_user)
+#    TODO rebuild page on liked
     {:noreply, assign(socket, notes: ArticleContent.get_notes_for_article(socket.assigns.article.id))}
   end
 

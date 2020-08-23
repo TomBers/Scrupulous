@@ -1,6 +1,29 @@
 <div class="container">
     <%= Phoenix.HTML.raw(@content) %>
 
+    <%= for note <- @notes do %>
+    <div class="tile is-ancestor">
+                <div class="tile is-parent is-vertical">
+                    <article class="tile is-child notification">
+                        <a href="#" phx-click="close_note"><i class="far fa-times-circle"></i></a>
+                        <p class="title"><%= note.note %></p>
+                        <p class="subtitle"><a href="/contributors/<%= note.user_id %>"><%=
+                            ScrupulousWeb.ReaderHelpers.format_email(note.user.email) %></a></p>
+                        <p class="subtitle">
+                            <%= if @current_user do %>
+                            <%= if ScrupulousWeb.ReaderHelpers.have_skruped(@current_user, note.article_skruples) do %>
+                            <i class="fas fa-heart"></i>
+                            <% else %>
+                            <a href="#" phx-click="add_skruple" phx-value-note="<%= note.id %>"><i class="far fa-heart"></i></a>
+                            <% end %>
+                            <% end %>
+                        </p>
+                        <p><%= length(note.article_skruples) %> Skruples</p>
+                    </article>
+                </div>
+    </div>
+    <% end %>
+
     <%= if @current_user do %>
         <div class="field stick-to-bottom noteForm notAlwaysVisible">
             <div class="control">
