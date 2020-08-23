@@ -95,8 +95,7 @@ defmodule ScrupulousWeb.BookReader do
   end
 
   def handle_event("search", %{"_target" => _target, "query" => query}, socket) do
-    len = String.length(query)
-    search = if  len > 6 do
+    search = if String.length(query) > 7 do
         FileStream.find_phrase(socket.assigns.book.file_name, query)
       else
         []
