@@ -9,7 +9,7 @@ defmodule ScrupulousWeb.ArticleReader do
     {article_slug, open_note_line} = extract_prams(params)
     article = ArticleContent.get_article_from_slug(article_slug)
     notes = ArticleContent.get_notes_for_article(article.id)
-    {:noreply, assign(socket, article: article, content: BuildHtml.calc_html(article, notes), prefix: BuildHtml.get_prefix(), notes: notes, open_note: open_note_line)}
+    {:noreply, assign(socket, article: article, content: BuildHtml.calc_html(article, notes, socket.assigns.current_user), prefix: BuildHtml.get_prefix(), notes: notes, open_note: open_note_line)}
   end
 
   def extract_prams(%{"article" => article, "note" => note}) do
@@ -33,32 +33,20 @@ defmodule ScrupulousWeb.ArticleReader do
 #  Events
 ######################
 
-  def handle_event("open_note", %{"line-number" => line}, socket) do
-    open_note =
-      if is_nil(socket.assigns.open_note) do
-        String.to_integer(line)
-      else
-        nil
-      end
-    {:noreply, assign(socket, open_note: open_note)}
-  end
-
-  def handle_event("close_note", _params, socket) do
-    {:noreply, assign(socket, open_note: nil)}
-  end
-
   def handle_event("add_note", %{"startLine" => start_line, "endLine" => end_line, "noteText" => note_text }, socket) do
     article_id = socket.assigns.article.id
     user = socket.assigns.current_user
     make_note(start_line, end_line, note_text, user, article_id)
 
     new_notes = ArticleContent.get_notes_for_article(article_id)
-    {:noreply, assign(socket, notes: new_notes, content: BuildHtml.calc_html(socket.assigns.article, new_notes))}
+    {:noreply, assign(socket, notes: new_notes, content: BuildHtml.calc_html(socket.assigns.article, new_notes, socket.assigns.current_user))}
   end
 
   def handle_event("add_skruple", %{"note" => note_id}, socket) do
+    article_id = socket.assigns.article.id
     make_skruple(note_id, socket.assigns.current_user)
-    {:noreply, assign(socket, notes: ArticleContent.get_notes_for_article(socket.assigns.article.id))}
+    new_notes = ArticleContent.get_notes_for_article(article_id)
+    {:noreply, assign(socket, notes: new_notes, content: BuildHtml.calc_html(socket.assigns.article, new_notes, socket.assigns.current_user))}
   end
 
   #  Create methods

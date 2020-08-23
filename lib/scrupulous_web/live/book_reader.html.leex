@@ -65,7 +65,7 @@
     <%= if @current_user do %>
         <div class="field stick-to-bottom notAlwaysVisible">
             <div class="control">
-                <a href="#" phx-click="close_form" class="notAlwaysVisible"><i class="far fa-times-circle bigIcon"></i></a>
+                <a phx-click="close_form" class="notAlwaysVisible"><i class="far fa-times-circle bigIcon"></i></a>
                 <form phx-submit="add_note">
                     <textarea id="note" class="textarea notAlwaysVisible" placeholder="Add note"
                               onkeyup="setNoteText()"></textarea>
