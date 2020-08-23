@@ -12,12 +12,12 @@
     </h2>
 
     <form phx-change="search" class="search-form">
-        <input type="text" id="search" name="query" class="input searchInput" placeholder="Search" phx-debounce="300" phx-change="search">
+        <input type="text" id="search" name="query" class="input searchInput" placeholder="Search" phx-debounce="500" phx-change="search">
     </form>
     <div class="content">
         <ol type="1">
             <%= for res <- @search do %>
-                <li><a href="/reader/<%= @book.id %>/page/<%= div(res.line, 50) %>"><%= res.txt %></a></li>
+                <li><%= res.txt %> <a href="/reader/<%= @book.id %>/page/<%= div(res.line, 50) %>">Line <%= res.line %></a></li>
         <% end %>
         </ol>
     </div>
@@ -43,7 +43,7 @@
                                     <div class="tile is-parent is-vertical">
                                         <article class="tile is-child notification">
                                             <a href="#" phx-click="close_note"><i class="far fa-times-circle"></i></a>
-                                            <p class="title"><%= note.note %></p>
+                                            <p><%= note.note %></p>
                                             <p class="subtitle"><a href="/contributors/<%= note.user_id %>"><%=
                                                 ScrupulousWeb.ReaderHelpers.format_email(note.user.email) %></a></p>
                                             <p class="subtitle">

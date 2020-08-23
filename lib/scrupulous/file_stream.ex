@@ -15,7 +15,6 @@ defmodule FileStream do
 
   def read_lines(path, start_line, end_line) do
     File.stream!(path)
-#    |> Stream.filter(fn(line) -> line != "\n" end)
     |> Stream.with_index()
     |> Stream.map(fn({line, indx}) -> %{line: indx, txt: line} end)
     |> Stream.take(end_line)
