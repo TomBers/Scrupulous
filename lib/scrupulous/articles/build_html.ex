@@ -68,7 +68,7 @@ defmodule Scrupulous.BuildHtml do
     end
   end
 
-  defp note_link(indx) do
+  defp note_link() do
     [{"a", [{"class", "noteLink"}], [{"i", [{"class", "fas fa-sticky-note"}], [], %{}}], %{}}]
   end
 
