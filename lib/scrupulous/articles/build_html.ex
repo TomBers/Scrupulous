@@ -35,18 +35,17 @@ defmodule Scrupulous.BuildHtml do
     notes_elements =
       notes
       |> Enum.filter(fn(note) -> note.end_line == indx end)
-      |> Enum.map(fn(note) -> create_note_cotent(note, current_user) end)
+      |> Enum.map(fn(note) -> create_note_cotent(note, indx, current_user) end)
     note_icon ++ notes_elements
   end
 
-  defp create_note_cotent(note, current_user) do
-#    {"div", [{"class", "tile is-ancestor"}], [{"p", [], [note.note], %{}}], %{}}
-    {"div", [{"class", "tile is-ancestor"}], [{"div", [{"class", "tile is-parent is-vertical"}], [{"article", [{"class", "tile is-child notification"}], build_tile_contents(note, current_user), %{}}], %{}}], %{}}
+  defp create_note_cotent(note, indx, current_user) do
+    {"div", [{"class", "hideNotes tile is-ancestor #{@prefix}#{indx}"}], [{"div", [{"class", "tile is-parent is-vertical"}], [{"article", [{"class", "tile is-child notification"}], build_tile_contents(note, current_user), %{}}], %{}}], %{}}
   end
 
   defp build_tile_contents(note, current_user) do
     top_part = [
-      {"a", [{"href", "#"}, {"class", "closeNote"}], [{"i", [{"class", "far fa-times-circle"}], [], %{}}], %{}},
+      {"a", [{"class", "closeNote"}], [{"i", [{"class", "far fa-times-circle"}], [], %{}}], %{}},
       {"p", [{"class", ""}], note.note, %{}},
       {"a", [{"class", "subtitle"}, {"href", "/contributors/#{note.user_id}"}], [ScrupulousWeb.ReaderHelpers.format_email(note.user.email)], %{}}
     ]
@@ -70,7 +69,7 @@ defmodule Scrupulous.BuildHtml do
   end
 
   defp note_link(indx) do
-    [{"a", [{"href", "#"}, {"class", "noteLink"}], [{"i", [{"class", "fas fa-sticky-note"}], [], %{}}], %{}}]
+    [{"a", [{"class", "noteLink"}], [{"i", [{"class", "fas fa-sticky-note"}], [], %{}}], %{}}]
   end
 
 
