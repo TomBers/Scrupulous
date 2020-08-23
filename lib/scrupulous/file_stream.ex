@@ -9,7 +9,7 @@ defmodule FileStream do
     File.stream!(get_path(file))
     |> Stream.with_index()
     |> Stream.map(fn({line, indx}) -> %{line: indx, txt: line} end)
-    |> Stream.filter(fn(%{line: line, txt: txt}) -> String.contains?(String.downcase(txt), String.downcase(phrase)) end)
+    |> Stream.filter(fn(%{line: _line, txt: txt}) -> String.contains?(String.downcase(txt), String.downcase(phrase)) end)
     |> Enum.to_list()
   end
 
