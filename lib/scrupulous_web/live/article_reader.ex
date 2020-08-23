@@ -43,9 +43,10 @@ defmodule ScrupulousWeb.ArticleReader do
   end
 
   def handle_event("add_skruple", %{"note" => note_id}, socket) do
+    article_id = socket.assigns.article.id
     make_skruple(note_id, socket.assigns.current_user)
-#    TODO rebuild page on liked
-    {:noreply, assign(socket, notes: ArticleContent.get_notes_for_article(socket.assigns.article.id))}
+    new_notes = ArticleContent.get_notes_for_article(article_id)
+    {:noreply, assign(socket, notes: new_notes, content: BuildHtml.calc_html(socket.assigns.article, new_notes, socket.assigns.current_user))}
   end
 
   #  Create methods
