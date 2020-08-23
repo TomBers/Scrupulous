@@ -24,18 +24,27 @@ defmodule Scrupulous.BuildHtml do
 
   def calc_node(ele, props, content, misc, indx, notes) do
     if Enum.any?(notes, fn(note) -> note.end_line == indx end) do
-      create_notes_elements(ele, props, content, misc, indx)
+      create_notes_elements(ele, props, content, misc, indx, notes)
     else
       {ele, props ++ [{"id", "#{@prefix}#{indx}"}, {"class", "selectableLine"}], content, misc}
     end
   end
 
-  def create_notes_elements(ele, props, content, misc, indx) do
-    [{ele, props ++ [{"id", "#{@prefix}#{indx}"}, {"class", "selectableLine"}], content ++ note_link(indx) , misc}]
+  def create_notes_elements(ele, props, content, misc, indx, notes) do
+    note_icon = [{ele, props ++ [{"id", "#{@prefix}#{indx}"}, {"class", "selectableLine"}], content ++ note_link(indx) , misc}]
+    notes_elements =
+      notes
+      |> Enum.filter(fn(note) -> note.end_line == indx end)
+      |> Enum.map(fn(note) -> create_note_cotent(note) end)
+    note_icon ++ notes_elements
   end
 
-  def note_link(indx) do
-    [{"a", [{"href", "#"}, {"class", "noteLink"}, {"phx-click", "open_note"}, {"phx-value-line-number", "#{indx}"}], [{"i", [{"class", "fas fa-sticky-note"}], [], %{}}], %{}}]
+  defp create_note_cotent(note) do
+    {"div", [{"class", "tile is-ancestor"}], [{"p", [], [note.note], %{}}], %{}}
+  end
+
+  defp note_link(indx) do
+    [{"a", [{"href", "#"}, {"class", "noteLink"}], [{"i", [{"class", "fas fa-sticky-note"}], [], %{}}], %{}}]
   end
 
 

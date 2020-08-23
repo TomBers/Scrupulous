@@ -33,20 +33,6 @@ defmodule ScrupulousWeb.ArticleReader do
 #  Events
 ######################
 
-  def handle_event("open_note", %{"line-number" => line}, socket) do
-    open_note =
-      if is_nil(socket.assigns.open_note) do
-        String.to_integer(line)
-      else
-        nil
-      end
-    {:noreply, assign(socket, open_note: open_note)}
-  end
-
-  def handle_event("close_note", _params, socket) do
-    {:noreply, assign(socket, open_note: nil)}
-  end
-
   def handle_event("add_note", %{"startLine" => start_line, "endLine" => end_line, "noteText" => note_text }, socket) do
     article_id = socket.assigns.article.id
     user = socket.assigns.current_user
