@@ -4,7 +4,7 @@
     <%= if @current_user do %>
         <div class="field stick-to-bottom noteForm notAlwaysVisible">
             <div class="control">
-                <a href="#" onclick="hideNoteForm()"><i class="far fa-times-circle bigIcon"></i></a>
+                <a onclick="hideNoteForm()"><i class="far fa-times-circle bigIcon"></i></a>
                 <form phx-submit="add_note">
                     <textarea id="note" class="textarea" placeholder="Add note"
                               onkeyup="setNoteText()"></textarea>

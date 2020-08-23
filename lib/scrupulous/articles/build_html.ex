@@ -72,12 +72,4 @@ defmodule Scrupulous.BuildHtml do
     [{"a", [{"class", "noteLink"}], [{"i", [{"class", "fas fa-sticky-note"}], [], %{}}], %{}}]
   end
 
-
-  def return_markdown(book) do
-    case File.read(book) do
-      {:ok, body} -> body
-      {:error, reason} -> IO.inspect(reason); ""
-    end
-  end
-
 end
