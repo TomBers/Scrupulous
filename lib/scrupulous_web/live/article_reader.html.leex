@@ -26,19 +26,6 @@
     var hiddenNoteElement = document.getElementById("noteText");
 
 
-     function selectLines(startLine, endLine) {
-        var elems = document.querySelectorAll("div.line");
-
-        elems.forEach.call(elems, function(el) {
-           if(el.id >= startLine && el.id <= endLine) {
-               el.classList.add("selected");
-            } else {
-                el.classList.remove("selected");
-            }
-         });
-    }
-
-
     toggleNotes(".noteLink", (e) => document.querySelectorAll("." + e.target.parentNode.parentNode.id));
     toggleNotes(".closeNote", (e) => document.querySelectorAll(".openNotes"));
 

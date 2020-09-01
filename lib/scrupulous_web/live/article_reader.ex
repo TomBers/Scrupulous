@@ -11,7 +11,7 @@ defmodule ScrupulousWeb.ArticleReader do
     notes = ArticleContent.get_notes_for_article(article.id)
     open_note = notes |> Enum.find(fn(note) -> note.id == open_note_line end)
 
-    {:noreply, assign(socket, article: article, content: BuildHtml.calc_html(article, notes, socket.assigns.current_user, open_note), prefix: BuildHtml.get_prefix(), notes: notes, open_note: open_note_line)}
+    {:noreply, assign(socket, article: article, content: BuildHtml.calc_html(article, notes, socket.assigns.current_user, open_note), prefix: BuildHtml.get_prefix(), notes: notes, open_note: open_note)}
   end
 
   def extract_prams(%{"article" => article, "note" => note}) do
@@ -41,14 +41,14 @@ defmodule ScrupulousWeb.ArticleReader do
     make_note(start_line, end_line, note_text, user, article_id)
 
     new_notes = ArticleContent.get_notes_for_article(article_id)
-    {:noreply, assign(socket, notes: new_notes, content: BuildHtml.calc_html(socket.assigns.article, new_notes, socket.assigns.current_user))}
+    {:noreply, assign(socket, notes: new_notes, content: BuildHtml.calc_html(socket.assigns.article, new_notes, socket.assigns.current_user, socket.assigns.open_note))}
   end
 
   def handle_event("add_skruple", %{"note" => note_id}, socket) do
     article_id = socket.assigns.article.id
     make_skruple(note_id, socket.assigns.current_user)
     new_notes = ArticleContent.get_notes_for_article(article_id)
-    {:noreply, assign(socket, notes: new_notes, content: BuildHtml.calc_html(socket.assigns.article, new_notes, socket.assigns.current_user))}
+    {:noreply, assign(socket, notes: new_notes, content: BuildHtml.calc_html(socket.assigns.article, new_notes, socket.assigns.current_user, socket.assigns.open_note))}
   end
 
   #  Create methods
