@@ -11,7 +11,6 @@ defmodule Scrupulous.BuildHtml do
 
   def calc_html(book, notes, current_user, open_note) do
     markdown = book.content
-
     {:ok, ast, []} = EarmarkParser.as_ast(markdown)
 
     new_ast =
@@ -41,8 +40,8 @@ defmodule Scrupulous.BuildHtml do
   end
 
   defp create_note_cotent(note, indx, current_user, open_note) do
-    hideNotes_class = if is_in_range(open_note, indx) do "" else "hideNotes" end
-    {"div", [{"class", "#{hideNotes_class} tile is-ancestor #{@prefix}#{indx}"}], [{"div", [{"class", "tile is-parent is-vertical"}], [{"article", [{"class", "tile is-child notification"}], build_tile_contents(note, current_user), %{}}], %{}}], %{}}
+    notes_class = if !is_nil(open_note) and note.id == open_note.id do "" else "hideNotes" end
+    {"div", [{"class", "#{notes_class} tile is-ancestor #{@prefix}#{indx}"}], [{"div", [{"class", "tile is-parent is-vertical"}], [{"article", [{"class", "tile is-child notification"}], build_tile_contents(note, current_user), %{}}], %{}}], %{}}
   end
 
   defp build_tile_contents(note, current_user) do
@@ -57,7 +56,9 @@ defmodule Scrupulous.BuildHtml do
       else
         []
       end
-    bottom_part = [{"p", [{"class", ""}], "#{length(note.article_skruples)} Skruples", %{}}]
+    bottom_part = [
+      {"p", [{"class", ""}], ["#{length(note.article_skruples)} Skruples ", {"a", [{"onclick", "copyStringToClipboard('#{note.id}')"}], [{"i", [{"class", "far fa-clipboard"}], [], %{}}], %{}} ], %{}}
+    ]
 
     top_part ++ user_part ++ bottom_part
   end
@@ -75,6 +76,7 @@ defmodule Scrupulous.BuildHtml do
   end
 
 
+  defp is_in_range(open_note, indx) when is_nil(open_note), do: false
   defp is_in_range(open_note, indx), do: indx >= open_note.start_line and indx <= open_note.end_line
 
   defp line_class(open_note, indx) do
