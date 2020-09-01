@@ -56,7 +56,7 @@
                                                 <% end %>
                                                 <% end %>
                                             </p>
-                                            <p><%= length(note.skruples) %> Skruples</p>
+                                            <p><%= length(note.skruples) %> Skruples <a onclick="copyStringToClipboard('<%= note.end_line %>')"><i class="far fa-clipboard"></i></a></p>
                                         </article>
                                     </div>
                                 </div>
@@ -137,6 +137,23 @@
                 el.classList.remove("selected");
             }
          });
+    }
+
+    function copyStringToClipboard (noteId) {
+       // Create new element
+       var el = document.createElement('textarea');
+       // Set value (string to be copied)
+       el.value = window.location.hostname + window.location.pathname + '?note=' + noteId;
+       // Set non-editable to avoid focus and move outside of view
+       el.setAttribute('readonly', '');
+       el.style = {position: 'absolute', left: '-9999px'};
+       document.body.appendChild(el);
+       // Select text inside element
+       el.select();
+       // Copy text to clipboard
+       document.execCommand('copy');
+       // Remove temporary element
+       document.body.removeChild(el);
     }
 
   document.addEventListener('selectionchange', () => {
