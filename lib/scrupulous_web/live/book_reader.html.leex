@@ -36,7 +36,7 @@
                 <a href="#" class="<%= ScrupulousWeb.ReaderHelpers.get_note_class(line.line, @open_note) %>" phx-click="open_note"
                    phx-value-line-number="<%= line.line %>"><i class="fas fa-sticky-note"></i></a>
                     <%= if ScrupulousWeb.ReaderHelpers.is_note_open(line.line, @open_note) do %>
-                        <%= for note <- ScrupulousWeb.ReaderHelpers.get_notes(line.line, @notes) do %>
+                        <%= for note <- ScrupulousWeb.ReaderHelpers.get_notes(line.line, @notes, @param_note) do %>
                         <div class="tile is-ancestor">
                             <div class="tile is-vertical is-12">
                                 <div class="tile">
@@ -56,7 +56,7 @@
                                                 <% end %>
                                                 <% end %>
                                             </p>
-                                            <p><%= length(note.skruples) %> Skruples <a onclick="copyStringToClipboard('<%= note.end_line %>')"><i class="far fa-clipboard"></i></a></p>
+                                            <p><%= length(note.skruples) %> Skruples <a onclick="copyStringToClipboard('<%= note.id %>')"><i class="far fa-clipboard"></i></a></p>
                                         </article>
                                     </div>
                                 </div>

@@ -6,9 +6,14 @@ defmodule ScrupulousWeb.ReaderHelpers do
     |> List.first
   end
 
-  def get_notes(line, notes) do
+  def get_notes(line, notes, param_note) when is_nil(param_note) do
     notes
     |> Enum.filter(fn(note) -> line >= note.start_line and line <= note.end_line end)
+  end
+
+  def get_notes(line, notes, param_note) do
+    notes
+    |> Enum.filter(fn(note) -> note.id == param_note.id end)
   end
 
   def have_skruped(user, skruples) do

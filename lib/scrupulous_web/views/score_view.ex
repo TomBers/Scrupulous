@@ -13,7 +13,7 @@ defmodule ScrupulousWeb.ScoreView do
   end
 
   def get_note_url(note) do
-      "/reader/#{note.book.id}/page/#{div(note.end_line, 50)}?note=#{note.end_line}"
+      "/reader/#{note.book.id}/page/#{div(note.end_line, 50)}?note=#{note.id}"
   end
 
 end
