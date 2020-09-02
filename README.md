@@ -1,6 +1,6 @@
 # Scrupulous
 
-[`https://skrupulus.com/`] https://skrupulus.com/
+[`https://skrupulus.com/`](https://skrupulus.com/)
 
 To start your Phoenix server:
 
