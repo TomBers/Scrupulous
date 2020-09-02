@@ -1,4 +1,4 @@
-<div class="container is-fluid">
+<div class="container">
     <h1 class="title"><%= @title %> <a href="/book/<%= @book.id %>"></h1>
     <h2 class="subtitle">
         <i class="fas fa-home bigIcon"></i></a>
@@ -30,13 +30,13 @@
             <%= if line.txt == "\n" do %>
             <div class="spacer"></div>
             <% else %>
-            <div class='<%= ScrupulousWeb.ReaderHelpers.get_line_class(line.line, @open_note, @notes) %>' id="<%= line.line %>">
+            <div class='<%= ScrupulousWeb.ReaderHelpers.get_line_class(line.line, @notes, @open_note, @param_note) %>' id="<%= line.line %>">
                 <span id="<%= line.line %>"><%= line.txt %></span>
                 <%= if ScrupulousWeb.ReaderHelpers.has_note(line.line, @notes) do %>
                 <a href="#" class="<%= ScrupulousWeb.ReaderHelpers.get_note_class(line.line, @open_note) %>" phx-click="open_note"
                    phx-value-line-number="<%= line.line %>"><i class="fas fa-sticky-note"></i></a>
                     <%= if ScrupulousWeb.ReaderHelpers.is_note_open(line.line, @open_note) do %>
-                        <%= for note <- ScrupulousWeb.ReaderHelpers.get_notes(line.line, @notes) do %>
+                        <%= for note <- ScrupulousWeb.ReaderHelpers.get_notes(line.line, @notes, @param_note) do %>
                         <div class="tile is-ancestor">
                             <div class="tile is-vertical is-12">
                                 <div class="tile">
@@ -56,7 +56,7 @@
                                                 <% end %>
                                                 <% end %>
                                             </p>
-                                            <p><%= length(note.skruples) %> Skruples</p>
+                                            <p><%= length(note.skruples) %> Skruples <a onclick="copyStringToClipboard('<%= note.id %>')"><i class="far fa-clipboard"></i></a></p>
                                         </article>
                                     </div>
                                 </div>
@@ -137,6 +137,23 @@
                 el.classList.remove("selected");
             }
          });
+    }
+
+    function copyStringToClipboard (noteId) {
+       // Create new element
+       var el = document.createElement('textarea');
+       // Set value (string to be copied)
+       el.value = window.location.hostname + window.location.pathname + '?note=' + noteId;
+       // Set non-editable to avoid focus and move outside of view
+       el.setAttribute('readonly', '');
+       el.style = {position: 'absolute', left: '-9999px'};
+       document.body.appendChild(el);
+       // Select text inside element
+       el.select();
+       // Copy text to clipboard
+       document.execCommand('copy');
+       // Remove temporary element
+       document.body.removeChild(el);
     }
 
   document.addEventListener('selectionchange', () => {

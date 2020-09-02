@@ -14,6 +14,10 @@ defmodule ScrupulousWeb.BookReader do
       UserContent.get_notes_between_lines(book.id, start_line, end_line)
       |> Enum.sort_by(&(length(&1.skruples)), &>=/2)
 
+    param_note = notes |> Enum.filter(fn(note) -> if is_nil(socket.assigns.param_note_id) do false else socket.assigns.param_note_id == note.id end end) |> List.first
+
+    open_note = if is_nil(param_note) do nil else param_note.end_line end
+
     lines = FileStream.read_book(book.file_name, start_line, end_line)
 
     bookmarks =
@@ -22,13 +26,13 @@ defmodule ScrupulousWeb.BookReader do
       else
        nil
       end
-    {:noreply, assign(socket, title: book.title, book: book, notes: notes, lines: lines, page: page, show_note_form: false, bookmarks: bookmarks, search: [])}
+    {:noreply, assign(socket, title: book.title, book: book, notes: notes, lines: lines, page: page, show_note_form: false, bookmarks: bookmarks, search: [], open_note: open_note, param_note: param_note)}
   end
 
   def mount(%{"book" => book, "page" => page, "note" => note_id}, %{"user_token" => user_token}, socket) do
     if String.to_integer(page) >= 0 do
       current_user = Scrupulous.Accounts.get_user_by_session_token(user_token)
-      {:ok, assign(socket, current_user: current_user, open_note: String.to_integer(note_id))}
+      {:ok, assign(socket, current_user: current_user, open_note: nil, param_note_id: String.to_integer(note_id))}
     else
       {:ok, redirect(socket, to: "/reader/#{book}/page/0")}
     end
@@ -37,18 +41,18 @@ defmodule ScrupulousWeb.BookReader do
   def mount(%{"book" => book, "page" => page}, %{"user_token" => user_token}, socket) do
     if String.to_integer(page) >= 0 do
       current_user = Scrupulous.Accounts.get_user_by_session_token(user_token)
-      {:ok, assign(socket, current_user: current_user, open_note: nil)}
+      {:ok, assign(socket, current_user: current_user, open_note: nil, param_note_id: nil)}
     else
       {:ok, redirect(socket, to: "/reader/#{book}/page/0")}
     end
   end
 
   def mount(%{"note" => note_id}, _session, socket) do
-    {:ok, assign(socket, current_user: nil, open_note: String.to_integer(note_id))}
+    {:ok, assign(socket, current_user: nil, open_note: nil, param_note_id: String.to_integer(note_id))}
   end
 
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, current_user: nil, open_note: nil)}
+    {:ok, assign(socket, current_user: nil, open_note: nil, param_note_id: nil)}
   end
 
 
@@ -82,11 +86,11 @@ defmodule ScrupulousWeb.BookReader do
       else
         nil
     end
-    {:noreply, assign(socket, open_note: open_note)}
+    {:noreply, assign(socket, open_note: open_note, param_note: nil)}
   end
 
   def handle_event("close_note", _params, socket) do
-    {:noreply, assign(socket, open_note: nil)}
+    {:noreply, assign(socket, open_note: nil, param_note: nil)}
   end
 
   def handle_event("close_form", _params, socket) do
