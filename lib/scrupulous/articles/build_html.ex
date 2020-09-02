@@ -76,7 +76,7 @@ defmodule Scrupulous.BuildHtml do
   end
 
 
-  defp is_in_range(open_note, indx) when is_nil(open_note), do: false
+  defp is_in_range(open_note, _indx) when is_nil(open_note), do: false
   defp is_in_range(open_note, indx), do: indx >= open_note.start_line and indx <= open_note.end_line
 
   defp line_class(open_note, indx) do

@@ -11,7 +11,7 @@ defmodule ScrupulousWeb.ReaderHelpers do
     |> Enum.filter(fn(note) -> line >= note.start_line and line <= note.end_line end)
   end
 
-  def get_notes(line, notes, param_note) do
+  def get_notes(_line, notes, param_note) do
     notes
     |> Enum.filter(fn(note) -> note.id == param_note.id end)
   end
@@ -38,17 +38,25 @@ defmodule ScrupulousWeb.ReaderHelpers do
     end
   end
 
-  def get_line_class(line, open_note, notes) do
-    if Enum.any?(
-         notes,
-         fn (note) ->
-           open_note >= note.start_line and open_note <= note.end_line and line >= note.start_line and line <= note.end_line
-         end
-       ) do
+  def get_line_class(line, notes,  open_note, param_note) do
+    if line_class_conditions(line, notes,  open_note, param_note) do
       "line selected"
     else
       "line"
     end
+  end
+
+  defp line_class_conditions(line, notes,  open_note, param_note) when is_nil(param_note) do
+    Enum.any?(
+      notes,
+      fn (note) ->
+        open_note >= note.start_line and open_note <= note.end_line and line >= note.start_line and line <= note.end_line
+      end
+    )
+  end
+
+  defp line_class_conditions(line, _notes, _open_note, param_note) do
+    line >= param_note.start_line and line <= param_note.end_line
   end
 
 end

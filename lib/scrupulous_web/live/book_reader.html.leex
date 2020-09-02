@@ -30,7 +30,7 @@
             <%= if line.txt == "\n" do %>
             <div class="spacer"></div>
             <% else %>
-            <div class='<%= ScrupulousWeb.ReaderHelpers.get_line_class(line.line, @open_note, @notes) %>' id="<%= line.line %>">
+            <div class='<%= ScrupulousWeb.ReaderHelpers.get_line_class(line.line, @notes, @open_note, @param_note) %>' id="<%= line.line %>">
                 <span id="<%= line.line %>"><%= line.txt %></span>
                 <%= if ScrupulousWeb.ReaderHelpers.has_note(line.line, @notes) do %>
                 <a href="#" class="<%= ScrupulousWeb.ReaderHelpers.get_note_class(line.line, @open_note) %>" phx-click="open_note"
