@@ -31,10 +31,10 @@ defmodule Scrupulous.BuildHtml do
   end
 
   def create_notes_elements(ele, props, content, misc, indx, notes, current_user, open_note) do
-    note_icon = [{ele, props ++ [{"id", "#{@prefix}#{indx}"}, {"class", line_class(open_note, indx)}], content ++ note_link() , misc}]
+    notes_for_line = notes |> Enum.filter(fn(note) -> note.end_line == indx end)
+    note_icon = [{ele, props ++ [{"id", "#{@prefix}#{indx}"}, {"class", line_class(open_note, indx)}], content ++ note_link(length(notes_for_line)) , misc}]
     notes_elements =
-      notes
-      |> Enum.filter(fn(note) -> note.end_line == indx end)
+      notes_for_line
       |> Enum.map(fn(note) -> create_note_cotent(note, indx, current_user, open_note) end)
     note_icon ++ notes_elements
   end
@@ -67,12 +67,12 @@ defmodule Scrupulous.BuildHtml do
     if ScrupulousWeb.ReaderHelpers.have_skruped(current_user, note.article_skruples) do
       [{"i", [{"class", "fas fa-heart"}], [], %{}}]
     else
-      [{"a", [{"href", "#"}, {"phx-click", "add_skruple"}, {"phx-value-note", "#{note.id}"}], [{"i", [{"class", "far fa-heart"}], [], %{}}], %{}}]
+      [{"a", [{"phx-click", "add_skruple"}, {"phx-value-note", "#{note.id}"}], [{"i", [{"class", "far fa-heart"}], [], %{}}], %{}}]
     end
   end
 
-  defp note_link() do
-    [{"a", [{"class", "noteLink"}], [{"i", [{"class", "fas fa-sticky-note"}], [], %{}}], %{}}]
+  defp note_link(notes_length) do
+    [{"a", [{"class", "noteLink"}], [{"span", [{"class", "small-white-circle article-circle"}], "#{notes_length}", %{}}], %{}}]
   end
 
 

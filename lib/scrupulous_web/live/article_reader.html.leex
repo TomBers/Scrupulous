@@ -34,10 +34,13 @@
         targets.forEach.call(targets, (target) => {
             target.addEventListener('click', (e) => {
                 var elements = containerFunction(e)
+                var isClose = false;
                 elements.forEach.call(elements, function(ele) {
+                    isClose = ele.classList.contains("openNotes") ? true : isClose;
                     ele.classList.toggle("hideNotes");
                     ele.classList.toggle("openNotes");
                 });
+                if (isClose) { hideNoteForm(); }
             });
         })
     }

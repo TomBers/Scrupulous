@@ -7,7 +7,7 @@
     <p>How does it work?</p>
     <br>
     <p>Simply choose a book, and you can get reading straight away.  The books home page includes related articles and dicussions.</p>
-    <p>While you are reading you will see <i class="fas fa-sticky-note"></i> clicking on this will open notes that other people have left.</p>
+        <p>While you are reading you will see <span class="small-white-circle homepage-circle">4</span> clicking on this will open notes that other people have left.</p>
     <br>
     <p>If you you log in you can contribute.</p>
     <br>

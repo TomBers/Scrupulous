@@ -29,6 +29,10 @@
   src: url("../fonts/Vollkorn-SemiboldItalic.woff2") format("woff2");
 }
 
+.container {
+  padding: 10px;
+}
+
 .stick-to-bottom {
     position: fixed;
     background-color: transparent;
@@ -42,6 +46,34 @@
 
 }
 
+.small-white-circle{
+    background: #e3e3e3;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    color: #6e6e6e;
+    display: inline-block;
+    font-weight: bold;
+    margin-right: 5px;
+    text-align: center;
+    opacity: 0.4;
+}
+
+.book-circle {
+    min-width: 40px;
+}
+
+.article-circle {
+    min-width: 35px;
+}
+
+.homepage-circle {
+   min-width: 25px;
+}
+
+.small-white-circle:hover {
+    opacity: 1;
+}
 
 .line {
   font-size: 1.6em;
@@ -51,6 +83,9 @@
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 768px) {
+    .line {
+        font-size: 1.2em;
+    }
     .stick-to-bottom {
         width: 100%;
     }

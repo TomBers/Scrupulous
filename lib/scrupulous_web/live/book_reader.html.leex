@@ -1,7 +1,6 @@
 <div class="container">
-    <h1 class="title"><%= @title %> <a href="/book/<%= @book.id %>"></h1>
-    <h2 class="subtitle">
-        <i class="fas fa-home bigIcon"></i></a>
+    <h1 class="title"><%= @title %>
+        <a href="/book/<%= @book.id %>"><i class="fas fa-home bigIcon"></i></a>
         <%= if @current_user do %>
             <%= if length(@bookmarks) > 0 do %>
                 <span><i class="fas fa-bookmark bigIcon"></i></span>
@@ -9,19 +8,20 @@
                 <a href="#" phx-click="bookmark"><i class="far fa-bookmark bigIcon"></i></a>
             <% end %>
         <% end %>
-    </h2>
+    </h1>
 
     <form phx-change="search" class="search-form">
         <input type="text" id="search" name="query" class="input searchInput" placeholder="Search" phx-debounce="500" phx-change="search">
     </form>
+
     <div class="content">
         <ol type="1">
             <%= for res <- @search do %>
-                <li><%= res.txt %> <a href="/reader/<%= @book.id %>/page/<%= div(res.line, 50) %>">Line <%= res.line %></a></li>
-        <% end %>
+            <li><%= res.txt %> <a href="/reader/<%= @book.id %>/page/<%= div(res.line, 50) %>">Line <%= res.line %></a></li>
+            <% end %>
         </ol>
     </div>
-    <br>
+
     <a href="/reader/<%= @book.id %>/page/<%= @page - 1 %>"><i class="fas fa-arrow-left bigIcon"></i></a>
     <a href="/reader/<%= @book.id %>/page/<%= @page + 1 %>" class="is-pulled-right"><i class="fas fa-arrow-right bigIcon"></i></a>
     <br><br>
@@ -34,7 +34,7 @@
                 <span id="<%= line.line %>"><%= line.txt %></span>
                 <%= if ScrupulousWeb.ReaderHelpers.has_note(line.line, @notes) do %>
                 <a href="#" class="<%= ScrupulousWeb.ReaderHelpers.get_note_class(line.line, @open_note) %>" phx-click="open_note"
-                   phx-value-line-number="<%= line.line %>"><i class="fas fa-sticky-note"></i></a>
+                   phx-value-line-number="<%= line.line %>"><span class="small-white-circle book-circle"><%= length(ScrupulousWeb.ReaderHelpers.get_notes(line.line, @notes, nil)) %></span></a>
                     <%= if ScrupulousWeb.ReaderHelpers.is_note_open(line.line, @open_note) do %>
                         <%= for note <- ScrupulousWeb.ReaderHelpers.get_notes(line.line, @notes, @param_note) do %>
                         <div class="tile is-ancestor">
