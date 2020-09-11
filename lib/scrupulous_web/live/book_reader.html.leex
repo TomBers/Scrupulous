@@ -75,6 +75,10 @@
     <%= if @current_user do %>
         <div class="field stick-to-bottom notAlwaysVisible">
             <div class="control">
+                <div class="content">
+                    <blockquote id="quoteHint"></blockquote>
+                    <p><%= @title %> - <%= @book.author %></p>
+                </div>
                 <a phx-click="close_form" class="notAlwaysVisible"><i class="far fa-times-circle bigIcon"></i></a>
                 <form phx-submit="add_note">
                     <textarea id="note" class="textarea notAlwaysVisible" placeholder="Add note"
@@ -90,7 +94,6 @@
         </div>
     <% end %>
 </div>
-
 
 <script>
     var startLine;
@@ -117,6 +120,17 @@
             return parseInt(node.parentNode.parentNode.id, 10);
         } else {
             return parseInt(node.parentElement.id, 10);
+        }
+    }
+
+    function showQuoteHint(text) {
+        var quoteHint = document.getElementById("quoteHint");
+        if(text === "") {
+            quoteHint.innerText = "";
+            quoteHint.classList.add("neverVisible");
+        } else {
+            quoteHint.classList.remove("neverVisible");
+            quoteHint.innerText = text.replace(/(\n)/gm, " ");
         }
     }
 
@@ -160,6 +174,9 @@
     var select = document.getSelection();
 
     if (select.anchorNode.nodeName == "#text") {
+
+        showQuoteHint(select.toString());
+
         var baseLine = getNodeID(select.anchorNode);
         var extentLine = getNodeID(select.focusNode);
 

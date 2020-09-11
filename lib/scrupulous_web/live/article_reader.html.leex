@@ -4,6 +4,8 @@
     <%= if @current_user do %>
         <div class="field stick-to-bottom noteForm notAlwaysVisible">
             <div class="control">
+                <blockquote id="quoteHint"></blockquote>
+                <br>
                 <a onclick="hideNoteForm()"><i class="far fa-times-circle bigIcon"></i></a>
                 <form phx-submit="add_note">
                     <textarea id="note" class="textarea" placeholder="Add note"
@@ -43,6 +45,17 @@
                 if (isClose) { hideNoteForm(); }
             });
         })
+    }
+
+    function showQuoteHint(text) {
+        var quoteHint = document.getElementById("quoteHint");
+        if(text === "") {
+            quoteHint.innerText = "";
+            quoteHint.classList.add("neverVisible");
+        } else {
+            quoteHint.classList.remove("neverVisible");
+            quoteHint.innerText = text.replace(/(\n)/gm, " ");
+        }
     }
 
     function setNoteText() {
@@ -123,6 +136,9 @@
     var select = document.getSelection();
 
     if (select.anchorNode.nodeName == "#text") {
+
+        showQuoteHint(select.toString());
+
         var baseLine = getNodeID(select.anchorNode);
         var extentLine = getNodeID(select.focusNode);
 
