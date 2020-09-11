@@ -1,24 +1,22 @@
 <div class="container">
     <div class="section">
-    <h1 class="subtitle">Welcome to Skrupulus</h1>
+    <h1 class="title">Welcome to Skrupulus</h1>
 
-    <p>A library for the future, brings together original texts with the best notes, critiques and discussions.</p>
+    <p>A library for the future, brings together original texts with the best notes, critiques and discussions. Skrupulus allows you to comment on a line by line basis, and share your notes with others.</p>
     <br>
-    <p>How does it work?</p>
-    <br>
-    <p>Simply choose a book, and you can get reading straight away.  The books home page includes related articles and dicussions.</p>
-        <p>While you are reading you will see <span class="small-white-circle homepage-circle">4</span> clicking on this will open notes that other people have left.</p>
+    <p class="subtitle">How does it work?</p>
+    <p>Simply choose a book, and you can get reading straight away, we have a selection of books (with full text search) and articles.</p>
+        <p>While you are reading you will see <span class="small-white-circle homepage-circle">4</span> clicking on this will open notes that other people have left. Clicking <a><i class="far fa-clipboard"></i></a> copies the note's unique URL to the clipboard for sharing.</p>
     <br>
     <p>If you you log in you can contribute.</p>
     <br>
     <p>Liking notes that you think offer insight into the line / paragraph or adding your own note at any point in the book, shared with everyone.</p>
-    <p>To add a note simple select the text the note refers to, and a text area will appear.</p>
+    <p>To add a note simple select the text the note refers to, and a text-area will appear.</p>
     <p>All contributions are recorded and can be seen on the contributors page.</p>
 
 
-    <br>
-    <br>
-    <p>Here are some books to get started</p>
+        <br>
+    <p class="subtitle">Here are some books to get started</p>
     <div class="content">
         <ul>
             <li><a href="/book/9">Notes from the Underground</a></li>
@@ -27,6 +25,9 @@
         </ul>
     </div>
 
-    <%= render("twitter_button.html", text: "Read and share at https://skrupulus.com") %>
+        <p class="subtitle">Get in touch</p>
+        <a href="mailto:tom@skrupulus.com">tom@skrupulus.com</a><br>
+        <a href="https://twitter.com/SkrupulusApp">@SkrupulusApp</a><br><br>
+        <%= render("twitter_button.html", text: "Read and share books and articles at https://skrupulus.com") %>
     </div>
 </div>
