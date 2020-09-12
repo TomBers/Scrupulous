@@ -79,7 +79,8 @@
                     <blockquote id="quoteHint"></blockquote>
                     <p><%= @title %> - <%= @book.author %></p>
                 </div>
-                <a phx-click="close_form" class="notAlwaysVisible"><i class="far fa-times-circle bigIcon"></i></a>
+                <a href="#" phx-click="close_form" class="notAlwaysVisible"><i class="far fa-times-circle bigIcon"></i></a>
+                <br>
                 <form phx-submit="add_note">
                     <textarea id="note" class="textarea notAlwaysVisible" placeholder="Add note"
                               onkeyup="setNoteText()"></textarea>
@@ -88,9 +89,10 @@
                     <input type="hidden" id="startLine" name="startLine" value="">
                     <input type="hidden" id="endLine" name="endLine" value="">
                     <input type="submit" id="noteBtn" value="Add note" class="button is-light notAlwaysVisible"/>
+                    <p class="neverVisible"><%= @show_note_form %></p>
                 </form>
             </div>
-            <span class="neverVisible"><%= @show_note_form %></span>
+
         </div>
     <% end %>
 </div>
