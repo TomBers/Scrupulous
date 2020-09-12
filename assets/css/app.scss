@@ -87,7 +87,13 @@
         font-size: 1.2em;
     }
     .stick-to-bottom {
+        padding: 10px;
+        bottom: 0;
+        background-color: #DCDCDC;
         width: 100%;
+    }
+    #note {
+        min-height: 3em;
     }
 }
 
@@ -115,6 +121,7 @@
 }
 
 .neverVisible {
+  height: 1px;
   visibility: hidden;
 }
 
