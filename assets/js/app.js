@@ -11,7 +11,7 @@ window.layoutFunc = fcose;
 import {Socket} from "phoenix"
 import LiveSocket from "phoenix_live_view"
 
-const COLOUR_MODE_COOKIE_NAME = "colour_mode"
+const COLOUR_MODE_COOKIE_NAME = "colourMode"
 
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
