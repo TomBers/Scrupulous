@@ -22,7 +22,36 @@ liveSocket.connect()
 
 //socket.connect()
 
+function toggleColorMode() {
+    var body = document.getElementsByTagName("BODY")[0];
+    body.classList.toggle("night-mode");
+    var html = document.getElementsByTagName("html")[0];
+    var colour;
+    html.style.backgroundColor != "black" ? colour = "black" : colour = "white";
+    html.style.backgroundColor = colour;
+    document.cookie = "colour=" + colour;
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var ca = document.cookie.split(';');
+  for(var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
+
+    getCookie("colour") == "black" ? toggleColorMode() : null;
+
     var nav = document.getElementById("navBurger")
     nav.addEventListener('click', () => {
        // Get the target from the "data-target" attribute
@@ -34,11 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
        $target.classList.toggle('is-active');
   });
 
-  var nightMode = document.getElementById("night-mode-button");
-  nightMode.addEventListener('click', () => {
-    var body = document.getElementsByTagName("BODY")[0];
-    console.log(body);
-    body.classList.toggle("night-mode");
+
+  document.getElementById("night-mode-button").addEventListener('click', () => {
+    toggleColorMode();
   })
 
 });

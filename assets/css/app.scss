@@ -57,13 +57,14 @@
 }
 
 .night-mode .tile {
-    background-color: black;
+    background-color: transparent;
     color: white;
 }
 
-.night-mode .selected {
-    background-color: transparent;
+.night-mode .tile .is-child {
+    border: 1px solid white;
 }
+
 
 .night-mode blockquote {
     background-color: black;
@@ -195,13 +196,6 @@ a.white-text:hover {
     color: #a8d1ff;
 }
 
-.line.selected span {
-    background-color: #a8d1ff;
-}
-
-.selected {
-    background-color: #a8d1ff;
-}
 
 #cy {
     min-width: 300px;
