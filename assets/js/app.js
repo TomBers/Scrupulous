@@ -29,7 +29,7 @@ function toggleColorMode() {
     var colour;
     html.style.backgroundColor != "black" ? colour = "black" : colour = "white";
     html.style.backgroundColor = colour;
-    document.cookie = COLOUR_MODE_COOKIE_NAME + "=" + colour;
+    document.cookie = COLOUR_MODE_COOKIE_NAME + "=" + colour + ";path=/";
 }
 
 function getCookie(cname) {
@@ -39,6 +39,7 @@ function getCookie(cname) {
 
 
 document.addEventListener('DOMContentLoaded', () => {
+
     getCookie(COLOUR_MODE_COOKIE_NAME) == "black" ? toggleColorMode() : null;
 
     var nav = document.getElementById("navBurger")

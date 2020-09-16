@@ -46,7 +46,7 @@ defmodule Scrupulous.BuildHtml do
 
   defp build_tile_contents(note, current_user) do
     top_part = [
-      {"a", [{"class", "closeNote"}], [{"i", [{"class", "far fa-times-circle"}], [], %{}}], %{}},
+      {"a", [{"class", "closeNote is-pulled-right"}], [{"i", [{"class", "far fa-times-circle"}], [], %{}}], %{}},
       {"p", [{"class", ""}], note.note, %{}},
       {"a", [{"class", "subtitle"}, {"href", "/contributors/#{note.user_id}"}], [ScrupulousWeb.ReaderHelpers.format_email(note.user.email)], %{}}
     ]
@@ -65,9 +65,9 @@ defmodule Scrupulous.BuildHtml do
 
   defp calc_user_part(note, current_user) do
     if ScrupulousWeb.ReaderHelpers.have_skruped(current_user, note.article_skruples) do
-      [{"i", [{"class", "fas fa-heart"}], [], %{}}]
+      [{"i", [{"class", "fas fa-heart fa-2x is-pulled-right"}], [], %{}}]
     else
-      [{"a", [{"phx-click", "add_skruple"}, {"phx-value-note", "#{note.id}"}], [{"i", [{"class", "far fa-heart"}], [], %{}}], %{}}]
+      [{"a", [{"phx-click", "add_skruple"}, {"phx-value-note", "#{note.id}"}, {"class", "is-pulled-right"}], [{"i", [{"class", "far fa-heart fa-2x"}], [], %{}}], %{}}]
     end
   end
 
