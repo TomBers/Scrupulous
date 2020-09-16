@@ -33,4 +33,12 @@ document.addEventListener('DOMContentLoaded', () => {
        nav.classList.toggle('is-active');
        $target.classList.toggle('is-active');
   });
+
+  var nightMode = document.getElementById("night-mode-button");
+  nightMode.addEventListener('click', () => {
+    var body = document.getElementsByTagName("BODY")[0];
+    console.log(body);
+    body.classList.toggle("night-mode");
+  })
+
 });

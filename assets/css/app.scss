@@ -33,6 +33,51 @@
   padding: 10px;
 }
 
+.night-mode {
+    background-color: black;
+    color: white;
+}
+
+.night-mode .navbar {
+    background-color: black;
+    color: white;
+}
+
+.night-mode .navbar a {
+    color: white;
+}
+
+.night-mode .navbar a:hover {
+    color: black;
+}
+
+
+.night-mode .panel a {
+    color: white;
+}
+
+.night-mode .tile {
+    background-color: black;
+    color: white;
+}
+
+.night-mode .selected {
+    background-color: transparent;
+}
+
+.night-mode blockquote {
+    background-color: black;
+    color: white;
+}
+
+.night-mode .title {
+    color: white;
+}
+
+.night-mode .subtitle {
+    color: white;
+}
+
 .stick-to-bottom {
     position: fixed;
     background-color: transparent;

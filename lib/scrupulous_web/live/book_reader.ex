@@ -4,10 +4,12 @@ defmodule ScrupulousWeb.BookReader do
   alias Scrupulous.UserContent
   alias Scrupulous.StaticContent
 
+  @lines_per_page 300
+
   def handle_params(%{"book" => book, "page" => pageStr}, _uri, socket) do
     {page, _rem} = Integer.parse(pageStr)
-    start_line = page * 50
-    end_line = start_line + 50
+    start_line = page * @lines_per_page
+    end_line = start_line + @lines_per_page
 
     book = StaticContent.get_book!(book)
     notes =
@@ -109,7 +111,7 @@ defmodule ScrupulousWeb.BookReader do
 
 
   def get_updated_notes(socket) do
-    start_line = socket.assigns.page * 50
+    start_line = socket.assigns.page * @lines_per_page
     UserContent.get_notes_between_lines(socket.assigns.book.id, start_line, start_line + 50)
     |> Enum.sort_by(&(length(&1.skruples)), &>=/2)
   end
