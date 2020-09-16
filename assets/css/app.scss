@@ -48,12 +48,17 @@
 }
 
 .night-mode .navbar a:hover {
+    background: white;
     color: black;
 }
 
 
 .night-mode .panel a {
     color: white;
+}
+
+.night-mode .panel a:hover {
+    color: black;
 }
 
 .night-mode .tile {

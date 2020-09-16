@@ -28,7 +28,7 @@ defmodule ScrupulousWeb.BookReader do
       else
        nil
       end
-    {:noreply, assign(socket, title: book.title, book: book, notes: notes, lines: lines, page: page, show_note_form: false, bookmarks: bookmarks, search: [], open_note: open_note, param_note: param_note)}
+    {:noreply, assign(socket, title: book.title, book: book, notes: notes, lines: lines, page: page, show_note_form: false, bookmarks: bookmarks, search: [], open_note: open_note, param_note: param_note, lines_per_page: @lines_per_page)}
   end
 
   def mount(%{"book" => book, "page" => page, "note" => note_id}, %{"user_token" => user_token}, socket) do
@@ -112,7 +112,7 @@ defmodule ScrupulousWeb.BookReader do
 
   def get_updated_notes(socket) do
     start_line = socket.assigns.page * @lines_per_page
-    UserContent.get_notes_between_lines(socket.assigns.book.id, start_line, start_line + 50)
+    UserContent.get_notes_between_lines(socket.assigns.book.id, start_line, start_line + @lines_per_page)
     |> Enum.sort_by(&(length(&1.skruples)), &>=/2)
   end
 

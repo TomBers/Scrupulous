@@ -17,7 +17,7 @@
     <div class="content">
         <ol type="1">
             <%= for res <- @search do %>
-            <li><%= res.txt %> <a href="/reader/<%= @book.id %>/page/<%= div(res.line, 50) %>">Line <%= res.line %></a></li>
+            <li><%= res.txt %> <a href="/reader/<%= @book.id %>/page/<%= div(res.line, @lines_per_page) %>">Line <%= res.line %></a></li>
             <% end %>
         </ol>
     </div>

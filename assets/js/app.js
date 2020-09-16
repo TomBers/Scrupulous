@@ -8,10 +8,10 @@ import fcose from 'cytoscape-fcose';
 window.cytoscape = cytoscape
 window.layoutFunc = fcose;
 
-
-
 import {Socket} from "phoenix"
 import LiveSocket from "phoenix_live_view"
+
+const COLOUR_MODE_COOKIE_NAME = "colour_mode"
 
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
@@ -29,28 +29,17 @@ function toggleColorMode() {
     var colour;
     html.style.backgroundColor != "black" ? colour = "black" : colour = "white";
     html.style.backgroundColor = colour;
-    document.cookie = "colour=" + colour;
+    document.cookie = COLOUR_MODE_COOKIE_NAME + "=" + colour;
 }
 
 function getCookie(cname) {
-  var name = cname + "=";
-  var ca = document.cookie.split(';');
-  for(var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
+    let cookieValue = document.cookie.split('; ').find(row => row.startsWith(cname));
+    return cookieValue ? cookieValue.split('=')[1] :  "";
 }
 
 
 document.addEventListener('DOMContentLoaded', () => {
-
-    getCookie("colour") == "black" ? toggleColorMode() : null;
+    getCookie(COLOUR_MODE_COOKIE_NAME) == "black" ? toggleColorMode() : null;
 
     var nav = document.getElementById("navBurger")
     nav.addEventListener('click', () => {
