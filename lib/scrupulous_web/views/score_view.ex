@@ -1,7 +1,7 @@
 defmodule ScrupulousWeb.ScoreView do
   use ScrupulousWeb, :view
 
-  @lines_per_page 300
+  @lines_per_page Scrupulous.Constants.lines_per_page
 
   def format_email(email) do
     email

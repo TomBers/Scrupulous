@@ -4,7 +4,7 @@ defmodule ScrupulousWeb.BookReader do
   alias Scrupulous.UserContent
   alias Scrupulous.StaticContent
 
-  @lines_per_page 300
+  @lines_per_page Scrupulous.Constants.lines_per_page
 
   def handle_params(%{"book" => book, "page" => pageStr}, _uri, socket) do
     {page, _rem} = Integer.parse(pageStr)
