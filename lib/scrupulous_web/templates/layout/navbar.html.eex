@@ -17,6 +17,7 @@
             <a class="navbar-item" href="/contributors">Contributors</a>
             <a class="navbar-item" href="/list/articles">Articles</a>
             <a class="navbar-item" href="/graph">Graph</a>
+            <a class="navbar-item" id="night-mode-button"><i class="far fa-lightbulb"></i></a>
         </div>
 
         <div class="navbar-end">
@@ -26,10 +27,10 @@
                         <%= link "My Bookmarks", to: Routes.bookmark_path(@conn, :index), class: "button is-link is-light" %>
                         <%= link "My Articles", to: Routes.article_path(@conn, :index), class: "button is-link is-light" %>
                         <%= link "Settings", to: Routes.user_settings_path(@conn, :edit), class: "button is-link is-light" %>
-                        <%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete, class: "button is-light" %>
+                        <%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete, class: "button is-link is-light" %>
                     <% else %>
                         <%= link "Register", to: Routes.user_registration_path(@conn, :new), class: "button is-link is-light" %>
-                        <%= link "Log in", to: Routes.user_session_path(@conn, :new), class: "button is-light" %>
+                        <%= link "Log in", to: Routes.user_session_path(@conn, :new), class: "button is-link is-light" %>
                     <% end %>
                 </div>
             </div>

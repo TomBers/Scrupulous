@@ -17,7 +17,7 @@
     <div class="content">
         <ol type="1">
             <%= for res <- @search do %>
-            <li><%= res.txt %> <a href="/reader/<%= @book.id %>/page/<%= div(res.line, 50) %>">Line <%= res.line %></a></li>
+            <li><%= res.txt %> <a href="/reader/<%= @book.id %>/page/<%= div(res.line, @lines_per_page) %>">Line <%= res.line %></a></li>
             <% end %>
         </ol>
     </div>
@@ -42,17 +42,17 @@
                                 <div class="tile">
                                     <div class="tile is-parent is-vertical">
                                         <article class="tile is-child notification">
-                                            <a href="#" phx-click="close_note"><i class="far fa-times-circle"></i></a>
+                                            <a href="#" phx-click="close_note" class="is-pulled-right"><i class="far fa-times-circle"></i></a>
                                             <p><%= note.note %></p>
                                             <p class="subtitle"><a href="/contributors/<%= note.user_id %>"><%=
                                                 ScrupulousWeb.ReaderHelpers.format_email(note.user.email) %></a></p>
-                                            <p class="subtitle">
+                                            <p class="subtitle is-pulled-right">
                                                 <%= if @current_user do %>
                                                 <%= if ScrupulousWeb.ReaderHelpers.have_skruped(@current_user, note.skruples) do %>
-                                                <i class="fas fa-heart"></i>
+                                                <i class="fas fa-heart fa-2x"></i>
                                                 <% else %>
                                                 <a href="#" phx-click="add_skruple" phx-value-note="<%= note.id %>"><i
-                                                        class="far fa-heart"></i></a>
+                                                        class="far fa-heart fa-2x"></i></a>
                                                 <% end %>
                                                 <% end %>
                                             </p>

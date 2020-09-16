@@ -8,10 +8,10 @@ import fcose from 'cytoscape-fcose';
 window.cytoscape = cytoscape
 window.layoutFunc = fcose;
 
-
-
 import {Socket} from "phoenix"
 import LiveSocket from "phoenix_live_view"
+
+const COLOUR_MODE_COOKIE_NAME = "colourMode"
 
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
@@ -22,7 +22,26 @@ liveSocket.connect()
 
 //socket.connect()
 
+function toggleColorMode() {
+    var body = document.getElementsByTagName("BODY")[0];
+    body.classList.toggle("night-mode");
+    var html = document.getElementsByTagName("html")[0];
+    var colour;
+    html.style.backgroundColor != "black" ? colour = "black" : colour = "white";
+    html.style.backgroundColor = colour;
+    document.cookie = COLOUR_MODE_COOKIE_NAME + "=" + colour + ";path=/";
+}
+
+function getCookie(cname) {
+    let cookieValue = document.cookie.split('; ').find(row => row.startsWith(cname));
+    return cookieValue ? cookieValue.split('=')[1] :  "";
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
+
+    getCookie(COLOUR_MODE_COOKIE_NAME) == "black" ? toggleColorMode() : null;
+
     var nav = document.getElementById("navBurger")
     nav.addEventListener('click', () => {
        // Get the target from the "data-target" attribute
@@ -33,4 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
        nav.classList.toggle('is-active');
        $target.classList.toggle('is-active');
   });
+
+
+  document.getElementById("night-mode-button").addEventListener('click', () => {
+    toggleColorMode();
+  })
+
 });

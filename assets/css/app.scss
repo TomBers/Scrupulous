@@ -33,6 +33,57 @@
   padding: 10px;
 }
 
+.night-mode {
+    background-color: black;
+    color: white;
+}
+
+.night-mode .navbar {
+    background-color: black;
+    color: white;
+}
+
+.night-mode .navbar a {
+    color: white;
+}
+
+.night-mode .navbar a:hover {
+    background: white;
+    color: black;
+}
+
+
+.night-mode .panel a {
+    color: white;
+}
+
+.night-mode .panel a:hover {
+    color: black;
+}
+
+.night-mode .tile {
+    background-color: transparent;
+    color: white;
+}
+
+.night-mode .tile .is-child {
+    border: 1px solid white;
+}
+
+
+.night-mode blockquote {
+    background-color: black;
+    color: white;
+}
+
+.night-mode .title {
+    color: white;
+}
+
+.night-mode .subtitle {
+    color: white;
+}
+
 .stick-to-bottom {
     position: fixed;
     background-color: transparent;
@@ -150,13 +201,6 @@ a.white-text:hover {
     color: #a8d1ff;
 }
 
-.line.selected span {
-    background-color: #a8d1ff;
-}
-
-.selected {
-    background-color: #a8d1ff;
-}
 
 #cy {
     min-width: 300px;
