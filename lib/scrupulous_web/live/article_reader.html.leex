@@ -27,6 +27,15 @@
     var noteElement = document.getElementById("note")
     var hiddenNoteElement = document.getElementById("noteText");
 
+    <%= if @open_note do %>
+        scrollToLine(<%= @open_note.end_line %>);
+    <% end %>
+
+    function scrollToLine(lineNumber) {
+        var ele = document.getElementById("line_" + lineNumber);
+        setTimeout(() => ele.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"}), 1000);
+    }
+
 
     toggleNotes(".noteLink", (e) => document.querySelectorAll("." + e.target.parentNode.parentNode.id));
     toggleNotes(".closeNote", (e) => document.querySelectorAll(".openNotes"));

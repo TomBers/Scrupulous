@@ -103,6 +103,12 @@
     var noteElement = document.getElementById("note")
     var hiddenNoteElement = document.getElementById("noteText");
 
+    scrollToLine(<%= @open_note %>);
+
+    function scrollToLine(lineNumber) {
+        var ele = document.getElementById("" + lineNumber);
+        setTimeout(() => ele.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"}), 1000);
+    }
 
     function setNoteText() {
         hiddenNoteElement.value = noteElement.value;
