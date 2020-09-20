@@ -107,7 +107,7 @@
 
     <%= if @open_note do %>
         scrollToLine(<%= @open_note %>);
-    <%= end %>
+    <% end %>
 
     <%= if not (is_nil(@sl) and is_nil(@el)) do %>
         setTimeout(() => selectLines(<%= @sl %>, <%= @el %>), TIME_OUT_CONST);
@@ -211,6 +211,6 @@
         }
     }
 }, false);
-<%= end %>
+<% end %>
 
 </script>
