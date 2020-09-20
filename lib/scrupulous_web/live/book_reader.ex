@@ -6,8 +6,9 @@ defmodule ScrupulousWeb.BookReader do
 
   @lines_per_page Scrupulous.Constants.lines_per_page
 
-  def handle_params(%{"book" => book, "page" => pageStr}, _uri, socket) do
-    {page, _rem} = Integer.parse(pageStr)
+  def handle_params(params, _uri, socket) do
+    { book, page, note_id, highlight_start, highlight_end } = extract_params(params)
+
     start_line = page * @lines_per_page
     end_line = start_line + @lines_per_page
 
@@ -16,7 +17,7 @@ defmodule ScrupulousWeb.BookReader do
       UserContent.get_notes_between_lines(book.id, start_line, end_line)
       |> Enum.sort_by(&(length(&1.skruples)), &>=/2)
 
-    param_note = notes |> Enum.filter(fn(note) -> if is_nil(socket.assigns.param_note_id) do false else socket.assigns.param_note_id == note.id end end) |> List.first
+    param_note = notes |> Enum.filter(fn(note) -> if is_nil(note_id) do false else note_id == note.id end end) |> List.first
 
     open_note = if is_nil(param_note) do nil else param_note.end_line end
 
@@ -28,33 +29,40 @@ defmodule ScrupulousWeb.BookReader do
       else
        nil
       end
-    {:noreply, assign(socket, title: book.title, book: book, notes: notes, lines: lines, page: page, show_note_form: false, bookmarks: bookmarks, search: [], open_note: open_note, param_note: param_note, lines_per_page: @lines_per_page)}
+    {:noreply, assign(socket, title: book.title, book: book, notes: notes, lines: lines, page: page, show_note_form: false, bookmarks: bookmarks, search: [], open_note: open_note, param_note: param_note, lines_per_page: @lines_per_page, sl: highlight_start, el: highlight_end)}
   end
 
-  def mount(%{"book" => book, "page" => page, "note" => note_id}, %{"user_token" => user_token}, socket) do
-    if String.to_integer(page) >= 0 do
-      current_user = Scrupulous.Accounts.get_user_by_session_token(user_token)
-      {:ok, assign(socket, current_user: current_user, open_note: nil, param_note_id: String.to_integer(note_id))}
-    else
-      {:ok, redirect(socket, to: "/reader/#{book}/page/0")}
-    end
+  def extract_params(%{"book" => book, "page" => page, "sl" => sl, "el" => el}) do
+    {book, String.to_integer(page), nil, sl, el }
+  end
+
+  def extract_params(%{"book" => book, "page" => page, "note" => note}) do
+    {book, String.to_integer(page), String.to_integer(note), nil, nil }
+  end
+
+  def extract_params(%{"book" => book, "page" => page}) do
+    {book, String.to_integer(page), nil, nil, nil }
+  end
+
+  def extract_params(%{"book" => book}) do
+    {book, 0, nil, nil, nil }
   end
 
   def mount(%{"book" => book, "page" => page}, %{"user_token" => user_token}, socket) do
     if String.to_integer(page) >= 0 do
       current_user = Scrupulous.Accounts.get_user_by_session_token(user_token)
-      {:ok, assign(socket, current_user: current_user, open_note: nil, param_note_id: nil)}
+      {:ok, assign(socket, current_user: current_user, open_note: nil)}
     else
       {:ok, redirect(socket, to: "/reader/#{book}/page/0")}
     end
   end
 
-  def mount(%{"note" => note_id}, _session, socket) do
-    {:ok, assign(socket, current_user: nil, open_note: nil, param_note_id: String.to_integer(note_id))}
-  end
-
-  def mount(_params, _session, socket) do
-    {:ok, assign(socket, current_user: nil, open_note: nil, param_note_id: nil)}
+  def mount(%{"book" => book, "page" => page}, _session, socket) do
+    if String.to_integer(page) >= 0 do
+      {:ok, assign(socket, current_user: nil, open_note: nil)}
+    else
+      {:ok, redirect(socket, to: "/reader/#{book}/page/0")}
+    end
   end
 
 

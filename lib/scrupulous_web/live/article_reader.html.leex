@@ -27,6 +27,15 @@
     var noteElement = document.getElementById("note")
     var hiddenNoteElement = document.getElementById("noteText");
 
+    <%= if @open_note do %>
+        scrollToLine(<%= @open_note.end_line %>);
+    <% end %>
+
+    function scrollToLine(lineNumber) {
+        var ele = document.getElementById("line_" + lineNumber);
+        setTimeout(() => ele.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"}), 1000);
+    }
+
 
     toggleNotes(".noteLink", (e) => document.querySelectorAll("." + e.target.parentNode.parentNode.id));
     toggleNotes(".closeNote", (e) => document.querySelectorAll(".openNotes"));
@@ -102,19 +111,6 @@
     }
 
 
-    function selectLines(sLine, eLine) {
-        var elems = document.querySelectorAll(".selectableLine");
-
-        elems.forEach.call(elems, function(el) {
-            var elementId = getLineFromId(el);
-           if(elementId >= sLine && elementId <= eLine) {
-               el.classList.add("selected");
-            } else {
-                el.classList.remove("selected");
-            }
-         });
-    }
-
     function copyStringToClipboard (noteId) {
        // Create new element
        var el = document.createElement('textarea');
@@ -132,27 +128,28 @@
        document.body.removeChild(el);
     }
 
-  document.addEventListener('selectionchange', () => {
-    var select = document.getSelection();
+  <%= if @current_user do %>
+      document.addEventListener('selectionchange', () => {
+        var select = document.getSelection();
 
-    if (select.anchorNode.nodeName == "#text") {
+        if (select.anchorNode.nodeName == "#text") {
 
-        showQuoteHint(select.toString());
+            showQuoteHint(select.toString());
 
-        var baseLine = getNodeID(select.anchorNode);
-        var extentLine = getNodeID(select.focusNode);
+            var baseLine = getNodeID(select.anchorNode);
+            var extentLine = getNodeID(select.focusNode);
 
-        startLine = baseLine <= extentLine ? baseLine : extentLine;
-        endLine = baseLine >= extentLine ? baseLine : extentLine;
+            startLine = baseLine <= extentLine ? baseLine : extentLine;
+            endLine = baseLine >= extentLine ? baseLine : extentLine;
 
-        if(!isNaN(startLine) && !isNaN(endLine)) {
-            setLineNumbers(startLine, endLine);
-            noteElement.placeholder = "Add note from " + startLine + " to " + endLine;
-            selectLines(startLine, endLine);
-            showNoteForm();
+            if(!isNaN(startLine) && !isNaN(endLine)) {
+                setLineNumbers(startLine, endLine);
+                noteElement.placeholder = "Add note from " + startLine + " to " + endLine;
+                showNoteForm();
+            }
         }
-    }
-}, false);
+    }, false);
+<% end %>
 
 </script>
 
@@ -165,6 +162,7 @@
     background-color: black;
     font-weight: 400;
 }
+
 
 /* https://markdowncss.github.io/ */
 
