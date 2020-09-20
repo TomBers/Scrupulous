@@ -33,6 +33,14 @@
   padding: 10px;
 }
 
+.selected span {
+    background-color: #a8d1ff;
+}
+
+.night-mode .selected span {
+    background-color: #483D8B;
+}
+
 .night-mode {
     background-color: black;
     color: white;
