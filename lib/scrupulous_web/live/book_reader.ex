@@ -48,10 +48,6 @@ defmodule ScrupulousWeb.BookReader do
     {book, 0, nil, nil, nil }
   end
 
-  def get_page(page) when page < 0, do: 0
-  def get_page(page), do: page
-
-
   def mount(%{"book" => book, "page" => page}, %{"user_token" => user_token}, socket) do
     if String.to_integer(page) >= 0 do
       current_user = Scrupulous.Accounts.get_user_by_session_token(user_token)
