@@ -7,7 +7,7 @@ defmodule ScrupulousWeb.BookReader do
   @lines_per_page Scrupulous.Constants.lines_per_page
 
   def handle_params(params, _uri, socket) do
-    { book, page, note_id, highlight_start, highlight_end } = extract_prams(params)
+    { book, page, note_id, highlight_start, highlight_end } = extract_params(params)
 
     start_line = page * @lines_per_page
     end_line = start_line + @lines_per_page
@@ -32,19 +32,19 @@ defmodule ScrupulousWeb.BookReader do
     {:noreply, assign(socket, title: book.title, book: book, notes: notes, lines: lines, page: page, show_note_form: false, bookmarks: bookmarks, search: [], open_note: open_note, param_note: param_note, lines_per_page: @lines_per_page, sl: highlight_start, el: highlight_end)}
   end
 
-  def extract_prams(%{"book" => book, "page" => page, "sl" => sl, "el" => el}) do
+  def extract_params(%{"book" => book, "page" => page, "sl" => sl, "el" => el}) do
     {book, String.to_integer(page), nil, sl, el }
   end
 
-  def extract_prams(%{"book" => book, "page" => page, "note" => note}) do
+  def extract_params(%{"book" => book, "page" => page, "note" => note}) do
     {book, String.to_integer(page), String.to_integer(note), nil, nil }
   end
 
-  def extract_prams(%{"book" => book, "page" => page}) do
+  def extract_params(%{"book" => book, "page" => page}) do
     {book, String.to_integer(page), nil, nil, nil }
   end
 
-  def extract_prams(%{"book" => book}) do
+  def extract_params(%{"book" => book}) do
     {book, 0, nil, nil, nil }
   end
 
