@@ -22,15 +22,16 @@
 
         <div class="navbar-end">
             <div class="navbar-item">
-                <div class="buttons are-small">
+                <div class="buttons">
                     <%= if @current_user do %>
-                        <%= link "My Bookmarks", to: Routes.bookmark_path(@conn, :index), class: "button is-link is-light" %>
-                        <%= link "My Articles", to: Routes.article_path(@conn, :index), class: "button is-link is-light" %>
-                        <%= link "Settings", to: Routes.user_settings_path(@conn, :edit), class: "button is-link is-light" %>
-                        <%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete, class: "button is-link is-light" %>
+                        <a href="<%= Routes.page_path(@conn, :account) %>" class="button is-link is-light is-small">
+                            <span class="icon is-small">
+                            <i class="fas fa-cog"></i>
+                            </span>
+                        </a>
                     <% else %>
-                        <%= link "Register", to: Routes.user_registration_path(@conn, :new), class: "button is-link is-light" %>
-                        <%= link "Log in", to: Routes.user_session_path(@conn, :new), class: "button is-link is-light" %>
+                        <%= link "Register", to: Routes.user_registration_path(@conn, :new), class: "button is-link" %>
+                        <%= link "Log in", to: Routes.user_session_path(@conn, :new), class: "button is-info" %>
                     <% end %>
                 </div>
             </div>

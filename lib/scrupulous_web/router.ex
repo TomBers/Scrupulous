@@ -28,6 +28,7 @@ defmodule ScrupulousWeb.Router do
     live "/article/:article", ArticleReader, layout: {ScrupulousWeb.LayoutView, :app}
 
     get "/", PageController, :index
+    get "/account", PageController, :account
     get "/contributors", ScoreController, :score_board
     get "/contributors/:user", ScoreController, :user_score
     get "/book/:book", PageController, :book_overview

@@ -8,12 +8,12 @@ defmodule ScrupulousWeb.BookmarkController do
     user = conn.assigns[:current_user]
     bookmarks =
       if is_nil(user) do
-        []
+        conn
+        |> put_flash(:info, "You must be logged in.")
+        |> redirect(to: Routes.page_path(conn, :index))
       else
-        UserContent.bookmarks_for_user(user.id)
+        render(conn, "index.html", bookmarks: UserContent.bookmarks_for_user(user.id))
       end
-
-    render(conn, "index.html", bookmarks: bookmarks)
   end
 
   def new(conn, _params) do

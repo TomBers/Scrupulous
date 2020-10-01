@@ -9,6 +9,10 @@ defmodule ScrupulousWeb.PageController do
     render(conn, "index.html")
   end
 
+  def account(conn, _params) do
+    render(conn, "account.html")
+  end
+
   def book_overview(conn, %{"book" => book}) do
     book = StaticContent.get_book_with_notes!(book)
     render(conn, "book_overview.html", book: book)
