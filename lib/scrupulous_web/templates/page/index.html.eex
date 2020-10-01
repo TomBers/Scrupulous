@@ -1,19 +1,24 @@
 <div class="container">
     <div class="section">
-    <h1 class="title">Welcome to Skrupulus</h1>
+    <h1 class="title">Skrupulus - Read between the lines</h1>
 
-    <p>A library for the future, brings together original texts with the best notes, critiques and discussions. Skrupulus allows you to comment on a line by line basis, and share your notes with others.</p>
+    <p>Skrupulus is a library for the future; bringing together original texts with the best notes, critiques and discussions.</p>
     <br>
     <p class="subtitle">How does it work?</p>
     <p>Simply choose a book, and you can get reading straight away, we have a selection of books (with full text search) and articles.</p>
         <p>While you are reading you will see <span class="small-white-circle homepage-circle">4</span> clicking on this will open notes that other people have left. Clicking <a><i class="far fa-clipboard"></i></a> copies the note's unique URL to the clipboard for sharing.</p>
     <br>
-    <p>If you you log in you can contribute.</p>
-    <br>
-    <p>Liking notes that you think offer insight into the line / paragraph or adding your own note at any point in the book, shared with everyone.</p>
-    <p>To add a note simple select the text the note refers to, and a text-area will appear.</p>
-    <p>All contributions are recorded and can be seen on the contributors page.</p>
+    <p>Add your own perspective.</p>
 
+        <div class="content">
+            <ol>
+                <li>Like notes that you think offer insight into the line / paragraph</li>
+                <li>Add your own note at any point in the book</li>
+                <li>Each note has its own unique URL so can be shared by anyone</li>
+                <li>All contributions are recorded and can be seen on the contributors page</li>
+            </ol>
+        </div>
+        <p><a href="/users/register">Login</a> to get started</p>
 
         <br>
     <p class="subtitle">Here are some books to get started</p>
