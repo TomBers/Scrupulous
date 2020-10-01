@@ -1,5 +1,7 @@
+<div class="container">
 <h1 class="title">Add URL</h1>
 
 <%= render "form.html", Map.put(assigns, :action, Routes.resource_path(@conn, :create)) %>
 <br><br>
 <span><%= link "Back", to: Routes.page_path(@conn, :book_overview, @book_id) %></span>
+</div>
