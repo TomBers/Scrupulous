@@ -2,6 +2,7 @@ defmodule Scrupulous.StaticContent.Resource do
   use Ecto.Schema
   import Ecto.Changeset
   alias Scrupulous.StaticContent.Book
+  alias Scrupulous.Accounts.User
 
   schema "resources" do
     field :category, :string
