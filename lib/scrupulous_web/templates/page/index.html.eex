@@ -8,7 +8,7 @@
     <p>Simply choose a book, and you can get reading straight away, we have a selection of books (with full text search) and articles.</p>
         <p>While you are reading you will see <span class="small-white-circle homepage-circle">4</span> clicking on this will open notes that other people have left. Clicking <a><i class="far fa-clipboard"></i></a> copies the note's unique URL to the clipboard for sharing.</p>
     <br>
-    <p>Add your own perspective.</p>
+    <p class="subtitle">Add your own perspective.</p>
 
         <div class="content">
             <ol>
