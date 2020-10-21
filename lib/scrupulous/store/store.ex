@@ -36,6 +36,14 @@ defmodule Store do
     {:reply, Map.has_key?(state, key), state}
   end
 
+  def handle_call({:search, key, term}, _, state) do
+
+    lines = Map.get(state, key)
+     |> Stream.filter(fn({_line, txt}) -> String.contains?(String.downcase(txt), String.downcase(term)) end)
+     |> Enum.to_list()
+    {:reply, lines, state}
+  end
+
   def handle_call(:get_all, _, state) do
     {:reply, state, state}
   end
@@ -64,6 +72,10 @@ defmodule Store do
   def get_between(pid, key, s, e) do
     StoreHelpers.fetch_book_if_not_present(pid, key, &put/3)
     GenServer.call(pid, {:get_between, key, s, e})
+  end
+
+  def search(pid, key, term) do
+    GenServer.call(pid, {:search, key, term})
   end
 
   def put(pid, key, value) do
