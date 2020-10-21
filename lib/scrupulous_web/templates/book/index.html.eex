@@ -1,4 +1,5 @@
 <div class="container">
+  <%= render "indx.html" %>
   <h1 class="title">Listing Books</h1>
 
   <table class="table is-striped is-fullwidth">
@@ -6,9 +7,6 @@
       <tr>
         <th>Title</th>
         <th>Author</th>
-        <th>Country</th>
-        <th>Publication year</th>
-
         <th></th>
       </tr>
     </thead>
@@ -16,9 +14,7 @@
   <%= for book <- @books do %>
       <tr>
         <td><%= link book.title, to: Routes.page_path(@conn, :book_overview, book) %></td>
-        <td><%= book.author %></td>
-        <td><%= book.country %></td>
-        <td><%= book.publication_year %></td>
+        <td><a href="/books/search/?term=<%= book.author %>"><%= book.author %></a></td>
       </tr>
   <% end %>
     </tbody>

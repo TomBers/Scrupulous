@@ -1,0 +1,7 @@
+<%= for letter <- letters() do %>
+<a href="/books/<%= letter %>" class="letter-link"><%= letter %></a>
+<% end %>
+
+<form action="/books/search/">
+    <input type="text" name="term" placeholder="Search" class="input">
+</form>

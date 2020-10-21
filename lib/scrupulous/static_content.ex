@@ -53,6 +53,24 @@ defmodule Scrupulous.StaticContent do
     Repo.one(query)
     end
 
+  def authors_starting_with(letter) do
+    query = from b in Book,
+                 where: ilike(b.author, ^letter),
+                 order_by: [b.author, desc: b.author],
+                 limit: 30
+
+    Repo.all(query)
+  end
+
+  def search(term) do
+    query = from b in Book,
+                 where: ilike(b.author, ^term) or ilike(b.title, ^term),
+                 order_by: [b.author, desc: b.author],
+                 limit: 30
+
+    Repo.all(query)
+  end
+
   @doc """
   Creates a book.
 
