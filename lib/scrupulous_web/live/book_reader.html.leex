@@ -27,7 +27,7 @@
     <br><br>
     <div class="text-div">
         <%= for {line, txt} <- @lines do %>
-            <%= if txt == "\n" do %>
+            <%= if String.trim(txt) == "" do %>
             <div class="spacer"></div>
             <% else %>
             <div class='<%= ScrupulousWeb.ReaderHelpers.get_line_class(line, @notes, @open_note, @param_note) %>' id="<%= line %>">

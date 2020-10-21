@@ -9,7 +9,7 @@ defmodule StoreHelpers do
                                 |> Stream.map(fn({line, indx}) -> {indx, line} end)
                                 |> Enum.to_list()
                         store_func.(pid, key, lines)
-        {:error, _} -> IO.inspect("Error getting #{key}")
+        {:error, msg} -> IO.inspect("Error getting #{key} #{msg}")
       end
     end
   end
@@ -21,9 +21,9 @@ defmodule StoreHelpers do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, body}
       {:ok, %HTTPoison.Response{status_code: 404}} ->
-        {:error, "Error"}
+        {:error, "404 Error"}
       {:error, %HTTPoison.Error{reason: reason}} ->
-        {:error, "Error"}
+        {:error, "#{reason}"}
     end
 
   end
