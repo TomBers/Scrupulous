@@ -2,7 +2,7 @@
     <div class="columns">
         <div class="column is-three-quarters">
             <h1 class="title"><%= @book.title %>, <%= @book.publication_year %></h1>
-            <h2 class="subtitle"><%= @book.author %></h2>
+            <h2 class="subtitle"><a href="/books/search/?term=<%= @book.author %>"><%= @book.author %></a></h2>
         </div>
         <div class="column">
             <a href="/reader/<%= @book.id %>/page/0"><button class="button is-large is-fullwidth">Read Now</button></a>

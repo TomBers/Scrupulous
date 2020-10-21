@@ -5,7 +5,8 @@ defmodule ScrupulousWeb.BookController do
   alias Scrupulous.StaticContent.Book
 
   def index(conn, _params) do
-    render(conn, "search.html")
+    books = StaticContent.list_books()
+    render(conn, "index.html", books: books)
   end
 
   def author_by_letter(conn, %{"letter" => letter}) do
@@ -14,8 +15,7 @@ defmodule ScrupulousWeb.BookController do
   end
 
   def search(conn, %{"term" => term}) do
-    IO.inspect(term)
-    books = StaticContent.search("#{term}%") |> filter_read_me()
+    books = StaticContent.search("%#{term}%") |> filter_read_me()
     render(conn, "index.html", books: books)
   end
 

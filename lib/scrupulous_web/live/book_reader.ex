@@ -21,7 +21,9 @@ defmodule ScrupulousWeb.BookReader do
 
     open_note = if is_nil(param_note) do nil else param_note.end_line end
 
-    lines = FileStream.read_book(book.file_name, start_line, end_line)
+    pid = Store.pid
+
+    lines = Store.get_between(pid, book.file_name, start_line, end_line)
 
     bookmarks =
       if socket.assigns.current_user do

@@ -56,8 +56,7 @@ defmodule Scrupulous.StaticContent do
   def authors_starting_with(letter) do
     query = from b in Book,
                  where: ilike(b.author, ^letter),
-                 order_by: [b.author, desc: b.author],
-                 limit: 30
+                 order_by: [b.author, desc: b.author]
 
     Repo.all(query)
   end
@@ -65,8 +64,7 @@ defmodule Scrupulous.StaticContent do
   def search(term) do
     query = from b in Book,
                  where: ilike(b.author, ^term) or ilike(b.title, ^term),
-                 order_by: [b.author, desc: b.author],
-                 limit: 30
+                 order_by: [b.author, desc: b.author]
 
     Repo.all(query)
   end

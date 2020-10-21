@@ -1,12 +1,14 @@
 <div class="container">
   <%= render "indx.html" %>
-  <h1 class="title">Listing Books</h1>
+  <h1 class="title">Listing Books (<%= length(@books) %>)</h1>
 
   <table class="table is-striped is-fullwidth">
     <thead>
       <tr>
         <th>Title</th>
         <th>Author</th>
+        <th>Country</th>
+        <th>Year</th>
         <th></th>
       </tr>
     </thead>
@@ -15,6 +17,8 @@
       <tr>
         <td><%= link book.title, to: Routes.page_path(@conn, :book_overview, book) %></td>
         <td><a href="/books/search/?term=<%= book.author %>"><%= book.author %></a></td>
+        <td><%= book.country %></td>
+        <td><%= book.publication_year %></td>
       </tr>
   <% end %>
     </tbody>
