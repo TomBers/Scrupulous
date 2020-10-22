@@ -1,17 +1,18 @@
 defmodule StoreHelpers do
 
-  def fetch_book_if_not_present(pid, key, store_func) do
-    if !GenServer.call(pid, {:has_key, key}) do
+  def fetch_book_if_not_present(key, store_func) do
+    if is_nil(:persistent_term.get(key, nil)) do
       IO.inspect("READING FILE FROM S3")
       case get_book_contents(key) do
         {:ok, book } -> lines = String.split(book, "\n")
                                 |> Stream.with_index()
                                 |> Stream.map(fn({line, indx}) -> {indx, line} end)
                                 |> Enum.to_list()
-                        store_func.(pid, key, lines)
+                        store_func.(key, lines)
         {:error, msg} -> IO.inspect("Error getting #{key} #{msg}")
       end
     end
+    :persistent_term.get(key, [])
   end
 
   def get_book_contents(id) do

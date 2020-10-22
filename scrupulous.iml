@@ -100,5 +100,7 @@
     <orderEntry type="library" name="gen_state_machine" level="project" />
     <orderEntry type="library" name="eqc_ex" level="project" />
     <orderEntry type="library" name="httpoison" level="project" />
+    <orderEntry type="library" name="mimic" level="project" />
+    <orderEntry type="library" name="httparrot" level="project" />
   </component>
 </module>
