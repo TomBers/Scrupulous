@@ -2,7 +2,7 @@ defmodule StoreHelpers do
 
   def fetch_book_if_not_present(key, store_func) do
     if is_nil(:persistent_term.get(key, nil)) do
-      IO.inspect("READING FILE FROM S3")
+      IO.inspect("READING FILE #{key} FROM S3")
       case get_book_contents(key) do
         {:ok, book } -> lines = String.split(book, "\n")
                                 |> Stream.with_index()
