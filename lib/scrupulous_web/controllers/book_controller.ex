@@ -9,6 +9,20 @@ defmodule ScrupulousWeb.BookController do
     render(conn, "index.html", books: books)
   end
 
+  def author_by_letter(conn, %{"letter" => letter}) do
+    books = StaticContent.authors_starting_with("#{letter}%") |> filter_read_me()
+    render(conn, "index.html", books: books)
+  end
+
+  def search(conn, %{"term" => term}) do
+    books = StaticContent.search("%#{term}%") |> filter_read_me()
+    render(conn, "index.html", books: books)
+  end
+
+  def filter_read_me(books) do
+    Enum.filter(books, fn(book) -> !String.ends_with?(book.file_name, "readme.txt") end)
+  end
+
   def new(conn, _params) do
     changeset = StaticContent.change_book(%Book{})
     render(conn, "new.html", changeset: changeset)

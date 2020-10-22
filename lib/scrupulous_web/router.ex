@@ -33,6 +33,8 @@ defmodule ScrupulousWeb.Router do
     get "/contributors/:user", ScoreController, :user_score
     get "/book/:book", PageController, :book_overview
     get "/book/:book/resources/new/:category", ResourceController, :new_for_book
+    get "/books/search/", BookController, :search
+    get "/books/:letter", BookController, :author_by_letter
     get "/graph/", PageController, :graph
     get "/graph/:book", PageController, :usergraph
     get "/list/articles", ArticleController, :all_articles

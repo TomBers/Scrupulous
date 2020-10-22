@@ -6,6 +6,7 @@ defmodule Scrupulous.Application do
   use Application
 
   def start(_type, _args) do
+    import Supervisor.Spec
     children = [
       # Start the Ecto repository
       Scrupulous.Repo,
@@ -14,7 +15,8 @@ defmodule Scrupulous.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Scrupulous.PubSub},
       # Start the Endpoint (http/https)
-      ScrupulousWeb.Endpoint
+      ScrupulousWeb.Endpoint,
+      worker(Store, []),
       # Start a worker by calling: Scrupulous.Worker.start_link(arg)
       # {Scrupulous.Worker, arg}
     ]

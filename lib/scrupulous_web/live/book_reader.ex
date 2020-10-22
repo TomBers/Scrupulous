@@ -21,7 +21,8 @@ defmodule ScrupulousWeb.BookReader do
 
     open_note = if is_nil(param_note) do nil else param_note.end_line end
 
-    lines = FileStream.read_book(book.file_name, start_line, end_line)
+    pid = Store.pid
+    lines = Store.get_between(pid, book.file_name, start_line, end_line)
 
     bookmarks =
       if socket.assigns.current_user do
@@ -29,7 +30,7 @@ defmodule ScrupulousWeb.BookReader do
       else
        nil
       end
-    {:noreply, assign(socket, title: book.title, book: book, notes: notes, lines: lines, page: page, show_note_form: false, bookmarks: bookmarks, search: [], open_note: open_note, param_note: param_note, lines_per_page: @lines_per_page, sl: highlight_start, el: highlight_end)}
+    {:noreply, assign(socket, title: book.title, book: book, store_pid: pid, notes: notes, lines: lines, page: page, show_note_form: false, bookmarks: bookmarks, search: [], open_note: open_note, param_note: param_note, lines_per_page: @lines_per_page, sl: highlight_start, el: highlight_end)}
   end
 
   def extract_params(%{"book" => book, "page" => page, "sl" => sl, "el" => el}) do
@@ -110,7 +111,7 @@ defmodule ScrupulousWeb.BookReader do
 
   def handle_event("search", %{"_target" => _target, "query" => query}, socket) do
     search = if String.length(query) > 7 do
-        FileStream.find_phrase(socket.assigns.book.file_name, query)
+        Store.search(socket.assigns.store_pid, socket.assigns.book.file_name, query)
       else
         []
     end

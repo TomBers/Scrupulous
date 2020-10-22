@@ -16,8 +16,8 @@
 
     <div class="content">
         <ol type="1">
-            <%= for res <- @search do %>
-            <li><%= res.txt %> <a href="/reader/<%= @book.id %>/page/<%= div(res.line, @lines_per_page) %>?sl=<%= res.line %>&el=<%= res.line %>">Line <%= res.line %></a></li>
+            <%= for {line, txt} <- @search do %>
+            <li><%= txt %> <a href="/reader/<%= @book.id %>/page/<%= div(line, @lines_per_page) %>?sl=<%= line %>&el=<%= line %>">Line <%= line %></a></li>
             <% end %>
         </ol>
     </div>
@@ -26,17 +26,17 @@
     <a href="/reader/<%= @book.id %>/page/<%= @page + 1 %>" class="is-pulled-right"><i class="fas fa-arrow-right bigIcon"></i></a>
     <br><br>
     <div class="text-div">
-        <%= for line <- @lines do %>
-            <%= if line.txt == "\n" do %>
+        <%= for {line, txt} <- @lines do %>
+            <%= if String.trim(txt) == "" do %>
             <div class="spacer"></div>
             <% else %>
-            <div class='<%= ScrupulousWeb.ReaderHelpers.get_line_class(line.line, @notes, @open_note, @param_note) %>' id="<%= line.line %>">
-                <span id="<%= line.line %>"><%= line.txt %></span>
-                <%= if ScrupulousWeb.ReaderHelpers.has_note(line.line, @notes) do %>
-                <a href="#" class="<%= ScrupulousWeb.ReaderHelpers.get_note_class(line.line, @open_note) %>" phx-click="open_note"
-                   phx-value-line-number="<%= line.line %>"><span class="small-white-circle book-circle"><%= length(ScrupulousWeb.ReaderHelpers.get_notes(line.line, @notes, nil)) %></span></a>
-                    <%= if ScrupulousWeb.ReaderHelpers.is_note_open(line.line, @open_note) do %>
-                        <%= for note <- ScrupulousWeb.ReaderHelpers.get_notes(line.line, @notes, @param_note) do %>
+            <div class='<%= ScrupulousWeb.ReaderHelpers.get_line_class(line, @notes, @open_note, @param_note) %>' id="<%= line %>">
+                <span id="<%= line %>"><%= txt %></span>
+                <%= if ScrupulousWeb.ReaderHelpers.has_note(line, @notes) do %>
+                <a href="#" class="<%= ScrupulousWeb.ReaderHelpers.get_note_class(line, @open_note) %>" phx-click="open_note"
+                   phx-value-line-number="<%= line %>"><span class="small-white-circle book-circle"><%= length(ScrupulousWeb.ReaderHelpers.get_notes(line, @notes, nil)) %></span></a>
+                    <%= if ScrupulousWeb.ReaderHelpers.is_note_open(line, @open_note) do %>
+                        <%= for note <- ScrupulousWeb.ReaderHelpers.get_notes(line, @notes, @param_note) do %>
                         <div class="tile is-ancestor">
                             <div class="tile is-vertical is-12">
                                 <div class="tile">

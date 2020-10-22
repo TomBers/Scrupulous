@@ -1,0 +1,4 @@
+<div class="container">
+    <h1 class="title">Search Library</h1>
+    <%= render "indx.html" %>
+</div>
