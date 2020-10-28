@@ -4,15 +4,18 @@ defmodule StoreHelpers do
     if is_nil(:persistent_term.get(key, nil)) do
       IO.inspect("READING FILE #{key} FROM S3")
       case get_book_contents(key) do
-        {:ok, book } -> lines = String.split(book, "\n")
-                                |> Stream.with_index()
-                                |> Stream.map(fn({line, indx}) -> {indx, line} end)
-                                |> Enum.to_list()
-                        store_func.(key, lines)
+        {:ok, book } -> store_func.(key, get_lines_from_book(book))
         {:error, msg} -> IO.inspect("Error getting #{key} #{msg}")
       end
     end
     :persistent_term.get(key, [])
+  end
+
+  def get_lines_from_book(book) do
+    String.split(book, "\n")
+    |> Stream.with_index()
+    |> Stream.map(fn({line, indx}) -> {indx, line} end)
+    |> Enum.to_list()
   end
 
   def get_book_contents(id) do
