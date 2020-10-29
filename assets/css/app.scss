@@ -151,6 +151,15 @@
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 768px) {
+
+    .line {
+        font-size: 1.2em;
+    }
+
+    .book-circle {
+        min-width: 25px;
+    }
+
     .stick-to-bottom {
         padding: 10px;
         bottom: 0;
@@ -166,46 +175,6 @@
     text-align: justify;
     text-justify: inter-word;
 }
-
-@media only screen and (max-width: 800px) {
-    .line {
-        font-size: 1.4em;
-    }
- }
-
-@media only screen and (max-width: 600px) {
-    .line {
-        font-size: 0.8em;
-    }
- }
-
-@media only screen and (max-width: 500px) {
-    .line {
-        font-size: 0.7em;
-    }
- }
-
-@media only screen and (max-width: 400px) {
-    .line {
-        font-size: 0.62em;
-    }
- }
-
- @media only screen and (max-width: 320px) {
-     .line {
-         font-size: 0.57em;
-     }
-  }
-
-   @media only screen and (max-width: 300px) {
-       .line {
-           font-size: 0.53em;
-       }
-    }
-
-
-
-
 
 .bigIcon {
   font-size: x-large;

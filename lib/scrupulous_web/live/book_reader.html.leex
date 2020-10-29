@@ -30,7 +30,7 @@
             <%= if String.trim(txt) == "" do %>
             <div class="spacer"></div>
             <% else %>
-            <div class='<%= ScrupulousWeb.ReaderHelpers.get_line_class(line, @notes, @open_note, @param_note) %>' id="<%= line %>">
+            <span class='<%= ScrupulousWeb.ReaderHelpers.get_line_class(line, @notes, @open_note, @param_note) %>' id="<%= line %>">
                 <span id="<%= line %>"><%= txt %></span>
                 <%= if ScrupulousWeb.ReaderHelpers.has_note(line, @notes) do %>
                 <a href="#" class="<%= ScrupulousWeb.ReaderHelpers.get_note_class(line, @open_note) %>" phx-click="open_note"
@@ -65,7 +65,7 @@
                         <% end %>
                     <% end %>
                 <% end %>
-            </div>
+            </span>
             <% end %>
         <% end %>
     </div>
@@ -159,7 +159,7 @@
     }
 
     function selectLines(sLine, eLine) {
-        var elems = document.querySelectorAll("div.line");
+        var elems = document.querySelectorAll("span.line");
 
         elems.forEach.call(elems, function(el) {
            if(el.id >= sLine && el.id <= eLine) {
