@@ -101,12 +101,20 @@
     color: white;
 }
 
+.copy-to-clipboard {
+    padding-left: 10px;
+}
+
 .stick-to-bottom {
     position: fixed;
-    background-color: transparent;
+    background-color: white;
     width: 350px;
     bottom: 40px;
     right: 0;
+}
+
+.night-mode .stick-to-bottom {
+    background-color: black;
 }
 
 .searchInput {

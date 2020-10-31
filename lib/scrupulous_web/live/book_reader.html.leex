@@ -72,16 +72,16 @@
     <a href="/reader/<%= @book.id %>/page/<%= @page - 1 %>"><i class="fas fa-arrow-left bigIcon"></i></a>
     <a href="/reader/<%= @book.id %>/page/<%= @page + 1 %>" class="is-pulled-right"><i class="fas fa-arrow-right bigIcon"></i></a>
 
-    <%= if @current_user do %>
-        <div class="field stick-to-bottom notAlwaysVisible">
-            <div class="control">
-                <div class="content">
-                    <blockquote id="quoteHint"></blockquote>
-                    <p><%= @title %> - <%= @book.author %></p>
-                    <a onclick="copyLineHighlightToClipboard()"><i class="far fa-clipboard"></i></a>
-                </div>
-                <a href="#" phx-click="close_form" class="notAlwaysVisible"><i class="far fa-times-circle bigIcon"></i></a>
-                <br>
+    <div class="field stick-to-bottom notAlwaysVisible">
+        <div class="control">
+            <div class="content">
+                <blockquote id="quoteHint"></blockquote>
+                <p><%= @title %> - <%= @book.author %></p>
+                <a onclick="copyLineHighlightToClipboard()"><i class="far fa-clipboard fa-2x copy-to-clipboard"></i></a>
+            </div>
+            <a href="#" phx-click="close_form" class="notAlwaysVisible"><i class="far fa-times-circle bigIcon"></i></a>
+            <br>
+            <%= if @current_user do %>
                 <form phx-submit="add_note">
                     <textarea id="note" class="textarea notAlwaysVisible" placeholder="Add note"
                               onkeyup="setNoteText()"></textarea>
@@ -92,10 +92,10 @@
                     <input type="submit" id="noteBtn" value="Add note" class="button is-light notAlwaysVisible"/>
                     <p class="neverVisible"><%= @show_note_form %></p>
                 </form>
-            </div>
-
+            <% end %>
         </div>
-    <% end %>
+    </div>
+
 </div>
 
 <script>
@@ -123,7 +123,7 @@
         hiddenNoteElement.value = noteElement.value;
     }
 
-    function setLineNumbers(start, end) {
+    function setLineNumbersForHiddenFormFields(start, end) {
         try {
             document.getElementById("startLine").value = start;
             document.getElementById("endLine").value = end;
@@ -172,6 +172,7 @@
 
     function copyLineHighlightToClipboard() {
         copyStringToClipboard('sl=' + startLine + '&el='+endLine);
+        alert('Passage copied to clipboard');
     }
 
     function copyStringToClipboard (params) {
@@ -191,7 +192,6 @@
        document.body.removeChild(el);
     }
 
- <%= if @current_user do %>
   document.addEventListener('selectionchange', () => {
     var select = document.getSelection();
 
@@ -205,12 +205,13 @@
         endLine = baseLine >= extentLine ? baseLine : extentLine;
 
         if(!isNaN(startLine) && !isNaN(endLine)) {
-            setLineNumbers(startLine, endLine);
-            noteElement.placeholder = "Add note from " + startLine + " to " + endLine;
+            <%= if @current_user do %>
+                setLineNumbersForHiddenFormFields(startLine, endLine);
+                noteElement.placeholder = "Add note from " + startLine + " to " + endLine;
+            <% end %>
             showNoteForm();
         }
     }
 }, false);
-<% end %>
 
 </script>
