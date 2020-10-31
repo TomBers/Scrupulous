@@ -5,8 +5,9 @@
             <h2 class="subtitle"><a href="/books/search/?term=<%= @book.author %>"><%= @book.author %></a></h2>
         </div>
         <div class="column">
-            <a href="/reader/<%= @book.id %>/page/0"><button class="button is-large is-fullwidth">Read Now</button></a>
-            <a href="/graph/<%= @book.id %>"><button class="button is-large is-fullwidth">Related Books</button></a>
+            <a href="/reader/<%= @book.id %>/page/0"><button class="button is-primary is-large is-fullwidth">Read Now</button></a>
+            <br>
+            <a href="/graph/<%= @book.id %>"><button class="button is-fullwidth">Related Books</button></a>
         </div>
     </div>
 
