@@ -11,25 +11,36 @@ defmodule Store do
 
   def search(key, term) do
     book = StoreHelpers.fetch_book_if_not_present(key, &store_book/2)
+    search_in_book(book, term)
+  end
+
+  def search_in_book(book, term) do
     book
-    |> Enum.filter(fn ({line, txt}) -> compare_func(txt, term, line, book) end)
+    |> Enum.filter(fn ({_line, txt}) -> compare_func(txt, term) end)
   end
 
-  defp compare_func(txt, term, line, book) do
-    String.contains?(compare_string(book, line), term)
+  defp compare_func(txt, term) do
+    ftxt =
+      txt
+      |> String.replace("\r", "")
+      |> String.downcase()
+
+    dterm = String.downcase(term)
+
+    String.contains?(ftxt, dterm)
   end
 
-  defp compare_string(book, line) when line > 0 and line < length(book) - 1 do
-    {_num, previous_line_txt} = Enum.at(book, line - 1)
-    {_num, txt} = Enum.at(book, line)
-    {_num, next_line_txt} = Enum.at(book, line + 1)
-    String.replace("#{previous_line_txt} #{txt} #{next_line_txt}", "\r", "")
-  end
-
-  defp compare_string(book, line) do
-    {_num, txt} = Enum.at(book, line)
-    txt
-  end
+#  defp compare_string(book, line) when line > 0 and line < length(book) - 1 do
+#    {_num, previous_line_txt} = Enum.at(book, line - 1)
+#    {_num, txt} = Enum.at(book, line)
+#    {_num, next_line_txt} = Enum.at(book, line + 1)
+#    String.replace("#{previous_line_txt} #{txt} #{next_line_txt}", "\r", "")
+#  end
+#
+#  defp compare_string(book, line) do
+#    {_num, txt} = Enum.at(book, line)
+#    txt
+#  end
 
   #  Helpers
 
