@@ -8,6 +8,7 @@
                 <a href="#" phx-click="bookmark"><i class="far fa-bookmark bigIcon"></i></a>
             <% end %>
         <% end %>
+        <i class="far fa-play-circle bigIcon playIcon" onclick="readBookOutLoud()"></i>
     </h1>
 
     <form phx-change="search" class="search-form">
@@ -104,6 +105,7 @@
     var noteElement = document.getElementById("note")
     var hiddenNoteElement = document.getElementById("noteText");
     var TIME_OUT_CONST = 500;
+    var audioStarted = false;
 
     <%= if @open_note do %>
         scrollToLine(<%= @open_note %>);
@@ -113,6 +115,32 @@
         setTimeout(() => selectLines(<%= @sl %>, <%= @el %>), TIME_OUT_CONST);
         scrollToLine(<%= @sl %>);
     <% end %>
+
+    function readBookOutLoud() {
+        if(!audioStarted) {
+            audioStarted = true;
+            var elems = document.querySelectorAll("span.line");
+            highLightAndReadLine(0, elems);
+        } else {
+            window.speechSynthesis.cancel();
+            audioStarted = false;
+        }
+    }
+
+    function highLightAndReadLine(idx, elems) {
+        var line = elems[idx]
+        line.classList.add("selected");
+        var msg = new SpeechSynthesisUtterance(line.innerText)
+        msg.onend = () => {
+            line.classList.remove("selected");
+            if(idx < elems.length - 1 && audioStarted) {
+                highLightAndReadLine(idx + 1, elems);
+            } else {
+                audioStarted = false;
+            }
+        }
+         window.speechSynthesis.speak(msg);
+    }
 
     function scrollToLine(lineNumber) {
         var ele = document.getElementById("" + lineNumber);
