@@ -10,8 +10,25 @@ defmodule Store do
   end
 
   def search(key, term) do
-    StoreHelpers.fetch_book_if_not_present(key, &store_book/2)
-    |> Enum.filter(fn ({_line, txt}) -> String.contains?(String.downcase(txt), String.downcase(term)) end)
+    book = StoreHelpers.fetch_book_if_not_present(key, &store_book/2)
+    book
+    |> Enum.filter(fn ({line, txt}) -> compare_func(txt, term, line, book) end)
+  end
+
+  defp compare_func(txt, term, line, book) do
+    String.contains?(compare_string(book, line), term)
+  end
+
+  defp compare_string(book, line) when line > 0 and line < length(line) do
+    {_num, previous_line_txt} = Enum.at(book, line - 1)
+    {_num, txt} = Enum.at(book, line)
+    {_num, next_line_txt} = Enum.at(book, line + 1)
+    "#{previous_line_txt} #{txt} #{next_line_txt}"
+  end
+
+  defp compare_string(book, line) do
+    {_num, txt} = Enum.at(book, line)
+    txt
   end
 
   #  Helpers
