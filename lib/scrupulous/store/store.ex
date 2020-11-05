@@ -19,11 +19,11 @@ defmodule Store do
     String.contains?(compare_string(book, line), term)
   end
 
-  defp compare_string(book, line) when line > 0 and line < length(line) do
+  defp compare_string(book, line) when line > 0 and line < length(book) - 1 do
     {_num, previous_line_txt} = Enum.at(book, line - 1)
     {_num, txt} = Enum.at(book, line)
     {_num, next_line_txt} = Enum.at(book, line + 1)
-    "#{previous_line_txt} #{txt} #{next_line_txt}"
+    String.replace("#{previous_line_txt} #{txt} #{next_line_txt}", "\r", "")
   end
 
   defp compare_string(book, line) do
