@@ -68,7 +68,8 @@ defmodule Scrupulous.UserContentTest do
     end
   end
 
-  describe "notes" do
+  describe "more notes tests" do
+
     alias Scrupulous.UserContent.Note
 
     @valid_attrs %{end_line: 42, note: "some note", start_line: 42}
