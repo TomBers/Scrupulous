@@ -37,11 +37,11 @@
     font-size: 1.4em;
 }
 
-.selected span {
+.selected span, .articleSelected {
     background-color: #a8d1ff;
 }
 
-.night-mode .selected span {
+.night-mode .selected span, .night-mode .articleSelected {
     background-color: #483D8B;
 }
 

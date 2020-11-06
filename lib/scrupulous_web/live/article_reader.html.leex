@@ -1,4 +1,5 @@
 <div class="container">
+    <i class="far fa-play-circle bigIcon playIcon" onclick="readBookOutLoud()"></i>
     <%= Phoenix.HTML.raw(@content) %>
 
     <%= if @current_user do %>
@@ -26,6 +27,33 @@
     var endLine;
     var noteElement = document.getElementById("note")
     var hiddenNoteElement = document.getElementById("noteText");
+    var audioStarted = false;
+
+        function readBookOutLoud() {
+        if(!audioStarted) {
+            audioStarted = true;
+            var elems = document.querySelectorAll(".selectableLine");
+            highLightAndReadLine(0, elems);
+        } else {
+            window.speechSynthesis.cancel();
+            audioStarted = false;
+        }
+    }
+
+    function highLightAndReadLine(idx, elems) {
+        var line = elems[idx]
+        line.classList.add("articleSelected");
+        var msg = new SpeechSynthesisUtterance(line.innerText)
+        msg.onend = () => {
+            line.classList.remove("articleSelected");
+            if(idx < elems.length - 1 && audioStarted) {
+                highLightAndReadLine(idx + 1, elems);
+            } else {
+                audioStarted = false;
+            }
+        }
+         window.speechSynthesis.speak(msg);
+    }
 
     <%= if @open_note do %>
         scrollToLine(<%= @open_note.end_line %>);
