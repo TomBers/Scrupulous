@@ -18,12 +18,14 @@
   <%= checkbox f, :remember_me %>
 
   <div>
-    <%= submit "Log in", class: "button" %>
+    <br>
+    <%= submit "Log in", class: "button is-primary" %>
   </div>
 <% end %>
 
 <p>
-  <%= link "Register", to: Routes.user_registration_path(@conn, :new) %> |
+  <br>
+  <%= link "New? Register here", to: Routes.user_registration_path(@conn, :new) %> |
   <%= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new) %>
 </p>
 </div>

@@ -37,22 +37,29 @@ function getCookie(cname) {
     return cookieValue ? cookieValue.split('=')[1] :  "";
 }
 
+function addEvent(ele) {
+    ele.addEventListener('click', () => {
+       // Get the target from the "data-target" attribute
+       const target = ele.dataset.target;
+       const $target = document.getElementById(target);
+
+       // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+       ele.classList.toggle('is-active');
+       $target.classList.toggle('is-active');
+  });
+}
 
 document.addEventListener('DOMContentLoaded', () => {
 
     getCookie(COLOUR_MODE_COOKIE_NAME) == "black" ? toggleColorMode() : null;
 
-    var nav = document.getElementById("navBurger")
-    nav.addEventListener('click', () => {
-       // Get the target from the "data-target" attribute
-       const target = nav.dataset.target;
-       const $target = document.getElementById(target);
+    var nav = document.getElementById("navBurger");
+    var dropdown = document.getElementById("settings-nav-bar");
 
-       // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-       nav.classList.toggle('is-active');
-       $target.classList.toggle('is-active');
-  });
-
+    addEvent(nav);
+    if(dropdown) {
+        addEvent(dropdown);
+    }
 
   document.getElementById("night-mode-button").addEventListener('click', () => {
     toggleColorMode();

@@ -1,9 +1,0 @@
-<div class="container">
-<h1 class="title">Account</h1>
-    <div class="buttons">
-        <%= link "My Bookmarks", to: Routes.bookmark_path(@conn, :index), class: "button" %>
-        <%= link "My Articles", to: Routes.article_path(@conn, :index), class: "button" %>
-        <%= link "Settings", to: Routes.user_settings_path(@conn, :edit), class: "button is-success" %>
-        <%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete, class: "button is-danger" %>
-    </div>
-</div>
