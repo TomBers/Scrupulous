@@ -22,3 +22,6 @@ mix phx.gen.html UserContent Bookmark bookmarks user_id:references:users book_id
 
 mix phx.gen.html ArticleContent Article articles user_id:references:users title:string content:binary slug:string
 
+mix phx.gen.html BookClub Room room name:string subtitle:string
+
+mix phx.gen.html BookClub Message messages user_id:references:users parent:string content:binary room_id:references:room

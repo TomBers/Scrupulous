@@ -38,6 +38,11 @@ defmodule ScrupulousWeb.ReaderHelpers do
     end
   end
 
+  def render_markdown_as_html(md) do
+    {:ok, html, []} = Earmark.as_html(md)
+    html
+  end
+
   def get_line_class(line, notes,  open_note, param_note) do
     if line_class_conditions(line, notes,  open_note, param_note) do
       "line selected"

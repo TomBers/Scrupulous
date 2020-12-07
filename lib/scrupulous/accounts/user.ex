@@ -5,6 +5,7 @@ defmodule Scrupulous.Accounts.User do
   alias Scrupulous.UserContent.Note
   alias Scrupulous.UserContent.Skruple
   alias Scrupulous.StaticContent.Resource
+  alias Scrupulous.BookClub.Message
 
 
   @derive {Inspect, except: [:password]}
@@ -17,6 +18,7 @@ defmodule Scrupulous.Accounts.User do
     has_many :notes, Note, on_delete: :delete_all
     has_many :skruples, Skruple, on_delete: :delete_all
     has_many :resources, Resource, on_delete: :delete_all
+    has_many :messages, Message, on_delete: :delete_all
 
     timestamps()
   end
