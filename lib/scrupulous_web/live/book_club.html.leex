@@ -3,13 +3,7 @@
 
 
 <%= for message <- @messages do %>
-    <div class="card">
-        <div class="media-content">
-            <p class="title is-4"><%= ScrupulousWeb.ReaderHelpers.format_email(message.user.email) %></p>
-        </div>
-        <div class="content">
-            <%= Phoenix.HTML.raw(ScrupulousWeb.ReaderHelpers.render_markdown_as_html(message.content)) %>
-            <time datetime="2020-1-1"><%= message.inserted_at %></time>
-        </div>
+    <div style="margin-left: <%= message.depth * 50 %>px">
+        <%= message.txt %>
     </div>
 <% end %>

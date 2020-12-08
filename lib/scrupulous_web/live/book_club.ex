@@ -5,7 +5,7 @@ defmodule ScrupulousWeb.BookClub do
   def handle_params(params, _uri, socket) do
     room = BookClub.get_room_with_messages!(1)
 
-    messages = room.messages
+    messages = BC.run()
 
     {:noreply, assign(socket, room: room, messages: messages)}
   end
