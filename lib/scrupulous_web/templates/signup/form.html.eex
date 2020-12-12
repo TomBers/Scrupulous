@@ -5,15 +5,13 @@
     </div>
   <% end %>
 
-  <%= label f, :email %>
-  <%= text_input f, :email %>
+  <%= email_input f, :email, class: "input", placeholder: "email" %>
   <%= error_tag f, :email %>
 
-  <%= label f, :feature %>
-  <%= text_input f, :feature %>
-  <%= error_tag f, :feature %>
+  <%= hidden_input f, :feature %>
 
   <div>
-    <%= submit "Save" %>
+    <br>
+    <%= submit "Keep me informed", class: "button is-primary" %>
   </div>
 <% end %>

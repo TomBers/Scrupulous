@@ -10,7 +10,7 @@ defmodule ScrupulousWeb.SignupController do
   end
 
   def new(conn, _params) do
-    changeset = BookClub.change_signup(%Signup{})
+    changeset = BookClub.change_signup(%Signup{feature: "BookClub"})
     render(conn, "new.html", changeset: changeset)
   end
 
@@ -18,8 +18,8 @@ defmodule ScrupulousWeb.SignupController do
     case BookClub.create_signup(signup_params) do
       {:ok, signup} ->
         conn
-        |> put_flash(:info, "Signup created successfully.")
-        |> redirect(to: Routes.signup_path(conn, :show, signup))
+        |> put_flash(:info, "Thank you, we will get in contact.")
+        |> redirect(to: Routes.page_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
