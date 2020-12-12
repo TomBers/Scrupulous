@@ -1,0 +1,28 @@
+<h1>Listing Signups</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Feature</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for signup <- @signups do %>
+    <tr>
+      <td><%= signup.email %></td>
+      <td><%= signup.feature %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.signup_path(@conn, :show, signup) %></span>
+        <span><%= link "Edit", to: Routes.signup_path(@conn, :edit, signup) %></span>
+        <span><%= link "Delete", to: Routes.signup_path(@conn, :delete, signup), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Signup", to: Routes.signup_path(@conn, :new) %></span>
