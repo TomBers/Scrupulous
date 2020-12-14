@@ -1,0 +1,9 @@
+<div class="container">
+    <div class="section">
+        <h1 class="title">Bookclub</h1>
+        <p>The Skrupulus book club is going to be an online forum to discuss and share insights.  We are currently building the community, and will inform you when we are ready to launch.</p>
+        <br>
+        <%= render "form.html", Map.put(assigns, :action, Routes.signup_path(@conn, :create)) %>
+
+    </div>
+</div>

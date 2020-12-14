@@ -1,0 +1,18 @@
+<h1>Show Signup</h1>
+
+<ul>
+
+  <li>
+    <strong>Email:</strong>
+    <%= @signup.email %>
+  </li>
+
+  <li>
+    <strong>Feature:</strong>
+    <%= @signup.feature %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.signup_path(@conn, :edit, @signup) %></span>
+<span><%= link "Back", to: Routes.signup_path(@conn, :index) %></span>

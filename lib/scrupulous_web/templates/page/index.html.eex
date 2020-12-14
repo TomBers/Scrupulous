@@ -4,6 +4,12 @@
 
     <p>Skrupulus is a library for the future; bringing together original texts with the best notes, critiques and discussions.</p>
     <br>
+
+        <div class="section">
+        <p class="subtitle">Coming soon!</p>
+        We are building a virtual book club to connect readers and share ideas.  <a href="/signups/new">Find out more</a>
+        </div>
+
     <p class="subtitle">How does it work?</p>
     <p>Simply choose a book, and you can get reading straight away, we have a selection of books (with full text search) and articles.</p>
         <p>While you are reading you will see <span class="small-white-circle homepage-circle">4</span> clicking on this will open notes that other people have left. Clicking <a><i class="far fa-clipboard"></i></a> copies the note's unique URL to the clipboard for sharing.</p>
