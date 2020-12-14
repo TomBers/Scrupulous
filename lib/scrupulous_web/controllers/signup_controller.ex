@@ -16,7 +16,7 @@ defmodule ScrupulousWeb.SignupController do
 
   def create(conn, %{"signup" => signup_params}) do
     case BookClub.create_signup(signup_params) do
-      {:ok, signup} ->
+      {:ok, _signup} ->
         conn
         |> put_flash(:info, "Thank you, we will get in contact.")
         |> redirect(to: Routes.page_path(conn, :index))
