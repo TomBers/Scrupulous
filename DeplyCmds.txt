@@ -1,2 +1,4 @@
+Started using the GitHub Actions to automatically build and deploy
+
 heroku container:push web
 heroku container:release web
