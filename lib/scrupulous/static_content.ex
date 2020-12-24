@@ -24,7 +24,8 @@ defmodule Scrupulous.StaticContent do
   def list_books_from_ids(books) do
     query =
       from books in Book,
-           where: books.id in ^books
+        where: books.id in ^books
+
     Repo.all(query)
   end
 
@@ -49,22 +50,34 @@ defmodule Scrupulous.StaticContent do
   def get_book_from_slug(slug) do
     query =
       from books in Book,
-           where: books.slug == ^slug
+        where: books.slug == ^slug
+
     Repo.one(query)
-    end
+  end
+
+  def get_random_book!() do
+    query =
+      from b in Book,
+        order_by: fragment("RANDOM()"),
+        limit: 1
+
+    Repo.all(query) |> List.first()
+  end
 
   def authors_starting_with(letter) do
-    query = from b in Book,
-                 where: ilike(b.author, ^letter),
-                 order_by: [b.author, desc: b.author]
+    query =
+      from b in Book,
+        where: ilike(b.author, ^letter),
+        order_by: [b.author, desc: b.author]
 
     Repo.all(query)
   end
 
   def search(term) do
-    query = from b in Book,
-                 where: ilike(b.author, ^term) or ilike(b.title, ^term),
-                 order_by: [b.author, desc: b.author]
+    query =
+      from b in Book,
+        where: ilike(b.author, ^term) or ilike(b.title, ^term),
+        order_by: [b.author, desc: b.author]
 
     Repo.all(query)
   end
