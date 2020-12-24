@@ -32,6 +32,7 @@ defmodule ScrupulousWeb.Router do
     get "/account", PageController, :account
     get "/demo", PageController, :demo
     get "/quotes", PageController, :quotes
+    get "/quotes/:book_id", PageController, :quotes_for_book
     get "/contributors", ScoreController, :score_board
     get "/contributors/:user", ScoreController, :user_score
     get "/book/:book", PageController, :book_overview
