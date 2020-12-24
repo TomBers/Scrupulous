@@ -17,6 +17,7 @@
             <a class="navbar-item" href="/books">Library</a>
             <a class="navbar-item" href="/contributors">Contributors</a>
             <a class="navbar-item" href="/list/articles">Articles</a>
+            <a class="navbar-item" href="/quotes">Quotes</a>
             <a class="navbar-item" href="/graph">Graph</a>
             <a class="navbar-item" id="night-mode-button"><i class="far fa-lightbulb"></i></a>
         </div>

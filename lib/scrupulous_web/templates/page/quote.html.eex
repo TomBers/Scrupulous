@@ -69,6 +69,10 @@ body {
     z-index: 2;
 }
 
+.night-mode .blockquote h1:before {
+    border: 6px solid black;
+}
+
 /* increase header size after 600px */
 @media all and (min-width: 600px) {
     .blockquote h1 {

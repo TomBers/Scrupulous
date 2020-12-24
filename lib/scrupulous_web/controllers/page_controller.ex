@@ -16,7 +16,7 @@ defmodule ScrupulousWeb.PageController do
     render(conn, "demo.html")
   end
 
-  def quote(conn, _params) do
+  def quotes(conn, _params) do
     render(conn, "quote.html", quote: Scrupulous.RandomQuote.random_quote())
   end
 
