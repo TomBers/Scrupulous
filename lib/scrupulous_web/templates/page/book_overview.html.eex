@@ -7,6 +7,8 @@
         <div class="column">
             <a href="/reader/<%= @book.id %>/page/0"><button class="button is-primary is-large is-fullwidth"><span class="icon"><i class="fas fa-book-reader"></i></span><span>Read Now</span></button></a>
             <br>
+            <a href="/quotes/<%= @book.id %>"><button class="button is-primary is-outlined is-fullwidth"><span class="icon"><i class="fas fa-quote-left"></i></span><span>Quotes</span></button></a>
+            <br>
             <%= if has_discussion_link(@book.resources) do %>
                 <a href="<%= discussion_link(@book.resources).link %>" target="_blank"><button class="button is-large is-fullwidth"><span class="icon"><i class="fas fa-comments"></i></span><span>Discuss</span></button></a>
             <% end %>
@@ -21,4 +23,3 @@
     </div>
     <p>* We try to recommend independent book sellers where possible</p>
 </div>
-
