@@ -10,3 +10,4 @@ Add options to change font and size??
 
 
 
+<h1><span style="color:#ffffff"><%= @quote.quote %></span></h1>

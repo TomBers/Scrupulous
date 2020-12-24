@@ -31,6 +31,7 @@ defmodule ScrupulousWeb.Router do
     get "/", PageController, :index
     get "/account", PageController, :account
     get "/demo", PageController, :demo
+    get "/quote", PageController, :quote
     get "/contributors", ScoreController, :score_board
     get "/contributors/:user", ScoreController, :user_score
     get "/book/:book", PageController, :book_overview
@@ -40,18 +41,17 @@ defmodule ScrupulousWeb.Router do
     get "/graph/", PageController, :graph
     get "/graph/:book", PageController, :usergraph
     get "/list/articles", ArticleController, :all_articles
-#    get "/make/data/:type", PageController, :makedata
-
+    #    get "/make/data/:type", PageController, :makedata
   end
 
   # Other scopes may use custom stacks.
-   scope "/api", ScrupulousWeb do
-     pipe_through :api
+  scope "/api", ScrupulousWeb do
+    pipe_through :api
 
-     resources "/notes", NoteController, except: [:new, :edit, :delete]
-     resources "/edges", EdgeController, except: [:new, :edit, :delete]
-     resources "/skruples", SkrupleController, except: [:new, :edit, :delete]
-   end
+    resources "/notes", NoteController, except: [:new, :edit, :delete]
+    resources "/edges", EdgeController, except: [:new, :edit, :delete]
+    resources "/skruples", SkrupleController, except: [:new, :edit, :delete]
+  end
 
   # Enables LiveDashboard only for development
   #
