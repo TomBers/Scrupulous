@@ -2,25 +2,53 @@
   <%= render "indx.html" %>
   <h1 class="title">Listing Books (<%= length(@books) %>)</h1>
 
-  <table class="table is-striped is-fullwidth">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Country</th>
-        <th>Year</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
+
+<div class="columns is-multiline">
   <%= for book <- @books do %>
-      <tr>
-        <td><%= link book.title, to: Routes.page_path(@conn, :book_overview, book) %></td>
-        <td><a href="/books/search/?term=<%= book.author %>"><%= book.author %></a></td>
-        <td><%= book.country %></td>
-        <td><%= book.publication_year %></td>
-      </tr>
+  <div class="column is-one-quarter">
+      <ul class="align">
+            <li>
+                <figure class='book'>
+
+                  <!-- Front -->
+
+                  <ul class='hardcover_front'>
+                    <li>
+                      <div class="coverDesign bookGrad">
+                        <h1><%= book.title %></h1>
+                        <p><%= book.author %></p>
+                      </div>
+                    </li>
+                    <li></li>
+                  </ul>
+
+                  <!-- Pages -->
+
+                  <ul class='page'>
+                    <li></li>
+                    <li>
+                      <%= link "Read Now", to: Routes.page_path(@conn, :book_overview, book), class: "bookBtn" %>
+                    </li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                  </ul>
+
+                  <!-- Back -->
+
+                  <ul class='hardcover_back'>
+                    <li></li>
+                    <li></li>
+                  </ul>
+                  <ul class='book_spine'>
+                    <li></li>
+                    <li></li>
+                  </ul>
+                </figure>
+              </li>
+      </ul>
+  </div>
   <% end %>
-    </tbody>
-  </table>
+  </div>
+
 </div>

@@ -18,7 +18,7 @@ defmodule Scrupulous.StaticContent do
 
   """
   def list_books do
-    Repo.all(Book)
+    Repo.all(from b in Book, order_by: b.category_letter)
   end
 
   def list_books_from_ids(books) do
@@ -67,7 +67,7 @@ defmodule Scrupulous.StaticContent do
   def authors_starting_with(letter) do
     query =
       from b in Book,
-        where: ilike(b.author, ^letter),
+        where: ilike(b.category_letter, ^letter),
         order_by: [b.author, desc: b.author]
 
     Repo.all(query)
