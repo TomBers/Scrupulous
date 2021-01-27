@@ -2,7 +2,7 @@
     <div class="section">
     <h1 class="title">Skrupulus - Read between the lines</h1>
 
-    <p>Skrupulus is a library for the future; bringing together original texts with the best notes, critiques and discussions.</p>
+    <p>Skrupulus is a library for the future; bringing together original texts with the best notes, critiques and discussions. It is freely available to readers and academics for enjoyment and research.</p>
 
         <div class="section">
             <p class="subtitle">Coming soon!</p>
@@ -14,7 +14,7 @@
         <p>While you are reading you will see <span class="small-white-circle homepage-circle">4</span> clicking on this will open notes that other people have left. Clicking <a><i class="far fa-clipboard"></i></a> copies the note's unique URL to the clipboard for sharing.</p>
     <br>
         <p class="subtitle">Adding your own notes?</p>
-        <p>Simply select any text you wish to comment on, an input will pop up, enter your note and it will be instantly saved agains the txt.  You can share with the whole world.
+        <p>Simply select any text you wish to comment on, an input will pop up, enter your note and it will be instantly saved against the txt.  You can share with the whole world.
         <a href="/demo">See it in action</a></p>
         <br>
         <%= if !@current_user do %>
