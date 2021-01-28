@@ -1,20 +1,19 @@
 <div class="container">
   <%= render "indx.html" %>
+  <br>
   <h1 class="title">Listing Books (<%= length(@books) %>)</h1>
 
 
-<div class="columns is-multiline">
-  <%= for book <- @books do %>
-  <div class="column is-one-quarter">
+<div class="columns is-multiline is-variable is-1-mobile is-0-tablet is-3-desktop is-8-widescreen is-2-fullhd">
+  <%= for {book, indx} <- Enum.with_index(@books) do %>
+  <div class="column add-bottom-margin">
       <ul class="align">
             <li>
                 <figure class='book'>
-
                   <!-- Front -->
-
                   <ul class='hardcover_front'>
                     <li>
-                      <div class="coverDesign bookGrad">
+                      <div class="coverDesign bookGrad<%= Enum.random([0, 1, 2, 3, 4]) %>">
                         <h1><%= book.title %></h1>
                         <p><%= book.author %></p>
                       </div>
