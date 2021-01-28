@@ -10,12 +10,10 @@
       <ul class="align">
             <li>
                 <figure class='book'>
-
                   <!-- Front -->
-
                   <ul class='hardcover_front'>
                     <li>
-                      <div class="coverDesign bookGrad<%= rem(indx, 5) %>">
+                      <div class="coverDesign bookGrad<%= Enum.random([0, 1, 2, 3, 4]) %>">
                         <h1><%= book.title %></h1>
                         <p><%= book.author %></p>
                       </div>

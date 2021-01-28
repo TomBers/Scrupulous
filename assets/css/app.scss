@@ -39,7 +39,9 @@
 }
 
 .letter-link {
-    font-size: 1.4em;
+    text-transform: uppercase;
+    font-size: 2em;
+    letter-spacing: 0.2em;
 }
 
 .selected span, .articleSelected {
@@ -174,6 +176,12 @@
 
     .book-circle {
         min-width: 25px;
+    }
+
+    .letter-link {
+        text-transform: uppercase;
+        font-size: 1.2em;
+        letter-spacing: 0.45em;
     }
 
     .stick-to-bottom {
