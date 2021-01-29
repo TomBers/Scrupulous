@@ -79,6 +79,7 @@
                 <blockquote id="quoteHint"></blockquote>
                 <p><%= @title %> - <%= @book.author %></p>
                 <a onclick="copyLineHighlightToClipboard()"><i class="far fa-clipboard fa-2x copy-to-clipboard"></i></a>
+                <i class="far fa-play-circle bigIcon playIcon" onclick="readQuoteOutLoud()"></i>
             </div>
             <a href="#" phx-click="close_form" class="notAlwaysVisible"><i class="far fa-times-circle bigIcon"></i></a>
             <br>
@@ -121,6 +122,18 @@
             audioStarted = true;
             var elems = document.querySelectorAll("span.line");
             highLightAndReadLine(0, elems);
+        } else {
+            window.speechSynthesis.cancel();
+            audioStarted = false;
+        }
+    }
+
+    function readQuoteOutLoud() {
+        if(!audioStarted) {
+            audioStarted = true;
+            var quote = document.getElementById("quoteHint");
+            var msg = new SpeechSynthesisUtterance(quote.innerText);
+            window.speechSynthesis.speak(msg);
         } else {
             window.speechSynthesis.cancel();
             audioStarted = false;
