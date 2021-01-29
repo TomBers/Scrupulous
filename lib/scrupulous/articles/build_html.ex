@@ -40,7 +40,7 @@ defmodule Scrupulous.BuildHtml do
   end
 
   defp create_note_cotent(note, indx, current_user, open_note) do
-    notes_class = if !is_nil(open_note) and note.id == open_note.id do "" else "hideNotes" end
+    notes_class = if !is_nil(open_note) and note.id == open_note.id do "openNotes" else "hideNotes" end
     {"div", [{"class", "#{notes_class} tile is-ancestor #{@prefix}#{indx}"}], [{"div", [{"class", "tile is-parent is-vertical"}], [{"article", [{"class", "tile is-child notification"}], build_tile_contents(note, current_user), %{}}], %{}}], %{}}
   end
 

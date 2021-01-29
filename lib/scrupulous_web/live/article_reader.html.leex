@@ -7,6 +7,9 @@
             <div class="control">
                 <blockquote id="quoteHint"></blockquote>
                 <br>
+                <div class="content">
+                  <i class="far fa-play-circle bigIcon playIcon" onclick="readQuoteOutLoud()"></i>
+                </div>
                 <a onclick="hideNoteForm()"><i class="far fa-times-circle bigIcon"></i></a>
                 <form phx-submit="add_note">
                     <textarea id="note" class="textarea" placeholder="Add note"
@@ -34,6 +37,18 @@
             audioStarted = true;
             var elems = document.querySelectorAll(".selectableLine");
             highLightAndReadLine(0, elems);
+        } else {
+            window.speechSynthesis.cancel();
+            audioStarted = false;
+        }
+    }
+
+    function readQuoteOutLoud() {
+        if(!audioStarted) {
+            audioStarted = true;
+            var quote = document.getElementById("quoteHint");
+            var msg = new SpeechSynthesisUtterance(quote.innerText);
+            window.speechSynthesis.speak(msg);
         } else {
             window.speechSynthesis.cancel();
             audioStarted = false;
