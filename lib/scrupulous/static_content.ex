@@ -68,7 +68,7 @@ defmodule Scrupulous.StaticContent do
     query =
       from b in Book,
         where: ilike(b.category_letter, ^letter),
-        order_by: [b.author, desc: b.author]
+        order_by: [b.category_letter, desc: b.category_letter]
 
     Repo.all(query)
   end
@@ -77,7 +77,7 @@ defmodule Scrupulous.StaticContent do
     query =
       from b in Book,
         where: ilike(b.author, ^term) or ilike(b.title, ^term),
-        order_by: [b.author, desc: b.author]
+        order_by: [b.category_letter, desc: b.category_letter]
 
     Repo.all(query)
   end
