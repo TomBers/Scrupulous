@@ -110,7 +110,7 @@ defmodule ScrupulousWeb.BookReader do
   end
 
   def handle_event("search", %{"_target" => _target, "query" => query}, socket) do
-    search = if String.length(query) > 7 do
+    search = if String.length(query) > 3 do
         Store.search(socket.assigns.book.file_name, query)
       else
         []
