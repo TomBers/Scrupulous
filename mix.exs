@@ -47,7 +47,7 @@ defmodule Scrupulous.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:phx_gen_auth, "~> 0.4.0", only: [:dev], runtime: false},
-      {:earmark, "~> 1.4.10"},
+      {:earmark, "~> 1.4.13"},
       {:httpoison, "~> 1.8"}
     ]
   end
