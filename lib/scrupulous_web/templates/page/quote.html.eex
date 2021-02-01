@@ -23,7 +23,7 @@ body {
 /* Blockquote main style */
 .blockquote {
     position: relative;
-    font-family: 'Barlow Condensed', sans-serif;
+    font-family: 'Vollkorn', sans-serif;
     max-width: 620px;
     margin: 80px auto;
     align-self: center;
@@ -31,7 +31,7 @@ body {
 
 /* Blockquote header */
 .blockquote h1 {
-    font-family: 'Abril Fatface', cursive;
+    font-family: 'Vollkorn', sans-serif;
     position: relative; /* for pseudos */
     color: #e74848;
     font-size: 1.5rem;
