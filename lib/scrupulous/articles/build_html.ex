@@ -45,11 +45,10 @@ defmodule Scrupulous.BuildHtml do
   end
 
   defp build_tile_contents(note, current_user) do
-    {:ok, note_ast, []} = EarmarkParser.as_ast(ScrupulousWeb.ReaderHelpers.re_add_urls(note.note))
+    note_ast = create_note_ast(note.note)
     top_part = [
       {"a", [{"class", "closeNote is-pulled-right"}], [{"i", [{"class", "far fa-times-circle"}], [], %{}}], %{}},
       note_ast,
-      {"br", [], [], %{}},
       {"a", [{"class", "subtitle"}, {"href", "/contributors/#{note.user_id}"}], [ScrupulousWeb.ReaderHelpers.format_email(note.user.email)], %{}}
     ]
     user_part =
@@ -63,6 +62,12 @@ defmodule Scrupulous.BuildHtml do
     ]
 
     top_part ++ user_part ++ bottom_part
+  end
+
+  def create_note_ast(note) do
+    # Maybe TODO add target="_blank" to link
+    {:ok, ast, []} = EarmarkParser.as_ast(note)
+    ast
   end
 
   defp calc_user_part(note, current_user) do
