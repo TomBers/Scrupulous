@@ -145,7 +145,7 @@ defmodule ScrupulousWeb.BookReader do
   end
 
   def re_add_urls(note) do
-    url_regex = ~r/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)/
+    url_regex = ~r/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=\(\)]*)/
     Regex.replace(url_regex, note, fn m -> "<a href=#{m} target='_blank'>#{m}</a>" end)
   end
 
