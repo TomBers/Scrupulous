@@ -7,6 +7,13 @@ defmodule Scrupulous.Graph do
 
   @year_range 10
 
+  def gen_nodes(books) do
+    books
+      |> Enum.map(fn x -> Map.put(x, :book_id, x.id) end)
+      |> Enum.map(fn x -> Map.put(x, :id, x.title) end)
+      |> Enum.map(fn x -> Map.put(x, :col, get_cols(x.publication_year)) end)
+  end
+
   def gen_edges(nodes) do
     year = nodes
             |> Enum.flat_map(fn(node) -> make_edges(node, nodes, :publication_year, &range_func/3, @year_col, 2) end)

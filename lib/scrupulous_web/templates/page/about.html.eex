@@ -1,0 +1,29 @@
+ <div class="container">
+  <p class="subtitle">How does it work?</p>
+    <p>Simply choose a book, and you can get reading straight away, we have a selection of books (with full text search) and articles.</p>
+        <p>While you are reading you will see <span class="small-white-circle homepage-circle">4</span> clicking on this will open notes that other people have left. Clicking <a><i class="far fa-clipboard"></i></a> copies the note's unique URL to the clipboard for sharing.</p>
+        <p>(Also clicking <i class="far fa-play-circle bigIcon playIcon"></i> will read the text out loud)</p>
+    <br>
+        <p class="subtitle">Adding your own notes?</p>
+        <p>Simply select any text you wish to comment on, an input will pop up, enter your note and it will be instantly saved against the text.  You can share with the whole world.
+        <a href="/demo">See it in action</a></p>
+        <br>
+        <%= if !@current_user do %>
+            <p class="subtitle">Next step</p>
+            <%= link "Log in", to: Routes.user_session_path(@conn, :new), class: "button is-primary" %>
+            <br>
+            <br>
+        <% end %>
+        <p class="subtitle">Adding your own articles?</p>
+        <p>You can also publish your own articles to the platform to share with the world, getting line by line comments and a read out loud function.</p>
+        <p>Simply log in and upload your article (in Markdown <a href="https://daringfireball.net/projects/markdown/syntax" target="_blank">guide</a>)</p>
+        <br>
+        <br>
+
+        <p class="subtitle">Go to the <a href="/books">Library</a> or <a href="/list/articles">Articles</a> to get started</p>
+    <br>
+        <p class="subtitle">Get in touch</p>
+        <a href="mailto:tom@skrupulus.com">tom@skrupulus.com</a><br>
+        <a href="https://twitter.com/SkrupulusApp">@SkrupulusApp</a><br><br>
+    </div>
+</div>

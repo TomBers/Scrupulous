@@ -64,6 +64,16 @@ defmodule Scrupulous.StaticContent do
     Repo.all(query) |> List.first()
   end
 
+  def get_random_books(limit) do
+    query =
+      from b in Book,
+        order_by: fragment("RANDOM()"),
+        limit: ^limit
+
+    Repo.all(query)
+  end
+
+
   def authors_starting_with(letter) do
     query =
       from b in Book,

@@ -5,7 +5,15 @@ defmodule ScrupulousWeb.PageController do
   alias Scrupulous.StaticContent
 
   def index(conn, _params) do
-    render(conn, "index.html")
+    books = StaticContent.get_random_books(20)
+
+    nodes = Graph.gen_nodes(books)
+    edges = Graph.gen_edges(nodes)
+    render(conn, "index.html", nodes: nodes, edges: edges)
+  end
+
+  def about(conn, _params) do
+    render(conn, "about.html")
   end
 
   def account(conn, _params) do
@@ -32,12 +40,7 @@ defmodule ScrupulousWeb.PageController do
   def graph(conn, _params) do
     books = StaticContent.list_books()
 
-    nodes =
-      books
-      |> Enum.map(fn x -> Map.put(x, :book_id, x.id) end)
-      |> Enum.map(fn x -> Map.put(x, :id, x.title) end)
-      |> Enum.map(fn x -> Map.put(x, :col, Graph.get_cols(x.publication_year)) end)
-
+    nodes = Graph.gen_nodes(books)
     edges = Graph.gen_edges(nodes)
 
     render(conn, "graph.html", nodes: nodes, edges: edges)

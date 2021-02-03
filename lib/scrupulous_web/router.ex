@@ -19,7 +19,7 @@ defmodule ScrupulousWeb.Router do
 
   scope "/", ScrupulousWeb do
     pipe_through :browser
-    resources "/books", BookController, except: [:show, :edit, :delete]
+    resources "/books", BookController, except: [:show]
     resources "/resources", ResourceController, except: [:index, :show, :edit, :delete]
     resources "/bookmarks", BookmarkController, except: [:show, :edit]
     resources "/articles", ArticleController
@@ -29,6 +29,7 @@ defmodule ScrupulousWeb.Router do
     live "/article/:article", ArticleReader, layout: {ScrupulousWeb.LayoutView, :app}
 
     get "/", PageController, :index
+    get "/about", PageController, :about
     get "/account", PageController, :account
     get "/demo", PageController, :demo
     get "/quotes", PageController, :quotes
