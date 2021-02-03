@@ -1,5 +1,4 @@
 <div class="container">
-    <div class="section">
     <h1 class="title">Skrupulus - Read between the lines</h1>
 
     <p>Skrupulus is a library for the future; bringing together original texts with the best notes, critiques and discussions. It is freely available to readers and academics for enjoyment and research.</p>
@@ -8,33 +7,61 @@
             <p class="subtitle">Coming soon!</p>
             We are building a virtual book club to connect readers and share ideas.  <a href="/signups/new">Find out more</a>
         </div>
+        <p class="subtitle">Connections</p>
+        <p>Linking random books from the library, we connect books by author, country and publication year.  The darker the colour the more recently it was published. Click on a book to find out more.</p>
+        <div id="cy"></div>
+        </div>
+<script>
+    var elements = [];
+    <%= for node <- @nodes do %>
+        elements.push({data: {id: '<%= node.id %>', node_col: '<%= node.col %>', href: "/book/<%= node.book_id %>" }})
+    <% end %>
+    <%= for edge <- @edges do %>
+        elements.push({data: {id: '<%= edge.id %>', source: '<%= edge.source %>', target: '<%= edge.target %>', edge_col: '<%= edge.col %>', edge_width: '<%= edge.edge_width %>' }})
+    <% end %>
 
-    <p class="subtitle">How does it work?</p>
-    <p>Simply choose a book, and you can get reading straight away, we have a selection of books (with full text search) and articles.</p>
-        <p>While you are reading you will see <span class="small-white-circle homepage-circle">4</span> clicking on this will open notes that other people have left. Clicking <a><i class="far fa-clipboard"></i></a> copies the note's unique URL to the clipboard for sharing.</p>
-    <br>
-        <p class="subtitle">Adding your own notes?</p>
-        <p>Simply select any text you wish to comment on, an input will pop up, enter your note and it will be instantly saved against the txt.  You can share with the whole world.
-        <a href="/demo">See it in action</a></p>
-        <br>
-        <%= if !@current_user do %>
-            <p class="subtitle">Next step</p>
-            <%= link "Log in", to: Routes.user_session_path(@conn, :new), class: "button is-primary" %>
-            <br>
-            <br>
-        <% end %>
-    <p class="subtitle">Here are some books to get started</p>
-    <div class="content">
-        <ul>
-            <li><a href="/book/9">Notes from the Underground</a></li>
-            <li><a href="/book/16">Adventures of Huckleberry Finn</a></li>
-            <li><a href="/book/3">War and Peace</a></li>
-            <li><a href="/books">Many more</a></li>
-        </ul>
-    </div>
+document.addEventListener("DOMContentLoaded", function(){
+    window.cytoscape.use(window.layoutFunc);
+    var cy = window.cytoscape({
 
-        <p class="subtitle">Get in touch</p>
-        <a href="mailto:tom@skrupulus.com">tom@skrupulus.com</a><br>
-        <a href="https://twitter.com/SkrupulusApp">@SkrupulusApp</a><br><br>
-    </div>
-</div>
+  container: document.getElementById('cy'), // container to render in
+
+  elements: elements,
+
+  style: [ // the stylesheet for the graph
+    {
+      selector: 'node',
+      style: {
+        'background-color': 'data(node_col)',
+        'label': 'data(id)'
+      }
+    },
+
+    {
+      selector: 'edge',
+      style: {
+        'width': 'data(edge_width)',
+        'line-color': 'data(edge_col)',
+        'curve-style': 'bezier'
+      }
+    }
+  ],
+   layout: {
+    name: 'fcose',
+    nodeSeparation: 80,
+    nodeRepulsion: 650,
+    idealEdgeLength: 275,
+  }
+
+});
+
+cy.on('tap', 'node', function(){
+  try { // your browser may block popups
+    window.open( this.data('href') );
+  } catch(e){ // fall back on url change
+    window.location.href = this.data('href');
+  }
+});
+    });
+
+</script>

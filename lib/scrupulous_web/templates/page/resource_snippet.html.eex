@@ -2,7 +2,9 @@
     <p class="panel-heading">
         <%= @label %>
         <%= if @user do %>
-            <a href="<%= Routes.resource_path(@conn, :new_for_book, @book.id, @category) %>" class="is-pulled-right"><i class="far fa-plus-square"></i></a>
+            <a href="<%= Routes.resource_path(@conn, :new_for_book, @book.id, @category) %>" class="is-pulled-right"><i class="far fa-plus-square"></i> Add link</a>
+        <% else %>
+            <a href="<%= Routes.user_session_path(@conn, :new) %>" class="is-pulled-right"><i class="far fa-plus-square"></i> Add link</a>
         <% end %>
     </p>
 
