@@ -11,6 +11,8 @@
         <p>Linking random books from the library, we connect books by author, country and publication year.  The darker the colour the more recently it was published. Click on a book to find out more.</p>
         <div id="cy"></div>
         </div>
+
+
 <script>
     var elements = [];
     <%= for node <- @nodes do %>
@@ -20,48 +22,48 @@
         elements.push({data: {id: '<%= edge.id %>', source: '<%= edge.source %>', target: '<%= edge.target %>', edge_col: '<%= edge.col %>', edge_width: '<%= edge.edge_width %>' }})
     <% end %>
 
-document.addEventListener("DOMContentLoaded", function(){
-    window.cytoscape.use(window.layoutFunc);
-    var cy = window.cytoscape({
+    document.addEventListener("DOMContentLoaded", function(){
+        window.cytoscape.use(window.layoutFunc);
+        var cy = window.cytoscape({
 
-  container: document.getElementById('cy'), // container to render in
+      container: document.getElementById('cy'), // container to render in
 
-  elements: elements,
+      elements: elements,
 
-  style: [ // the stylesheet for the graph
-    {
-      selector: 'node',
-      style: {
-        'background-color': 'data(node_col)',
-        'label': 'data(id)'
+      style: [ // the stylesheet for the graph
+        {
+          selector: 'node',
+          style: {
+            'background-color': 'data(node_col)',
+            'label': 'data(id)'
+          }
+        },
+
+        {
+          selector: 'edge',
+          style: {
+            'width': 'data(edge_width)',
+            'line-color': 'data(edge_col)',
+            'curve-style': 'bezier'
+          }
+        }
+      ],
+       layout: {
+        name: 'fcose',
+        nodeSeparation: 80,
+        nodeRepulsion: 650,
+        idealEdgeLength: 275,
       }
-    },
 
-    {
-      selector: 'edge',
-      style: {
-        'width': 'data(edge_width)',
-        'line-color': 'data(edge_col)',
-        'curve-style': 'bezier'
+    });
+
+    cy.on('tap', 'node', function(){
+      try { // your browser may block popups
+        window.open( this.data('href') );
+      } catch(e){ // fall back on url change
+        window.location.href = this.data('href');
       }
-    }
-  ],
-   layout: {
-    name: 'fcose',
-    nodeSeparation: 80,
-    nodeRepulsion: 650,
-    idealEdgeLength: 275,
-  }
-
-});
-
-cy.on('tap', 'node', function(){
-  try { // your browser may block popups
-    window.open( this.data('href') );
-  } catch(e){ // fall back on url change
-    window.location.href = this.data('href');
-  }
-});
+      });
     });
 
 </script>
