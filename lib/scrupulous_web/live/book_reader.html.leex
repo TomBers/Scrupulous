@@ -23,10 +23,10 @@
         </ol>
     </div>
 
-    <a href="/reader/<%= @book.id %>/page/<%= @page - 1 %>"><i class="fas fa-arrow-left bigIcon"></i></a>
-    <a href="/reader/<%= @book.id %>/page/<%= @page + 1 %>" class="is-pulled-right"><i class="fas fa-arrow-right bigIcon"></i></a>
+    <a href="/reader/<%= @book.id %>/page/<%= @page - 1 %>" id="previousPage"><i class="fas fa-arrow-left bigIcon"></i></a>
+    <a href="/reader/<%= @book.id %>/page/<%= @page + 1 %>" class="is-pulled-right" id="nextPage"><i class="fas fa-arrow-right bigIcon"></i></a>
     <br><br>
-    <div class="text-div">
+    <div class="text-div" id="bookContainer">
         <%= for {line, txt} <- @lines do %>
             <%= if String.trim(txt) == "" do %>
             <div class="spacer"></div>
@@ -254,5 +254,28 @@
         }
     }
 }, false);
+
+// Touch Events
+const bookContainer = document.getElementById("bookContainer");
+let sx, sy, ex, ey = 0;
+bookContainer.addEventListener("touchstart", (evt) => {
+    var touches = evt.changedTouches;
+    sx = touches[0].screenX;
+    sy = touches[0].screenY;
+}, false);
+
+bookContainer.addEventListener("touchend", (evt) => {
+    var touches = evt.changedTouches
+    ex = touches[0].screenX;
+    ey = touches[0].screenY;
+
+    const dx = sx - ex;
+    const dy = sy - ey;
+    if(Math.abs(dx) > Math.abs(dy)) {
+        var ele = dx > 0 ? document.getElementById("nextPage") : document.getElementById("previousPage");
+        ele.click();
+    }
+}, false);
+
 
 </script>
