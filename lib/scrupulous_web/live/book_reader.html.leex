@@ -271,7 +271,7 @@ bookContainer.addEventListener("touchend", (evt) => {
 
     const dx = sx - ex;
     const dy = sy - ey;
-    if(Math.abs(dx) > Math.abs(dy)) {
+    if(Math.abs(dx) > Math.abs(dy) && Math.abs(dx) >= 100) {
         var ele = dx > 0 ? document.getElementById("nextPage") : document.getElementById("previousPage");
         ele.click();
     }
