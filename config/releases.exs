@@ -9,3 +9,5 @@ config :scrupulous, ScrupulousWeb.Endpoint,
 config :scrupulous, Scrupulous.Repo,
        url: db_url,
        pool_size: 15
+
+#       DB has gone down
