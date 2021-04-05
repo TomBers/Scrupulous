@@ -7,6 +7,7 @@ config :scrupulous, ScrupulousWeb.Endpoint,
 
 # Configure your database
 config :scrupulous, Scrupulous.Repo,
+       ssl: true,
        url: db_url,
        pool_size: 15
 
