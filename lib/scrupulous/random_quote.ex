@@ -18,7 +18,8 @@ defmodule Scrupulous.RandomQuote do
       quote: quote.txt,
       title: book.title,
       author: book.author,
-      url: "/reader/#{book.id}/page/#{quote.page}?sl=#{quote.start_line}&el=#{quote.end_line}"
+      url: "/reader/#{book.id}/page/#{quote.page}?sl=#{quote.start_line}&el=#{quote.end_line}",
+      book_id: book.id
     }
   end
 
