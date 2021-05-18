@@ -3,8 +3,8 @@
 <div class="blockquote-wrapper">
   <div class="blockquote">
     <h1><span style="color:#ffffff"><%= @quote.quote %></span></h1>
-    <h4>&mdash;<%= @quote.title %><br><em><%= @quote.author %></em></h4>
-    <h4><a href="<%= @quote.url %>">Continue reading</h4>
+    <h4><%= @quote.title %> by <em><%= @quote.author %></em></h4>
+    <h4><a href="#" onclick="location.reload()">New quote</a> | <a href="<%= @quote.url %>">Continue reading</a></h4>
   </div>
 </div>
 
