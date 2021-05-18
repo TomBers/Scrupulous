@@ -32,6 +32,14 @@ defmodule ScrupulousWeb.PageController do
     render(conn, "quote.html", quote: Scrupulous.RandomQuote.quote_for_book(book_id))
   end
 
+  def quotes_api(conn, _params) do
+    json(conn, Scrupulous.RandomQuote.random_quote())
+  end
+
+  def quotes_book_api(conn, %{"id" => book_id}) do
+    json(conn, Scrupulous.RandomQuote.quote_for_book(book_id))
+  end
+
   def book_overview(conn, %{"book" => book}) do
     book = StaticContent.get_book_with_notes!(book)
     render(conn, "book_overview.html", book: book)

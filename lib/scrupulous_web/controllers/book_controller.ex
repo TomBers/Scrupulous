@@ -27,5 +27,12 @@ defmodule ScrupulousWeb.BookController do
     render(conn, "show.html", book: book)
   end
 
+  def books_api(conn, _params) do
+    books =
+      StaticContent.list_books()
+      |> Enum.map(fn(book) -> %{id: book.id, author: book.author, title: book.title} end)
+
+    json(conn, books)
+  end
 
 end

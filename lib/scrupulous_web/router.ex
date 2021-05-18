@@ -53,6 +53,11 @@ defmodule ScrupulousWeb.Router do
     resources "/notes", NoteController, except: [:new, :edit, :delete]
     resources "/edges", EdgeController, except: [:new, :edit, :delete]
     resources "/skruples", SkrupleController, except: [:new, :edit, :delete]
+
+    get "/books", BookController, :books_api
+    get "/quote", PageController, :quotes_api
+    get "/quote/:id", PageController, :quotes_book_api
+
   end
 
   # Enables LiveDashboard only for development
