@@ -75,6 +75,7 @@ defmodule ScrupulousWeb.BookmarkControllerTest do
     test "deletes chosen bookmark", %{conn: conn, bookmark: bookmark} do
       conn = delete(conn, Routes.bookmark_path(conn, :delete, bookmark))
       assert redirected_to(conn) == Routes.bookmark_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.bookmark_path(conn, :show, bookmark))
       end

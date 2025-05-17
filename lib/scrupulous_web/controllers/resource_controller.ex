@@ -16,12 +16,21 @@ defmodule ScrupulousWeb.ResourceController do
 
   def new_for_book(conn, %{"book" => book_id, "category" => category}) do
     current_user = Map.get(conn.assigns, :current_user)
-    user_id = if current_user do
-      current_user.id
-    else
-      nil
-    end
-    changeset = StaticContent.change_resource(%Resource{book_id: book_id, category: category, user_id: user_id})
+
+    user_id =
+      if current_user do
+        current_user.id
+      else
+        nil
+      end
+
+    changeset =
+      StaticContent.change_resource(%Resource{
+        book_id: book_id,
+        category: category,
+        user_id: user_id
+      })
+
     render(conn, "new.html", changeset: changeset, book_id: book_id)
   end
 
@@ -30,7 +39,9 @@ defmodule ScrupulousWeb.ResourceController do
       {:ok, _resource} ->
         conn
         |> put_flash(:info, "Resource created successfully.")
-        |> redirect(to: Routes.page_path(conn, :book_overview, Map.get(resource_params, "book_id")))
+        |> redirect(
+          to: Routes.page_path(conn, :book_overview, Map.get(resource_params, "book_id"))
+        )
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)

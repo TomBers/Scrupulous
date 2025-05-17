@@ -11,6 +11,5 @@ defmodule Scrupulous.Repo.Migrations.CreateBooks do
 
       timestamps()
     end
-
   end
 end

@@ -30,7 +30,7 @@ defmodule Scrupulous.DataCase do
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Scrupulous.Repo)
 
-    unless tags[:async] do
+    if !tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Scrupulous.Repo, {:shared, self()})
     end
 

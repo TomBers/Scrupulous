@@ -4,7 +4,11 @@ defmodule ScrupulousWeb.ResourceControllerTest do
   alias Scrupulous.StaticContent
 
   @create_attrs %{category: "some category", label: "some label", link: "some link"}
-  @update_attrs %{category: "some updated category", label: "some updated label", link: "some updated link"}
+  @update_attrs %{
+    category: "some updated category",
+    label: "some updated label",
+    link: "some updated link"
+  }
   @invalid_attrs %{category: nil, label: nil, link: nil}
 
   def fixture(:resource) do
@@ -75,6 +79,7 @@ defmodule ScrupulousWeb.ResourceControllerTest do
     test "deletes chosen resource", %{conn: conn, resource: resource} do
       conn = delete(conn, Routes.resource_path(conn, :delete, resource))
       assert redirected_to(conn) == Routes.resource_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.resource_path(conn, :show, resource))
       end

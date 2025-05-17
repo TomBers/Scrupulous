@@ -7,7 +7,7 @@ defmodule ScrupulousWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_scrupulous_key",
-    signing_salt: "ZMkoS+8q"
+    signing_salt: "2+KZXiGG"
   ]
 
   socket "/socket", ScrupulousWeb.UserSocket,

@@ -16,7 +16,7 @@ config :scrupulous, Scrupulous.Repo,
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 config :scrupulous, ScrupulousWeb.Endpoint,
-  http: [port: System.get_env("PORT") || 4000],
+  http: [port: 4001, transport_options: [socket_opts: [:inet6]]],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
@@ -25,8 +25,7 @@ config :scrupulous, ScrupulousWeb.Endpoint,
       "node_modules/webpack/bin/webpack.js",
       "--mode",
       "development",
-      "--watch",
-      "--watch-options-stdin",
+      "--watch-stdin",
       cd: Path.expand("../assets", __DIR__)
     ]
   ]

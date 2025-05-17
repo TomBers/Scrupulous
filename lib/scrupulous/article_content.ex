@@ -26,8 +26,9 @@ defmodule Scrupulous.ArticleContent do
   def list_my_articles(user_id) do
     query =
       from articles in Article,
-           where: articles.user_id == ^user_id,
-           preload: [:notes]
+        where: articles.user_id == ^user_id,
+        preload: [:notes]
+
     Repo.all(query)
   end
 
@@ -50,18 +51,19 @@ defmodule Scrupulous.ArticleContent do
   def get_article_from_slug(slug) do
     query =
       from articles in Article,
-           where: articles.slug == ^slug
+        where: articles.slug == ^slug
+
     Repo.one(query)
   end
 
   def get_notes_for_article(article_id) do
     query =
       from note in Note,
-           where: note.article_id == ^"#{article_id}",
-           preload: [:user, :article_skruples]
+        where: note.article_id == ^"#{article_id}",
+        preload: [:user, :article_skruples]
+
     Repo.all(query)
   end
-
 
   @doc """
   Creates a article.
@@ -139,5 +141,4 @@ defmodule Scrupulous.ArticleContent do
     |> Skruple.changeset(attrs)
     |> Repo.insert()
   end
-
 end

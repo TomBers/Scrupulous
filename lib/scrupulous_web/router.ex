@@ -57,7 +57,6 @@ defmodule ScrupulousWeb.Router do
     get "/books", BookController, :books_api
     get "/quote", PageController, :quotes_api
     get "/quote/:id", PageController, :quotes_book_api
-
   end
 
   # Enables LiveDashboard only for development

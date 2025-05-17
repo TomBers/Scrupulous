@@ -3,7 +3,7 @@ defmodule ScrupulousWeb.PageView do
 
   def get_category_links(resources, category) do
     resources
-    |> Enum.filter(fn(resource) -> resource.category == category end)
+    |> Enum.filter(fn resource -> resource.category == category end)
   end
 
   def has_discussion_link(resources) do
@@ -11,7 +11,6 @@ defmodule ScrupulousWeb.PageView do
   end
 
   def discussion_link(resources) do
-    Enum.find(resources, fn(resource) -> resource.category == Scrupulous.Constants.discussion() end)
+    Enum.find(resources, fn resource -> resource.category == Scrupulous.Constants.discussion() end)
   end
-
 end

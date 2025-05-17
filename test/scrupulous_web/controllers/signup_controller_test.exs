@@ -75,6 +75,7 @@ defmodule ScrupulousWeb.SignupControllerTest do
     test "deletes chosen signup", %{conn: conn, signup: signup} do
       conn = delete(conn, Routes.signup_path(conn, :delete, signup))
       assert redirected_to(conn) == Routes.signup_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.signup_path(conn, :show, signup))
       end

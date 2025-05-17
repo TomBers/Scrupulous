@@ -46,7 +46,8 @@ defmodule Scrupulous.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug, "~> 1.10.0"},
-      {:plug_cowboy, "~> 2.0"},
+      {:plug_cowboy, "~> 2.0", override: true},
+      {:cowboy, "~> 2.8.0", override: true},
       {:phx_gen_auth, "~> 0.4.0", only: [:dev], runtime: false},
       {:earmark, "~> 1.4.13"},
       {:httpoison, "~> 1.8"}

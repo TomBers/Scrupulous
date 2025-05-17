@@ -6,8 +6,20 @@ defmodule Scrupulous.StaticContentTest do
   describe "books" do
     alias Scrupulous.StaticContent.Book
 
-    @valid_attrs %{author: "some author", country: "some country", file_name: "some file_name", publication_year: 42, title: "some title"}
-    @update_attrs %{author: "some updated author", country: "some updated country", file_name: "some updated file_name", publication_year: 43, title: "some updated title"}
+    @valid_attrs %{
+      author: "some author",
+      country: "some country",
+      file_name: "some file_name",
+      publication_year: 42,
+      title: "some title"
+    }
+    @update_attrs %{
+      author: "some updated author",
+      country: "some updated country",
+      file_name: "some updated file_name",
+      publication_year: 43,
+      title: "some updated title"
+    }
     @invalid_attrs %{author: nil, country: nil, file_name: nil, publication_year: nil, title: nil}
 
     def book_fixture(attrs \\ %{}) do
@@ -74,7 +86,11 @@ defmodule Scrupulous.StaticContentTest do
     alias Scrupulous.StaticContent.Resource
 
     @valid_attrs %{category: "some category", label: "some label", link: "some link"}
-    @update_attrs %{category: "some updated category", label: "some updated label", link: "some updated link"}
+    @update_attrs %{
+      category: "some updated category",
+      label: "some updated label",
+      link: "some updated link"
+    }
     @invalid_attrs %{category: nil, label: nil, link: nil}
 
     def resource_fixture(attrs \\ %{}) do
@@ -109,7 +125,10 @@ defmodule Scrupulous.StaticContentTest do
 
     test "update_resource/2 with valid data updates the resource" do
       resource = resource_fixture()
-      assert {:ok, %Resource{} = resource} = StaticContent.update_resource(resource, @update_attrs)
+
+      assert {:ok, %Resource{} = resource} =
+               StaticContent.update_resource(resource, @update_attrs)
+
       assert resource.category == "some updated category"
       assert resource.label == "some updated label"
       assert resource.link == "some updated link"

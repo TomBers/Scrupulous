@@ -27,6 +27,7 @@ defmodule ScrupulousWeb.ArticleController do
   def create(conn, %{"article" => article_params}) do
     user = conn.assigns.current_user
     article = article_from_params(article_params, user)
+
     case ArticleContent.create_article(article) do
       {:ok, article} ->
         conn
@@ -43,8 +44,11 @@ defmodule ScrupulousWeb.ArticleController do
     file = params["docfile"]
 
     case File.read(file.path) do
-      {:ok, body} -> %{user_id: user.id, title: title, content: body, slug: slug_from_title(title) }
-      {:error, _reason} -> %{}
+      {:ok, body} ->
+        %{user_id: user.id, title: title, content: body, slug: slug_from_title(title)}
+
+      {:error, _reason} ->
+        %{}
     end
   end
 
@@ -56,7 +60,7 @@ defmodule ScrupulousWeb.ArticleController do
 
   def slug_from_title(title) do
     title
-    |> String.downcase
+    |> String.downcase()
     |> String.replace(" ", "-")
   end
 
@@ -112,6 +116,7 @@ defmodule ScrupulousWeb.ArticleController do
   defp check_article_ownership(conn, _opts) do
     id = get_path_params(conn.path_params)
     article = ArticleContent.get_article!(id)
+
     if article.user_id == conn.assigns.current_user.id do
       conn
       |> assign(:article, article)
@@ -124,7 +129,4 @@ defmodule ScrupulousWeb.ArticleController do
   end
 
   def get_path_params(%{"id" => id}), do: id
-
 end
-
-

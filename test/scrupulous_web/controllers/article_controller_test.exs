@@ -4,7 +4,11 @@ defmodule ScrupulousWeb.ArticleControllerTest do
   alias Scrupulous.ArticleContent
 
   @create_attrs %{content: "some content", slug: "some slug", title: "some title"}
-  @update_attrs %{content: "some updated content", slug: "some updated slug", title: "some updated title"}
+  @update_attrs %{
+    content: "some updated content",
+    slug: "some updated slug",
+    title: "some updated title"
+  }
   @invalid_attrs %{content: nil, slug: nil, title: nil}
 
   def fixture(:article) do
@@ -75,6 +79,7 @@ defmodule ScrupulousWeb.ArticleControllerTest do
     test "deletes chosen article", %{conn: conn, article: article} do
       conn = delete(conn, Routes.article_path(conn, :delete, article))
       assert redirected_to(conn) == Routes.article_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.article_path(conn, :show, article))
       end

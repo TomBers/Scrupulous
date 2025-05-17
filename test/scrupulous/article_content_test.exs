@@ -7,7 +7,11 @@ defmodule Scrupulous.ArticleContentTest do
     alias Scrupulous.ArticleContent.Article
 
     @valid_attrs %{content: "some content", slug: "some slug", title: "some title"}
-    @update_attrs %{content: "some updated content", slug: "some updated slug", title: "some updated title"}
+    @update_attrs %{
+      content: "some updated content",
+      slug: "some updated slug",
+      title: "some updated title"
+    }
     @invalid_attrs %{content: nil, slug: nil, title: nil}
 
     def article_fixture(attrs \\ %{}) do

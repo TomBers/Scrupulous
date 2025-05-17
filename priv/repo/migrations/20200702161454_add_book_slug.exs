@@ -7,6 +7,5 @@ defmodule Scrupulous.Repo.Migrations.AddBookSlug do
     end
 
     create unique_index(:books, [:slug])
-
   end
 end

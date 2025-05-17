@@ -73,7 +73,6 @@ defmodule Scrupulous.StaticContent do
     Repo.all(query)
   end
 
-
   def authors_starting_with(letter) do
     query =
       from b in Book,

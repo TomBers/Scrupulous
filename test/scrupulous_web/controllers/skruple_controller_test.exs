@@ -4,12 +4,8 @@ defmodule ScrupulousWeb.SkrupleControllerTest do
   alias Scrupulous.UserContent
   alias Scrupulous.UserContent.Skruple
 
-  @create_attrs %{
-
-  }
-  @update_attrs %{
-
-  }
+  @create_attrs %{}
+  @update_attrs %{}
   @invalid_attrs %{}
 
   def fixture(:skruple) do

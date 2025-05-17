@@ -3,8 +3,20 @@ defmodule ScrupulousWeb.BookControllerTest do
 
   alias Scrupulous.StaticContent
 
-  @create_attrs %{author: "some author", country: "some country", file_name: "some file_name", publication_year: 42, title: "some title"}
-  @update_attrs %{author: "some updated author", country: "some updated country", file_name: "some updated file_name", publication_year: 43, title: "some updated title"}
+  @create_attrs %{
+    author: "some author",
+    country: "some country",
+    file_name: "some file_name",
+    publication_year: 42,
+    title: "some title"
+  }
+  @update_attrs %{
+    author: "some updated author",
+    country: "some updated country",
+    file_name: "some updated file_name",
+    publication_year: 43,
+    title: "some updated title"
+  }
   @invalid_attrs %{author: nil, country: nil, file_name: nil, publication_year: nil, title: nil}
 
   def fixture(:book) do
@@ -75,6 +87,7 @@ defmodule ScrupulousWeb.BookControllerTest do
     test "deletes chosen book", %{conn: conn, book: book} do
       conn = delete(conn, Routes.book_path(conn, :delete, book))
       assert redirected_to(conn) == Routes.book_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.book_path(conn, :show, book))
       end

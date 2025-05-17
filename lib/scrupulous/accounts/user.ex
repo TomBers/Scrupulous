@@ -6,7 +6,6 @@ defmodule Scrupulous.Accounts.User do
   alias Scrupulous.UserContent.Skruple
   alias Scrupulous.StaticContent.Resource
 
-
   @derive {Inspect, except: [:password]}
   schema "users" do
     field :email, :string

@@ -8,6 +8,5 @@ defmodule Scrupulous.Repo.Migrations.CreateSignups do
 
       timestamps()
     end
-
   end
 end

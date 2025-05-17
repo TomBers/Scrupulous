@@ -11,7 +11,6 @@ defmodule ScrupulousWeb.EdgeView do
   end
 
   def render("edge.json", %{edge: edge}) do
-    %{id: edge.id,
-      label: edge.label}
+    %{id: edge.id, label: edge.label}
   end
 end

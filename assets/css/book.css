@@ -542,23 +542,23 @@ Table of Contents
 }
 
 .bookGrad0 {
-	background-image: url(/images/book-cover.jpg);
+	background-color: #1abc9c;
 }
 
 .bookGrad1 {
-	background-image: url(/images/book-cover2.jpg);
+	background-color: #3498db;
 }
 
 .bookGrad2 {
-	background-image: url(/images/book-cover3.jpg);
+	background-color: #9b59b6;
 }
 
 .bookGrad3 {
-	background-image: url(/images/book-cover4.jpg);
+	background-color: #e74c3c;
 }
 
 .bookGrad4 {
-	background-image: url(/images/book-cover5.jpg);
+	background-color: #f1c40f;
 }
 
 /* Basic ribbon */

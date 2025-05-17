@@ -1,3 +1,4 @@
+import "regenerator-runtime/runtime"
 import "../css/app.scss"
 
 import "phoenix_html"

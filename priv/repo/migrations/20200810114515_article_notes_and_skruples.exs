@@ -25,6 +25,5 @@ defmodule Scrupulous.Repo.Migrations.ArticleNotesAndSkruples do
 
     create index(:article_skruples, [:note_id])
     create index(:article_skruples, [:user_id])
-
   end
 end

@@ -7,7 +7,12 @@ defmodule Scrupulous.UserContentTest do
     alias Scrupulous.UserContent.Note
 
     @valid_attrs %{book: "some book", end_line: 42, note: "some note", start_line: 42}
-    @update_attrs %{book: "some updated book", end_line: 43, note: "some updated note", start_line: 43}
+    @update_attrs %{
+      book: "some updated book",
+      end_line: 43,
+      note: "some updated note",
+      start_line: 43
+    }
     @invalid_attrs %{book: nil, end_line: nil, note: nil, start_line: nil}
 
     def note_fixture(attrs \\ %{}) do
@@ -69,7 +74,6 @@ defmodule Scrupulous.UserContentTest do
   end
 
   describe "more notes tests" do
-
     alias Scrupulous.UserContent.Note
 
     @valid_attrs %{end_line: 42, note: "some note", start_line: 42}

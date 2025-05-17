@@ -4,23 +4,37 @@ defmodule ScrupulousWeb.BookReader do
   alias Scrupulous.UserContent
   alias Scrupulous.StaticContent
 
-  @lines_per_page Scrupulous.Constants.lines_per_page
+  @lines_per_page Scrupulous.Constants.lines_per_page()
 
   def handle_params(params, _uri, socket) do
-    { book, page, note_id, highlight_start, highlight_end } = extract_params(params)
+    {book, page, note_id, highlight_start, highlight_end} = extract_params(params)
 
     start_line = page * @lines_per_page
     end_line = start_line + @lines_per_page
 
     book = StaticContent.get_book!(book)
+
     notes =
       UserContent.get_notes_between_lines(book.id, start_line, end_line)
-      |> Enum.sort_by(&(length(&1.skruples)), &>=/2)
+      |> Enum.sort_by(&length(&1.skruples), &>=/2)
 
-    param_note = notes |> Enum.filter(fn(note) -> if is_nil(note_id) do false else note_id == note.id end end) |> List.first
+    param_note =
+      notes
+      |> Enum.filter(fn note ->
+        if is_nil(note_id) do
+          false
+        else
+          note_id == note.id
+        end
+      end)
+      |> List.first()
 
-    open_note = if is_nil(param_note) do nil else param_note.end_line end
-
+    open_note =
+      if is_nil(param_note) do
+        nil
+      else
+        param_note.end_line
+      end
 
     lines = Store.get_between(book.file_name, start_line, end_line)
 
@@ -28,25 +42,41 @@ defmodule ScrupulousWeb.BookReader do
       if socket.assigns.current_user do
         UserContent.bookmark_for_page(socket.assigns.current_user.id, book.id, page)
       else
-       nil
+        nil
       end
-    {:noreply, assign(socket, title: book.title, book: book, notes: notes, lines: lines, page: page, show_note_form: false, bookmarks: bookmarks, search: [], open_note: open_note, param_note: param_note, lines_per_page: @lines_per_page, sl: highlight_start, el: highlight_end)}
+
+    {:noreply,
+     assign(socket,
+       title: book.title,
+       book: book,
+       notes: notes,
+       lines: lines,
+       page: page,
+       show_note_form: false,
+       bookmarks: bookmarks,
+       search: [],
+       open_note: open_note,
+       param_note: param_note,
+       lines_per_page: @lines_per_page,
+       sl: highlight_start,
+       el: highlight_end
+     )}
   end
 
   def extract_params(%{"book" => book, "page" => page, "sl" => sl, "el" => el}) do
-    {book, String.to_integer(page), nil, sl, el }
+    {book, String.to_integer(page), nil, sl, el}
   end
 
   def extract_params(%{"book" => book, "page" => page, "note" => note}) do
-    {book, String.to_integer(page), String.to_integer(note), nil, nil }
+    {book, String.to_integer(page), String.to_integer(note), nil, nil}
   end
 
   def extract_params(%{"book" => book, "page" => page}) do
-    {book, String.to_integer(page), nil, nil, nil }
+    {book, String.to_integer(page), nil, nil, nil}
   end
 
   def extract_params(%{"book" => book}) do
-    {book, 0, nil, nil, nil }
+    {book, 0, nil, nil, nil}
   end
 
   def mount(%{"book" => book, "page" => page}, %{"user_token" => user_token}, socket) do
@@ -66,19 +96,24 @@ defmodule ScrupulousWeb.BookReader do
     end
   end
 
-
   def handle_event("bookmark", _params, socket) do
     bookmark = %{
       user_id: socket.assigns.current_user.id,
       book_id: socket.assigns.book.id,
       page: socket.assigns.page
     }
+
     UserContent.create_bookmark(bookmark)
-#    Adding the bookmarks list as we test that it is not empty in the template.  Could put in the result, but no point
+
+    #    Adding the bookmarks list as we test that it is not empty in the template.  Could put in the result, but no point
     {:noreply, assign(socket, bookmarks: [1])}
   end
 
-  def handle_event("add_note", %{"startLine" => start_line, "endLine" => end_line, "noteText" => note_text }, socket) do
+  def handle_event(
+        "add_note",
+        %{"startLine" => start_line, "endLine" => end_line, "noteText" => note_text},
+        socket
+      ) do
     book_id = socket.assigns.book.id
     user = socket.assigns.current_user
     make_note(start_line, end_line, note_text, user, book_id)
@@ -96,7 +131,8 @@ defmodule ScrupulousWeb.BookReader do
         String.to_integer(line_number)
       else
         nil
-    end
+      end
+
     {:noreply, assign(socket, open_note: open_note, param_note: nil)}
   end
 
@@ -110,28 +146,41 @@ defmodule ScrupulousWeb.BookReader do
   end
 
   def handle_event("search", %{"_target" => _target, "query" => query}, socket) do
-    search = if String.length(query) > 3 do
+    search =
+      if String.length(query) > 3 do
         Store.search(socket.assigns.book.file_name, query)
       else
         []
-    end
+      end
+
     {:noreply, assign(socket, search: search)}
   end
 
-
   def get_updated_notes(socket) do
     start_line = socket.assigns.page * @lines_per_page
-    UserContent.get_notes_between_lines(socket.assigns.book.id, start_line, start_line + @lines_per_page)
-    |> Enum.sort_by(&(length(&1.skruples)), &>=/2)
+
+    UserContent.get_notes_between_lines(
+      socket.assigns.book.id,
+      start_line,
+      start_line + @lines_per_page
+    )
+    |> Enum.sort_by(&length(&1.skruples), &>=/2)
   end
 
-#  Create methods
+  #  Create methods
   def make_note(_start_line, _end_line, _note, user, _book_id) when is_nil(user) do
     nil
   end
 
   def make_note(start_line, end_line, note, user, book_id) do
-    new_note = %{start_line: start_line, end_line: end_line, note: note, user_id: user.id, book_id: book_id }
+    new_note = %{
+      start_line: start_line,
+      end_line: end_line,
+      note: note,
+      user_id: user.id,
+      book_id: book_id
+    }
+
     UserContent.create_note(new_note)
   end
 
@@ -143,5 +192,4 @@ defmodule ScrupulousWeb.BookReader do
     new_skruple = %{note_id: note_id, user_id: user.id}
     UserContent.create_skruple(new_skruple)
   end
-
 end

@@ -37,38 +37,41 @@ defmodule Scrupulous.UserContent do
   """
   def get_note!(id), do: Repo.get!(Note, id)
 
-
   def get_notes_between_lines(book_id, start_line, end_line) do
     query =
       from note in Note,
-           where: note.book_id == ^"#{book_id}" and note.start_line >= ^start_line and note.end_line <= ^end_line,
-           preload: [:user, :skruples]
+        where:
+          note.book_id == ^"#{book_id}" and note.start_line >= ^start_line and
+            note.end_line <= ^end_line,
+        preload: [:user, :skruples]
+
     Repo.all(query)
   end
 
   def get_notes_for_book(book_id) do
     query =
       from note in Note,
-           where: note.book_id == ^"#{book_id}",
-           preload: [:user, :skruples]
+        where: note.book_id == ^"#{book_id}",
+        preload: [:user, :skruples]
+
     Repo.all(query)
   end
 
   def get_notes_for_user(user_id) do
     query =
       from note in Note,
-           where: note.user_id == ^"#{user_id}",
-           preload: [:book, :skruples]
+        where: note.user_id == ^"#{user_id}",
+        preload: [:book, :skruples]
+
     Repo.all(query)
   end
 
-#  def get_notes_between_lines(book, start_line, end_line) do
-#    query =
-#      from note in Note,
-#           where: note.book == ^"#{book}" and note.start_line >= ^start_line and note.end_line <= ^end_line
-#    Repo.all(query)
-#  end
-
+  #  def get_notes_between_lines(book, start_line, end_line) do
+  #    query =
+  #      from note in Note,
+  #           where: note.book == ^"#{book}" and note.start_line >= ^start_line and note.end_line <= ^end_line
+  #    Repo.all(query)
+  #  end
 
   @doc """
   Creates a note.
@@ -169,17 +172,18 @@ defmodule Scrupulous.UserContent do
   def get_edges_for_topic(topic) do
     query =
       from edge in Edge,
-           where: edge.label == ^topic
+        where: edge.label == ^topic
+
     Repo.all(query)
   end
 
   def get_edges_for_book(book_id) do
     query =
       from edge in Edge,
-           where: edge.source_id == ^book_id
+        where: edge.source_id == ^book_id
+
     Repo.all(query)
   end
-
 
   @doc """
   Creates a edge.
@@ -280,8 +284,9 @@ defmodule Scrupulous.UserContent do
   def count_skruples_for_user(user_id) do
     query =
       from skruple in Skruple,
-           select: count(skruple.id),
-           where: skruple.user_id == ^"#{user_id}"
+        select: count(skruple.id),
+        where: skruple.user_id == ^"#{user_id}"
+
     Repo.one(query)
   end
 
@@ -384,18 +389,21 @@ defmodule Scrupulous.UserContent do
   def bookmark_for_page(user_id, book_id, page) do
     query =
       from bookmark in Bookmark,
-           where: bookmark.user_id == ^"#{user_id}" and bookmark.book_id == ^"#{book_id}" and bookmark.page == ^"#{page}"
+        where:
+          bookmark.user_id == ^"#{user_id}" and bookmark.book_id == ^"#{book_id}" and
+            bookmark.page == ^"#{page}"
+
     Repo.all(query)
   end
 
   def bookmarks_for_user(user_id) do
     query =
       from bookmark in Bookmark,
-           where: bookmark.user_id == ^"#{user_id}",
-           preload: [:book]
+        where: bookmark.user_id == ^"#{user_id}",
+        preload: [:book]
+
     Repo.all(query)
   end
-
 
   @doc """
   Creates a bookmark.

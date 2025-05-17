@@ -2,8 +2,28 @@ const path = require('path');
 const glob = require('glob');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const fs = require('fs');
+
+// Create default book cover images if they don't exist
+const staticImagesDir = path.resolve(__dirname, 'static/images');
+if (!fs.existsSync(staticImagesDir)) {
+  fs.mkdirSync(staticImagesDir, { recursive: true });
+}
+
+const bookCovers = [
+  'book-cover.jpg', 'book-cover2.jpg', 'book-cover3.jpg', 
+  'book-cover4.jpg', 'book-cover5.jpg'
+];
+
+bookCovers.forEach(cover => {
+  const coverPath = path.join(staticImagesDir, cover);
+  if (!fs.existsSync(coverPath)) {
+    // Create an empty file
+    fs.writeFileSync(coverPath, '');
+  }
+});
 
 module.exports = (env, options) => {
   const devMode = options.mode !== 'production';
@@ -11,8 +31,10 @@ module.exports = (env, options) => {
   return {
     optimization: {
       minimizer: [
-        new TerserPlugin({}),
-        new OptimizeCSSAssetsPlugin({})
+        new TerserPlugin({
+          parallel: true,
+        }),
+        new CssMinimizerPlugin()
       ]
     },
     entry: {
@@ -21,9 +43,9 @@ module.exports = (env, options) => {
     output: {
       filename: '[name].js',
       path: path.resolve(__dirname, '../priv/static/js'),
-      publicPath: '/js/'
+      publicPath: '/'
     },
-    devtool: devMode ? 'source-map' : undefined,
+    devtool: devMode ? 'source-map' : false,
     module: {
       rules: [
         {
@@ -31,13 +53,22 @@ module.exports = (env, options) => {
           exclude: /node_modules/,
           use: {
             loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env']
+            }
           }
         },
         {
           test: /\.[s]?css$/,
           use: [
             MiniCssExtractPlugin.loader,
-            'css-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                url: true,
+                import: true,
+              }
+            },
             'sass-loader',
           ],
         },
@@ -54,7 +85,19 @@ module.exports = (env, options) => {
     },
     plugins: [
       new MiniCssExtractPlugin({ filename: '../css/app.css' }),
-      new CopyWebpackPlugin({ patterns: [{ from: 'static/', to: './' }]})
+      new CopyWebpackPlugin({ 
+        patterns: [
+          { 
+            from: 'static/',
+            to: '../',
+            globOptions: {
+              dot: true,
+              gitignore: true,
+              ignore: ['**/.DS_Store', '**/.gitkeep'],
+            },
+          }
+        ]
+      })
     ]
   }
 };

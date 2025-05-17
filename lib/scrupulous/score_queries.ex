@@ -7,5 +7,4 @@ defmodule ScoreQueries do
   def users do
     Repo.all(User) |> Repo.preload([{:notes, :skruples}, :skruples, :resources])
   end
-
 end

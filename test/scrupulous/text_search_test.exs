@@ -1,12 +1,13 @@
 defmodule Scrupulus.TextSearchTest do
-
   use Scrupulous.DataCase
 
   describe "test search works correctly" do
     test "can find simple phrase" do
       book = sample_book()
 
-      rs = Store.search_in_book(book, "On the screen, a news commentator was", &Store.split_term/2)
+      rs =
+        Store.search_in_book(book, "On the screen, a news commentator was", &Store.split_term/2)
+
       ln = length(rs)
       assert ln == 1
     end
@@ -14,19 +15,31 @@ defmodule Scrupulus.TextSearchTest do
     test "can find phrase split over multiple lines" do
       book = sample_book()
 
-      rs = Store.search_in_book(book, "On the screen, a news commentator was summarizing the day's happenings. Every thirty seconds or so", &Store.split_term/2)
+      rs =
+        Store.search_in_book(
+          book,
+          "On the screen, a news commentator was summarizing the day's happenings. Every thirty seconds or so",
+          &Store.split_term/2
+        )
+
       ln = length(rs)
       assert ln == 1
     end
-#
+
+    #
     test "can find full paragraph" do
       book = sample_book()
 
-      rs = Store.search_in_book(book, "Gramps Ford, his chin resting on his hands, his hands on the crook of his cane, was staring irascibly at the five-foot television screen that dominated the room. On the screen, a news commentator was summarizing the day's happenings.", &Store.split_term/2)
+      rs =
+        Store.search_in_book(
+          book,
+          "Gramps Ford, his chin resting on his hands, his hands on the crook of his cane, was staring irascibly at the five-foot television screen that dominated the room. On the screen, a news commentator was summarizing the day's happenings.",
+          &Store.split_term/2
+        )
+
       ln = length(rs)
       assert ln == 1
     end
-
   end
 
   def sample_book do
@@ -135,5 +148,4 @@ defmodule Scrupulus.TextSearchTest do
       }
     ]
   end
-
 end
